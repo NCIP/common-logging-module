@@ -8,6 +8,8 @@ CREATE TABLE LOGTAB (
 	PRIORITY VARCHAR2(15), 
 	CATEGORY VARCHAR2(255), 
 	THREAD VARCHAR2(255), 
+	USER VARCHAR(255),
+	SESSIONID VARCHAR(255),
 	MSG VARCHAR2(4000), 
 	THROWABLE VARCHAR2(4000),
 	NDC VARCHAR(4000), 
@@ -44,15 +46,20 @@ BEGIN
     END IF;
 END;
 
+
 CREATE TABLE SIGNIN_USERS (
        USERNAME VARCHAR(255) NOT NULL,
        PASSWORD VARCHAR(255),
-       PRIMARY KEY(USERNAME) );
+       APPLICATION VARCHAR(100) NOT NULL,
+       PRIMARY KEY(USERNAME, APPLICATION) );
        
 create index USERNAME_SIGNIN_USERS_INDEX on SIGNIN_USERS(USERNAME);
 create index PASSWORD_SIGNIN_USERS_PASSWORD on SIGNIN_USERS(PASSWORD);
+create index APPLICATION_SIGNIN_USERS_INDEX on SIGNIN_USERS(APPLICATION);
        
 INSERT INTO signin_users (username, password) VALUES ('admin','pX4bLclVVdFwnQoyStFF3jIVAYI=');
+INSERT INTO signin_users (username, password, application) VALUES ('mytest','N/omUzCtg+qoee+x4ttjgIls9jk=', 'upt');
+INSERT INTO signin_users (username, password, application) VALUES ('mytest','N/omUzCtg+qoee+x4ttjgIls9jk=', 'csm');
 
 
 /
