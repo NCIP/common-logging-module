@@ -23,6 +23,8 @@ public interface Constants
 	public static final String PRIORITY = "PRIORITY";
 	public static final String CATEGORY = "CATEGORY";
 	public static final String THREAD = "THREAD";
+	public static final String USER = "USER";
+	public static final String SESSIONID = "SESSIONID";
 	public static final String MSG = "MSG";
 	public static final String THROWABLE = "THROWABLE";
 	public static final String NDC = "NDC";
