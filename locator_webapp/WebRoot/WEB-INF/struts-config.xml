@@ -27,9 +27,9 @@
 <struts-config>
 	<!-- ======================================== Form Bean Definitions -->
 	<form-beans>
-		<form-bean name="queryForm" type="gov.nih.nci.logging.struts.QueryForm"/>
-		<form-bean name="detailForm" type="gov.nih.nci.logging.struts.DetailForm"/>
-		<form-bean name="loginForm" type="gov.nih.nci.logging.struts.LoginForm"/>
+		<form-bean name="queryForm" type="gov.nih.nci.logging.webapp.struts.QueryForm"/>
+		<form-bean name="detailForm" type="gov.nih.nci.logging.webapp.struts.DetailForm"/>
+		<form-bean name="loginForm" type="gov.nih.nci.logging.webapp.struts.LoginForm"/>
 	</form-beans>
 	<!-- ================================= Global Exception Definitions -->
 	<!--
@@ -46,16 +46,16 @@
 	<!-- =================================== Action Mapping Definitions -->
 	<action-mappings>
 		<!-- Default "Welcome" action -->
-		<action input=".signOn" path="/sign-on" type="gov.nih.nci.logging.struts.LoginAction" scope="session" parameter="/sign-on.jsp" name="loginForm">
+		<action input=".signOn" path="/sign-on" type="gov.nih.nci.logging.webapp.struts.LoginAction" scope="session" parameter="/sign-on.jsp" name="loginForm">
 			<forward name="success" path=".mainLayout"/>
 			<forward name="failure" path=".signOn"/>
 		</action>
 		<!-- Forwards to Welcome.jsp -->
 		<action path="/Welcome" type="org.apache.struts.actions.ForwardAction" parameter="/index.jsp"/>
-		<action input=".summaryResults" name="queryForm" path="/executeQuery" type="gov.nih.nci.logging.struts.QueryAction" scope="session">
+		<action input=".summaryResults" name="queryForm" path="/executeQuery" type="gov.nih.nci.logging.webapp.struts.QueryAction" scope="session">
 			<forward name="success" path=".summaryResults"/>
 		</action>
-		<action input=".summaryResults" name="queryForm" path="/executeDetails" type="gov.nih.nci.logging.struts.DetailAction" scope="session">
+		<action input=".summaryResults" name="queryForm" path="/executeDetails" type="gov.nih.nci.logging.webapp.struts.DetailAction" scope="session">
 			<forward name="success" path=".detailResults"/>
 		</action>
 	</action-mappings>

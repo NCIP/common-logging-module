@@ -92,7 +92,7 @@
          <td colspan="2" class="displayValue">
          
           <html:select property="server">
-              	<custom:options />              	
+              	<custom:servers/>              	
          </html:select>
          
           </td>

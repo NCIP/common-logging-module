@@ -4,17 +4,16 @@
   
 	<!-- Load variable definitions from local.properties -->
 	<property name="localProperties" value="./local.properties"/>	
-  	<property file="${basedir}/script/local.properties" />
-	<property name="J2EE_JAR" value="C:/jboss-4.0.2/server/default/lib/javax.servlet.jsp.jar"/>
+  	<property file="${basedir}/script/local.properties" />	
   	<!-- Set up the classpath required to compile -->
   	<path id="classpath">
-		<fileset dir="webapp/WEB-INF/lib">
+		<fileset dir="webroot/WEB-INF/lib">
 			<include name="**/*.jar"/>
 		</fileset>
 	</path>
   	
   	<!-- Initialize local.properties -->
-	<target name="init">
+	<target name="init" >
 		
 		<!-- Has the file been created before -->
 		<available file="${localProperties}" property="haveLocalProperties"/>
@@ -43,7 +42,7 @@ BUILD_DIR=build
 CLASSES=${BUILD_DIR}/classes
 BUILD_SRC=${CLASSES}/src
 WAR_DIR=${BUILD_DIR}/wardir
-WEBAPP_DIR=webapp
+WEBAPP_DIR=webroot
 WEBINF=${WEBAPP_DIR}/WEB-INF
 WEBXML=${WEBINF}/web.xml
 WAR_WEBINF=${WAR_DIR}/WEB-INF
@@ -58,7 +57,7 @@ WEBAPP_WAR=${BUILD_DIR}/log-locator.war
 	</target>
   	
   	<!-- Create directories -->
-	<target name="make_dirs" depends="init">
+	<target name="make_dirs" depends="init, clean">
 	
 		<!-- Staging directory for compiling and packaging -->
 		<mkdir dir="${BUILD_DIR}"/>
@@ -147,12 +146,13 @@ WEBAPP_WAR=${BUILD_DIR}/log-locator.war
   		<copy todir="${WAR_WEBINF}" file="${WEBXML}"/>
     	<war destfile="${WEBAPP_WAR}"
     		webxml="${WAR_WEBINF}/web.xml"
-    		basedir="${WAR_DIR}"
+    		basedir="${WAR_DIR}" excludes="**/web.xml, **/MANIFEST.MF" 
     	/>
   	</target>
   	
   	<!-- Remove everything created by the previous build -->
-	<target name="clean" depends="init">
+	<target name="clean" >
+		<echo>Deleting build dir...</echo>
    		<delete dir="${BUILD_DIR}" />
  	</target>
 

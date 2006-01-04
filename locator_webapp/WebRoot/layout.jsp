@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="style/translocator.css">
 	</HEAD>
 	<BODY>
-	<TABLE border="0" width="100%" cell spacing="5">
+	<TABLE border="0" width="100%" cellspacing="5">
 		<TR>
 			<TD colspan="2"><tiles:insert attribute="header"/></TD>
 		</TR>

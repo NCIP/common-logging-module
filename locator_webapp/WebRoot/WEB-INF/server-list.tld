@@ -6,13 +6,13 @@
 <shortname>html</shortname>
 <uri>http://www.nih.nci.gov/serverList.tld</uri>
 <tag>
-<name>options</name>
-<tagclass>gov.nih.nci.logging.struts.tags.ServerListOptionTag</tagclass>
+<name>servers</name>
+<tagclass>gov.nih.nci.logging.webapp.struts.tags.ServerListOptionTag</tagclass>
 <bodycontent>empty</bodycontent>
 </tag>
 <tag>
 <name>applications</name>
-<tagclass>gov.nih.nci.logging.struts.tags.ApplicationListOptionTag</tagclass>
+<tagclass>gov.nih.nci.logging.webapp.struts.tags.ApplicationListOptionTag</tagclass>
 <bodycontent>empty</bodycontent>
 </tag>
 </taglib>
