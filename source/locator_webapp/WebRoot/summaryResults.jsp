@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ page import="gov.nih.nci.logging.Constants" %>
+<%@ page import="gov.nih.nci.logging.webapp.util.Constants" %>
 
 <!-- Display Search Criteria -->
 <br>
@@ -50,7 +50,7 @@
       <br>
 
 <% int i =0; %>
-        <logic:iterate id="next" name="summary" type="gov.nih.nci.logging.dao.Summary" >
+        <logic:iterate id="next" name="summary" type="gov.nih.nci.logging.webapp.dao.Summary" >
          <%  String cellColor = i++ % 2 == 1 ? "#CCCCCC" : "#FFFFFF"; %>
          <tr align="center" bgcolor= <%= cellColor %> ><td>
 <table align="center" width="100%" border="0" cellspacing="0" cellpadding="2">
