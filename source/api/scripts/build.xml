@@ -50,7 +50,7 @@ JAR_FILE=jdbcAppender.jar
 	</target>
   	
   	<!-- Create directories -->
-	<target name="make_dirs" depends="init">
+	<target name="make_dirs" depends="init, clean">
    		
    		<!-- Staging for creating the build -->
    		<mkdir dir="${BUILD_DIR}"/>
@@ -100,7 +100,7 @@ JAR_FILE=jdbcAppender.jar
   	 	
 	
 	<!-- Remove everything created by the previous build -->
-	<target name="clean" depends="init">
+	<target name="clean">
 		<echo>Cleaning the build Directory...</echo>
    		<delete dir="${BUILD_DIR}"/>
  	</target>
