@@ -6,6 +6,11 @@ package gov.nih.nci.logging.api.appender.jdbc;
  * 
  * <!-- LICENSE_TEXT_END -->
  */
+import gov.nih.nci.logging.api.logger.util.ThreadVariable;
+import gov.nih.nci.logging.api.user.UserInfo;
+import gov.nih.nci.logging.api.util.Constants;
+import gov.nih.nci.logging.api.util.Utils;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +18,6 @@ import java.util.List;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
-
-import gov.nih.nci.logging.api.util.Constants;
-import gov.nih.nci.logging.api.util.Utils;
-import gov.nih.nci.logging.utils.*;
 
 /**
  * A custom Apache Log4J Appender will be responsible for formatting and
