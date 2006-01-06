@@ -33,11 +33,11 @@ public class ObjectStateLogger
 		String log4jConfigFile = ApplicationProperties.getInstance().getConfigFile();		
 		if (log4jConfigFile.toUpperCase().endsWith(".XML"))
 		{
-			DOMConfigurator.configure(log4jConfigFile);
+			DOMConfigurator.configure(ClassLoader.getSystemResource(log4jConfigFile));
 		}
 		else
 		{
-			PropertyConfigurator.configure(log4jConfigFile);
+			PropertyConfigurator.configure(ClassLoader.getSystemResource(log4jConfigFile));
 		}		
 		logger = Logger.getLogger(ApplicationProperties.ObjectStateLogger);
 	}
