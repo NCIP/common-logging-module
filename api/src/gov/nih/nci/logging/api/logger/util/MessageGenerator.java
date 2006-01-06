@@ -175,7 +175,9 @@ public class MessageGenerator
 		Writer wout = new OutputStreamWriter(out, "UTF8");
 		wout.write("<?xml version=\"1.0\"?>\r\n");
 		wout.write("<" + entityName + ">\r\n");
-
+		wout.write("<operation>\r\n");
+		wout.write( operation);
+		wout.write("</operation>\r\n");
 		for (int index = 0; index < State.length; index++)
 		{
 			wout.write("  <" + propertyNames[index] + ">\r\n");
@@ -256,6 +258,9 @@ public class MessageGenerator
 		Writer wout = new OutputStreamWriter(out, "UTF8");
 		wout.write("<?xml version=\"1.0\"?>\r\n");
 		wout.write("<" + entityName + ">\r\n");
+		wout.write("<operation>\r\n");
+		wout.write( operation);
+		wout.write("</operation>\r\n");
 
 		for (int index = 0; index < currentState.length; index++)
 		{
