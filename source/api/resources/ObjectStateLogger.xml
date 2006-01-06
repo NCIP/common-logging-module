@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <logging-config>
-	<logger-config-file>	log4jConfig.properties  </logger-config-file>    
-	<MessageType> string </MessageType>
+<logging-config>
+	<logger-config-file>log4jConfig.properties</logger-config-file>
+	<MessageType>string</MessageType>
 	<DomainObjectList>
-	<object-name> test.application.domainobjects.Customer</object-name>
-	<object-name> test.application.domainobjects.Item</object-name>
+		<object-name>test.application.domainobjects.Customer</object-name>
+		<object-name>test.application.domainobjects.Item</object-name>
 	</DomainObjectList>
-	<LoggingEnabled> false</LoggingEnabled>
+	<LoggingEnabled>false</LoggingEnabled>
 	</logging-config>
 
 
