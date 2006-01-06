@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.log4j.*;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.hibernate.type.Type;
 
 import gov.nih.nci.logging.api.logger.util.ApplicationProperties;
@@ -30,15 +29,6 @@ public class ObjectStateLogger
 
 	private ObjectStateLogger()
 	{	 
-		String log4jConfigFile = ApplicationProperties.getInstance().getConfigFile();		
-		if (log4jConfigFile.toUpperCase().endsWith(".XML"))
-		{
-			DOMConfigurator.configure(ClassLoader.getSystemResource(log4jConfigFile));
-		}
-		else
-		{
-			PropertyConfigurator.configure(ClassLoader.getSystemResource(log4jConfigFile));
-		}		
 		logger = Logger.getLogger(ApplicationProperties.ObjectStateLogger);
 	}
 
