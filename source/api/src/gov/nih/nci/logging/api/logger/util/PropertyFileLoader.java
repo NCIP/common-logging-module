@@ -7,9 +7,7 @@ package gov.nih.nci.logging.api.logger.util;
  */
 
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -73,9 +71,7 @@ public class PropertyFileLoader
 
 		if (name.endsWith(SUFFIX))
 			name = name.substring(0, name.length() - SUFFIX.length());
-
-		Properties result = null;
-
+		
 		InputStream in = null;
 		try
 		{
@@ -87,16 +83,7 @@ public class PropertyFileLoader
 				name = name.replace('/', '.');
 
 				// throws MissingResourceException on lookup failures:
-				final ResourceBundle rb = ResourceBundle.getBundle(name, Locale.getDefault(), loader);
-
-				result = new Properties();
-				for (Enumeration keys = rb.getKeys(); keys.hasMoreElements();)
-				{
-					final String key = (String) keys.nextElement();
-					final String value = rb.getString(key);
-
-					result.put(key, value);
-				}
+				final ResourceBundle rb = ResourceBundle.getBundle(name, Locale.getDefault(), loader);			
 			}
 			else
 			{
@@ -118,7 +105,7 @@ public class PropertyFileLoader
 		}
 		catch (Exception e)
 		{
-			result = null;
+			e.printStackTrace();
 		}
 		finally
 		{
