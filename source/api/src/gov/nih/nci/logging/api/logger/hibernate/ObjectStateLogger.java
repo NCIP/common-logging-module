@@ -54,14 +54,15 @@ public class ObjectStateLogger
 	public  void logMessage(Object obj, Serializable id, Object[] currentState, Object[] prevState, String[] propertyNames, Type[] types, String operation)
 	{
 		if (ApplicationProperties.getInstance().isLoggingEnabled())
-		{
-			String myMessage = null;
-			myMessage = MessageGenerator.generateStringMessage(obj, id, currentState, prevState, propertyNames, types, operation);
+		{						
 			System.out.println("isEnabled " + ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj));
 			if (ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj) == true)
 			{
-				if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.messageLoggingStringFormat))
+				if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.messageLoggingStringFormat)){
+					String myMessage = null;
+					myMessage = MessageGenerator.generateStringMessage(obj, id, currentState, prevState, propertyNames, types, operation);
 					logMessage(myMessage);
+					}
 				else if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.messageLoggingXMLFormat))
 				{
 					String outfileName = obj.getClass().getName() + System.currentTimeMillis() + ".xml";
