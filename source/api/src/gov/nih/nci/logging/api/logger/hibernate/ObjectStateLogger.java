@@ -29,7 +29,7 @@ public class ObjectStateLogger
 
 	private ObjectStateLogger()
 	{	 
-		logger = Logger.getLogger(ApplicationProperties.ObjectStateLogger);
+		logger = Logger.getLogger(ApplicationProperties.getInstance().getLoggerName());
 	}
 
 	/**
