@@ -28,7 +28,7 @@ public class ApplicationProperties implements Constants
 	private static Logger logger = Logger.getLogger(ApplicationProperties.class);
 	private static ApplicationProperties myInstance;
 	private static List objectNamesList = new ArrayList();
-
+	private static String loggerName = null;
 	private static boolean isLoggingEnabled = false;
 	private static String messageLoggingFormat = null;
 	private static String loggingConfigFile = null;
@@ -44,6 +44,7 @@ public class ApplicationProperties implements Constants
 			configDocument = builder.build(in);
 			Element loggingConfig = configDocument.getRootElement();
 			loggingConfigFile = loggingConfig.getChild("logger-config-file").getText().trim();
+			loggerName = loggingConfig.getChild("logger-name").getText().trim();
 			messageLoggingFormat = loggingConfig.getChild(ObjectStateLoggerMessageFormat).getText().trim();			
 			if (loggingConfig.getChild(ObjectStateLoggingSwitch).getText().trim().equalsIgnoreCase("true"))
 			{
@@ -94,6 +95,13 @@ public class ApplicationProperties implements Constants
 		return loggingConfigFile;
 	}
 
+	/**
+	 * @return -- Returns the logging configuration file
+	 */
+	public String getLoggerName()
+	{
+		return loggerName;
+	}
 	/**
 	 * @return returns message logging format
 	 */
