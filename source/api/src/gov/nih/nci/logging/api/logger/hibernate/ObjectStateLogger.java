@@ -79,15 +79,17 @@ public class ObjectStateLogger
 	 */
 	public  void logMessage(String message)
 	{
-		UserInfo user = (UserInfo) ThreadVariable.get();
-		if (user.getIsIntransaction() == true)
+		UserInfo userInfo = (UserInfo) ThreadVariable.get();
+		if (null == userInfo)
+			userInfo = new UserInfo();
+		if (userInfo.getIsIntransaction() == true)
 		{
 			logToBuffer(message);
 		}
 		else
 		{
 			log(message);
-			System.out.println("-- start to write the msgs to database for user: " + user.getUsername());
+			System.out.println("-- start to write the msgs to database for user: " + userInfo.getUsername());
 			System.out.println(message);
 		}
 	}
@@ -100,16 +102,18 @@ public class ObjectStateLogger
 	public  void logToBuffer(String msg)
 	{
 		 
-			UserInfo user = (UserInfo) ThreadVariable.get();
-			ArrayList logs = user.getTransactionLogs();
+			UserInfo userInfo = (UserInfo) ThreadVariable.get();
+			if (null == userInfo)
+				userInfo = new UserInfo();
+			ArrayList logs = userInfo.getTransactionLogs();
 			if (logs == null)
 			{
 				logs = new ArrayList();
 			}
 
 			logs.add(msg);
-			user.setTransactionLogs(logs);
-			ThreadVariable.set(user);		 
+			userInfo.setTransactionLogs(logs);
+			ThreadVariable.set(userInfo);		 
 
 	}
 
