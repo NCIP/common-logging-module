@@ -28,7 +28,8 @@ public class HibernateSessionFactoryHelper
 
 	/**
 	 * @param sessionFactory TODO
-	 * @return - Returns a Hibernate session that can be used for object auditing
+	 * @return - Returns a Hibernate session with audit interceptor from the
+	 * passed in session factory
 	 * @throws HibernateException
 	 */
 	public static Session getAuditSession(SessionFactory sessionFactory) throws HibernateException
@@ -37,7 +38,8 @@ public class HibernateSessionFactoryHelper
 	}
 
 	/**
-	 * @return - Returns a regular Hibernate session
+	 * @return - Returns a Hibernate session with audit interceptor using
+	 * the default session factory created from the <code>hibernate.cfg.xml</code> file
 	 * @throws HibernateException
 	 */
 	public static Session getDefaultAuditSession() throws HibernateException
