@@ -5,6 +5,8 @@ package test.application.clients;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import gov.nih.nci.logging.api.logger.util.ApplicationProperties;
 
 /**
@@ -28,21 +30,23 @@ public class ObjectStateLoggerTest
 	 * @param args
 	 */
 	public static void main(String[] args)
-	{		
+	{
+		Configuration cfg = new Configuration();
+		SessionFactory sessionFactory = cfg.configure().buildSessionFactory();
 		Thread x[] = new Thread[10];
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			x[i] = new ClientThread(i + "", i);
+			x[i] = new ClientThread(i + "", i, sessionFactory);
 		}
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			x[i].start();
 		}
 
 		// x[1].notify();
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			try
 			{

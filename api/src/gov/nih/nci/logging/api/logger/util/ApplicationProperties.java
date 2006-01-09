@@ -44,8 +44,7 @@ public class ApplicationProperties implements Constants
 			configDocument = builder.build(in);
 			Element loggingConfig = configDocument.getRootElement();
 			loggingConfigFile = loggingConfig.getChild("logger-config-file").getText().trim();
-			messageLoggingFormat = loggingConfig.getChild(ObjectStateLoggerMessageFormat).getText().trim();
-
+			messageLoggingFormat = loggingConfig.getChild(ObjectStateLoggerMessageFormat).getText().trim();			
 			if (loggingConfig.getChild(ObjectStateLoggingSwitch).getText().trim().equalsIgnoreCase("true"))
 			{
 				isLoggingEnabled = true;
