@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <logging-config>
+	<logger-name>ObjectStateLogger</logger-name>
 	<logger-config-file>log4jConfig.properties</logger-config-file>
 	<MessageType>string</MessageType>
 	<DomainObjectList>
