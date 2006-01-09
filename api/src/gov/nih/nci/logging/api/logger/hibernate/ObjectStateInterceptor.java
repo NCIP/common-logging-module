@@ -107,10 +107,11 @@ public class ObjectStateInterceptor extends EmptyInterceptor
 	public void afterTransactionBegin(Transaction tx)
 	{
 
-		UserInfo user = (UserInfo) ThreadVariable.get();
-		user = (UserInfo) ThreadVariable.get();
-		user.setIsIntransaction(true);
-		ThreadVariable.set(user);
+		UserInfo userInfo = (UserInfo) ThreadVariable.get();
+		if (null == userInfo)
+			userInfo = new UserInfo();
+		userInfo.setIsIntransaction(true);
+		ThreadVariable.set(userInfo);
 	}
 
 	
