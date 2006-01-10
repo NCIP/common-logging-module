@@ -151,8 +151,9 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 			return;
 		}
 		//
-		UserInfo user = (UserInfo) ThreadVariable.get();
-
+		UserInfo userInfo = (UserInfo) ThreadVariable.get();
+		if (null == userInfo)
+			userInfo = new UserInfo();
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO LOGTAB (");
 		sql.append(APPLICATION);
@@ -192,9 +193,9 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		sql.append("','");
 		sql.append(clean(le.getThreadName()));
 		sql.append("','");
-		sql.append(clean(user.getUsername()));
+		sql.append(clean(userInfo.getUsername()));
 		sql.append("','");
-		sql.append(clean(user.getSessionID()));
+		sql.append(clean(userInfo.getSessionID()));
 		sql.append("','");
 		String msg = "";
 		if (le.getMessage() != null)
