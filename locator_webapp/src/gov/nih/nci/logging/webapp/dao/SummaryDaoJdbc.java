@@ -163,7 +163,7 @@ public class SummaryDaoJdbc implements Constants
 
 		}
 
-		sql.append(" order by CREATED_ON");
+		sql.append(" order by CREATED_ON DESC");
 
 		String sqlString = sql.toString();
 		return sqlString;
