@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/server-list.tld" prefix="custom" %>
 
 
-<html:form action="/executeQuery" focus="logLevel" >
+<html:form action="/executeQuery"  >
      <script language="Javascript">
         function defaultFields() {
          document.queryForm.application.value = "";
@@ -43,7 +43,7 @@
 	
          <tr>
           <td colspan="2" class="formLabelwhite">
-              LogLevel:
+              LogLevel/Type:
           </td>
         </tr>
         <tr>
