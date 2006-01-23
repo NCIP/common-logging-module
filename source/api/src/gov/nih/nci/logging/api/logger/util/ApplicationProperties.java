@@ -32,6 +32,7 @@ public class ApplicationProperties implements Constants
 	private static boolean isLoggingEnabled = false;
 	private static String messageLoggingFormat = null;
 	private static String loggingConfigFile = null;
+	private static String logLevel = null;
 
 	private ApplicationProperties()
 	{
@@ -45,6 +46,7 @@ public class ApplicationProperties implements Constants
 			Element loggingConfig = configDocument.getRootElement();
 			loggingConfigFile = loggingConfig.getChild("logger-config-file").getText().trim();
 			loggerName = loggingConfig.getChild("logger-name").getText().trim();
+			logLevel = loggingConfig.getChild("log-level").getText().trim();
 			messageLoggingFormat = loggingConfig.getChild(ObjectStateLoggerMessageFormat).getText().trim();			
 			if (loggingConfig.getChild(ObjectStateLoggingSwitch).getText().trim().equalsIgnoreCase("true"))
 			{
@@ -93,6 +95,14 @@ public class ApplicationProperties implements Constants
 	public String getConfigFile()
 	{
 		return loggingConfigFile;
+	}
+
+	/**
+	 * @return -- Returns the log level
+	 */
+	public String getLogLevel()
+	{
+		return logLevel;
 	}
 
 	/**

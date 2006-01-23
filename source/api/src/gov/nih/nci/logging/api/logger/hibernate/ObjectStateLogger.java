@@ -124,7 +124,16 @@ public class ObjectStateLogger
 	 */
 	public  void log(String message)
 	{
+	 if (ApplicationProperties.getInstance().getLogLevel().equalsIgnoreCase("info"))
 		logger.info(message);
+	 else if (ApplicationProperties.getInstance().getLogLevel().equalsIgnoreCase("warn"))
+		 logger.warn(message);
+	 else if (ApplicationProperties.getInstance().getLogLevel().equalsIgnoreCase("error"))
+		 logger.error(message);
+	 else if (ApplicationProperties.getInstance().getLogLevel().equalsIgnoreCase("fatal"))
+		 logger.fatal(message);
+	 else if (ApplicationProperties.getInstance().getLogLevel().equalsIgnoreCase("debug"))
+		 logger.debug(message);
 	}
 
 	/**
