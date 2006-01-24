@@ -9,8 +9,8 @@
         function defaultFields() {
          document.queryForm.application.value = "";
          document.queryForm.server.value = "";
-         document.queryForm.startDate.value = '<%= new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date()) %>';
-         document.queryForm.startTime.value = "";
+         document.queryForm.startDate.value = '<%= new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date()) %>';       
+         document.queryForm.startTime.value = '';
          document.queryForm.endDate.value = "";
          document.queryForm.endTime.value = "";
          document.queryForm.logLevel.value = "";
@@ -180,7 +180,11 @@
            	</td>
 
            	<td>
-        		<html:text property="startTime" size="10" maxlength="8" />
+           	<%
+           	 java.util.Calendar calendar = new java.util.GregorianCalendar();
+	     calendar.add(java.util.GregorianCalendar.HOUR, -1);
+         java.util.Date date = calendar.getTime();%>
+        		<html:text property="startTime" size="10" maxlength="8" value='<%= new java.text.SimpleDateFormat("h:mm a").format(date) %>' />
           	</td>
        </tr>
 
