@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/server-list.tld" prefix="custom" %>
 
 
-<html:form action="/executeQuery"  >
+<html:form action="/executeQuery" >
      <script language="Javascript">
         function defaultFields() {
          document.queryForm.application.value = "";
          document.queryForm.server.value = "";
          document.queryForm.startDate.value = '<%= new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date()) %>';       
-         document.queryForm.startTime.value = '';
+         document.queryForm.startTime.value = "";
          document.queryForm.endDate.value = "";
          document.queryForm.endTime.value = "";
          document.queryForm.logLevel.value = "";
@@ -20,7 +20,7 @@
          document.queryForm.isXmlView.checked  = false;
          document.queryForm.logLevel.focus();
          return true;
-       }
+       }            
 
      </script>
     <center>
@@ -180,11 +180,17 @@
            	</td>
 
            	<td>
-           	<%
-           	 java.util.Calendar calendar = new java.util.GregorianCalendar();
+           <logic:notEmpty name="queryForm" property="startTime">
+        	   <html:text property="startTime" size="10" />
+        	  </logic:notEmpty>	
+          <logic:empty name="queryForm" property="startTime">    
+          <%
+        java.util.Calendar calendar = new java.util.GregorianCalendar();
 	     calendar.add(java.util.GregorianCalendar.HOUR, -1);
-         java.util.Date date = calendar.getTime();%>
-        		<html:text property="startTime" size="10" maxlength="8" value='<%= new java.text.SimpleDateFormat("h:mm a").format(date) %>' />
+         java.util.Date date = calendar.getTime();
+         %>   		
+   		<html:text property="startTime" size="10" maxlength="8" value='<%= new java.text.SimpleDateFormat("h:mm a").format(date) %>' /> 
+   		 </logic:empty>
           	</td>
        </tr>
 
@@ -242,7 +248,7 @@
           <td>
             <html:image
 				border="0"
-    			src="images/TL_Submit.jpg"
+    			src="images/TL_Submit.jpg"    			
           		value="submit"/>
           </td>
       </tr>
