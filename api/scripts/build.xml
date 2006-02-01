@@ -45,7 +45,8 @@
 			<fileset dir="${resources}">
 				<exclude name="MANIFEST.MF" />
 			</fileset>
-		</copy>		
+		</copy>
+		<jar jarfile="${dist}/clmwebapp.jar" basedir="${build}" includes="gov/nih/nci/logging/api/logger/hibernate/*.*" manifest="${resources}/MANIFEST.MF" />
 	</target>
 
 	<target name="clean" description="perform the clean up">
