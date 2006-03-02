@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  */
 public class JdbcConnectionHandler
 {
-	public final static String dbName = "java:/MySqlDSLogLocator";
+	public final static String dbName = "java:/DSLogLocator";
 	public static DataSource  dbSource = null;
 	static
 	{
