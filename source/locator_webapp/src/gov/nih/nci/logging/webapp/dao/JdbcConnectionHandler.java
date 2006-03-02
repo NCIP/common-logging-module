@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  */
 public class JdbcConnectionHandler
 {
-	public final static String dbName = "java:/DSLogLocator";
+	public final static String dbName = "java:/LogLocatorDS";
 	public static DataSource  dbSource = null;
 	static
 	{
