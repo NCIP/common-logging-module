@@ -148,6 +148,9 @@ WEBAPP_WAR=${BUILD_DIR}/log-locator.war
     		webxml="${WAR_WEBINF}/web.xml"
     		basedir="${WAR_DIR}" excludes="**/web.xml, **/MANIFEST.MF" 
     	/>
+  		<copy todir="${BUILD_DIR}" file="${RESOURCES_DIR}/mysql-ds.xml" />
+  		<delete dir="${CLASSES}" />
+  		<delete dir="${WAR_DIR}" />
   	</target>
   	
   	<!-- Remove everything created by the previous build -->
