@@ -149,6 +149,7 @@ WEBAPP_WAR=${BUILD_DIR}/log-locator.war
     		basedir="${WAR_DIR}" excludes="**/web.xml, **/MANIFEST.MF" 
     	/>
   		<copy todir="${BUILD_DIR}" file="${RESOURCES_DIR}/mysql-ds.xml" />
+  		<copy todir="${BUILD_DIR}" file="${RESOURCES_DIR}/mysql_log_table.sql" />  		
   		<delete dir="${CLASSES}" />
   		<delete dir="${WAR_DIR}" />
   	</target>
