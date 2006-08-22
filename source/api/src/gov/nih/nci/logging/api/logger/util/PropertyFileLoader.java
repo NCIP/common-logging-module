@@ -16,8 +16,6 @@ import java.util.ResourceBundle;
  * This class actually loads the propety file in the classpath
  * 
  */
-
-// ----------------------------------------------------------------------------
 public class PropertyFileLoader
 {
 
@@ -31,7 +29,7 @@ public class PropertyFileLoader
 
 	private PropertyFileLoader()
 	{
-	} // this class is not extentible
+	} 
 
 	/**
 	 * Looks up a resource named 'name' in the classpath. The resource must map

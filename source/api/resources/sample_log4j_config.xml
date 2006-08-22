@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!DOCTYPE log4j:configuration SYSTEM ".\log4j.dtd">
 
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
     <appender name="JDBC_MySql" class="gov.nih.nci.logging.api.appender.jdbc.JDBCAppender">
-      <param name="application" value="WS" />
-      <param name="server" value="WEB1" />
-      <param name="maxBufferSize" value="25" />
+      <param name="application" value="test" />
+      <param name="maxBufferSize" value="1" />
       <param name="dbDriverClass" value="com.mysql.jdbc.Driver" />
-      <param name="dbUrl" value="jdbc:mysql://localhost:3306/log" />
+      <param name="dbUrl" value="jdbc:mysql://localhost:3306/clm" />
       <param name="dbUser" value="root" />
-      <param name="dbPwd" value="love" />
+      <param name="dbPwd" value="mysql" />
 	  <param name="useFilter" value="true" />
       <layout class="org.apache.log4j.PatternLayout">
            <param name="ConversionPattern"
@@ -53,7 +52,7 @@
         </appender>
 
 
-   <logger name="gov.nih.nci.logging.appender ">
+   <logger name="sampleObjectStateLogger">
        <level value="debug" />
        <appender-ref ref="JDBC_MySql" />
     </logger>

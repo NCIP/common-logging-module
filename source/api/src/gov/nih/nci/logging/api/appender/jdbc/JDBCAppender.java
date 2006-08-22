@@ -6,14 +6,22 @@ package gov.nih.nci.logging.api.appender.jdbc;
  * 
  * <!-- LICENSE_TEXT_END -->
  */
+
+import gov.nih.nci.logging.api.appender.util.AppenderUtils;
+import gov.nih.nci.logging.api.applicationservice.Constants;
+import gov.nih.nci.logging.api.domain.LogMessage;
+import gov.nih.nci.logging.api.domain.ObjectAttribute;
+import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
 import gov.nih.nci.logging.api.logger.util.ThreadVariable;
 import gov.nih.nci.logging.api.user.UserInfo;
-import gov.nih.nci.logging.api.util.Constants;
-import gov.nih.nci.logging.api.util.Utils;
+import gov.nih.nci.logging.api.util.StringUtils;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Layout;
@@ -23,10 +31,10 @@ import org.apache.log4j.spi.LoggingEvent;
  * A custom Apache Log4J Appender will be responsible for formatting and
  * inserting Log4J messages into the configurable RDBMS.
  * 
- * Features include: --Inserts the SQL statements into the database in near real
+ * Features include: --Inserts Logs Messages into the database in near real
  * time --Uses a configurable buffer to perform batch processing --Spawns
  * threads to execute the batch inserts to maximize performance --Prepares all
- * data for RDBMS by escaping quotes
+ * data for RDBMS by escaping quotes.
  * 
  * @author Ekagra Software Technologies Limited ('Ekagra')
  * 
@@ -44,7 +52,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 	private int recordCtr = 0;
 	private int maxBufferSize = 0;
 	private List buff = new ArrayList();
-
+	
 	static
 	{
 		// set the server by looking up the host name from the system
@@ -64,6 +72,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 	 */
 	public JDBCAppender()
 	{
+
 	}
 
 	/**
@@ -152,78 +161,216 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		}
 		//
 		UserInfo userInfo = (UserInfo) ThreadVariable.get();
-		if (null == userInfo)
+		if (null == userInfo){
 			userInfo = new UserInfo();
-		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO LOGTAB (");
-		sql.append(APPLICATION);
-		sql.append(",");
-		sql.append(SERVER);
-		sql.append(",");
-		sql.append(PRIORITY);
-		sql.append(",");
-		sql.append(CATEGORY);
-		sql.append(",");
-		sql.append(THREAD);
-		sql.append(",");
-		sql.append(USER);
-		sql.append(",");
-		sql.append(SESSIONID);
-		sql.append(",");
-		sql.append(MSG);
-		sql.append(",");
-		sql.append(THROWABLE);
-		sql.append(",");
-		sql.append(NDC);
-		sql.append(",");
-		sql.append(CREATED_ON);
-		sql.append(") VALUES ('");
-		sql.append(clean(getApplication()));
-		sql.append("','");
-		sql.append(clean(getServer()));
-		sql.append("','");
-		String level = "";
-		if (le.getLevel() != null)
-		{
-			level = le.getLevel().toString();
 		}
-		sql.append(clean(level));
-		sql.append("','");
-		sql.append(clean(le.getLoggerName()));
-		sql.append("','");
-		sql.append(clean(le.getThreadName()));
-		sql.append("','");
-		sql.append(clean(userInfo.getUsername()));
-		sql.append("','");
-		sql.append(clean(userInfo.getSessionID()));
-		sql.append("','");
+		
+		// Determine Log Type
 		String msg = "";
 		if (le.getMessage() != null)
 		{
 			msg = le.getMessage().toString();
 		}
-		// sql.append( clean( msg ) ); sql.append("','");
-		sql.append(clean(msg));
-		sql.append("','");
-		sql.append(clean(getThrowable(le)));
-		sql.append("','");
-		sql.append(clean(le.getNDC()));
-		sql.append("',");
-		sql.append(System.currentTimeMillis());
-		sql.append(")");
-		addRowToBuffer(sql.toString());
+		String logType = getLogType(msg);
+		String level = "";
+		if (le.getLevel() != null){
+			level = le.getLevel().toString();
+		}
+		
+		LogMessage logMessage;
+		if(EVENT_LOG_TYPE.equalsIgnoreCase(logType)){
+			logMessage = new LogMessage();
+			logMessage.setApplication(clean(getApplication()));
+			logMessage.setLogLevel(clean(level));
+			java.util.Date d = new java.util.Date();
+			d.setTime(new Long(System.currentTimeMillis()).longValue());
+			logMessage.setCreatedDate(d);
+			logMessage.setMessage(msg);
+			logMessage.setNdc(clean(le.getNDC()));
+			logMessage.setOrganization(clean(userInfo.getOrganization()));
+			logMessage.setServer(clean(getServer()));
+			logMessage.setSessionID(clean(userInfo.getSessionID()));
+			logMessage.setThread(clean(le.getThreadName()));
+			logMessage.setThrowable(clean(getThrowable(le)));
+			logMessage.setUserName(clean(userInfo.getUsername()));
+			addRowToBuffer(logMessage);
+		}
+		if(OBJECT_STATE_LOG_TYPE.equalsIgnoreCase(getLogType(msg))){
+			
+			logMessage = populateObjectStateLogMesage(msg);
+			
+			if(logMessage==null){
+				logMessage = new LogMessage();
+			}
+			
+			logMessage.setApplication(clean(getApplication()));
+			logMessage.setLogLevel(clean(level));
+			java.util.Date d = new java.util.Date();
+			d.setTime(new Long(System.currentTimeMillis()).longValue());
+			logMessage.setCreatedDate(d);
+			logMessage.setNdc(clean(le.getNDC()));
+			logMessage.setOrganization(clean(userInfo.getOrganization()));
+			logMessage.setServer(clean(getServer()));
+			logMessage.setSessionID(clean(userInfo.getSessionID()));
+			logMessage.setThread(clean(le.getThreadName()));
+			logMessage.setThrowable(clean(getThrowable(le)));
+			logMessage.setUserName(clean(userInfo.getUsername()));
+
+			
+			addRowToBuffer(logMessage);
+		}
+
 
 	}
 
-	private void addRowToBuffer(String sql)
+	private String getLogType(String string) {
+		if(StringUtils.initString(string).startsWith("&"+ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION+"=["+ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_NAME+"=")){
+			return OBJECT_STATE_LOG_TYPE;
+		}
+		return EVENT_LOG_TYPE;
+	}
+	
+	/**
+	 * Method parses the msg field content to populate the object state (operation name, object name/ID, object Attributes) into logMessage
+	 * @param objectAttributeMessage
+	 * @param logMessage
+	 */
+	private  LogMessage populateObjectStateLogMesage(String objectAttributeMessage ) {
+		
+		LogMessage logMessage = new LogMessage();
+		
+		HashMap previousAttributes= new HashMap();
+		HashMap currentAttributes= new HashMap();
+		
+		//String objectAttributeMessage = "&operation=[name=INSERT;comment=qq]&object=[name=test.application.domainobjects.Customer;ID=0]&attributes=[first=Bill;last=Burke;street=1 Boston Road;city=Newland;state=MA;zip=02115;items=[test.application.domainobjects.Item@fb6354]]";
+		
+		
+		StringTokenizer stringTokenizer = new StringTokenizer(objectAttributeMessage,"&");
+		while(stringTokenizer.hasMoreElements()){
+			String messagetemp = (String) stringTokenizer.nextElement();
+			//System.out.println(messagetemp);
+			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION)){
+				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
+				while(attTknzr.hasMoreElements()){
+					String temp = (String) attTknzr.nextElement();
+					if(temp==null) continue;
+					if(temp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION)) continue;
+					
+					if(temp.indexOf("=")<=0) continue;
+					
+					String attributeName= temp.substring(0,temp.indexOf("="));
+					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_NAME.equalsIgnoreCase(attributeName)){
+						//String operationName= temp.substring(temp.indexOf("=")+1);
+						logMessage.setOperation(temp.substring(temp.indexOf("=")+1));
+					}
+					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_COMMENT.equalsIgnoreCase(attributeName)){
+						//String comment= temp.substring(temp.indexOf("=")+1);
+						logMessage.setMessage(temp.substring(temp.indexOf("=")+1));
+					}
+					
+				}
+			}
+			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_OBJECT)){
+				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
+				while(attTknzr.hasMoreElements()){
+					String temp = (String) attTknzr.nextElement();
+					if(temp==null) continue;
+					if(temp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_OBJECT)) continue;
+					
+					if(temp.indexOf("=")<=0) continue;
+					
+					String attributeName= temp.substring(0,temp.indexOf("="));
+					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_OBJECT_NAME.equalsIgnoreCase(attributeName)){
+						logMessage.setObjectName(temp.substring(temp.indexOf("=")+1));
+					}
+					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_OBJECT_IDENTIFIER_ATTRIBUTE_VALUE.equalsIgnoreCase(attributeName)){
+						logMessage.setObjectID(temp.substring(temp.indexOf("=")+1));
+					}
+				}
+			}
+			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_PREVIOUS_ATTRIBUTES)){
+				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
+				while(attTknzr.hasMoreElements()){
+					String temp = (String) attTknzr.nextElement();
+					if(temp==null) continue;
+					if(temp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_PREVIOUS_ATTRIBUTES)) continue;
+					
+					if(temp.indexOf("=")<=0) continue;
+					
+					String attributeName= temp.substring(0,temp.indexOf("="));
+					String attributeValue = temp.substring(temp.indexOf("=")+1);
+					if(attributeName !=null && attributeName.length()>0){
+						previousAttributes.put(attributeName,attributeValue);
+						
+					}
+				}
+			}
+			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_CURRENT_ATTRIBUTES)){
+				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
+				while(attTknzr.hasMoreElements()){
+					String temp = (String) attTknzr.nextElement();
+					if(temp==null) continue;
+					if(temp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_CURRENT_ATTRIBUTES)) continue;
+					
+					if(temp.indexOf("=")<=0) continue;
+					
+					String attributeName= temp.substring(0,temp.indexOf("="));
+					String attributeValue = temp.substring(temp.indexOf("=")+1);
+					if(attributeName !=null && attributeName.length()>0){
+						currentAttributes.put(attributeName,attributeValue);	
+					}
+				}
+			}
+			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_ATTRIBUTES)){
+
+				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
+				while(attTknzr.hasMoreElements()){
+					String temp = (String) attTknzr.nextElement();
+					if(temp==null) continue;
+					if(temp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_ATTRIBUTES)) continue;
+					
+					if(temp.indexOf("=")<=0) continue;
+					
+					String attributeName= temp.substring(0,temp.indexOf("="));
+					String attributeValue = temp.substring(temp.indexOf("=")+1);
+					if(attributeName !=null && attributeName.length()>0){
+						currentAttributes.put(attributeName,attributeValue);	
+					}
+				}
+			}
+		}
+		
+		
+		// Create ObjectAttribute Set for the ObjectStateLogMessage
+		if(currentAttributes.size()>0){
+			Iterator iterator = currentAttributes.keySet().iterator();
+			while(iterator.hasNext()){
+				String attribute = (String)iterator.next();
+				ObjectAttribute oa = new ObjectAttribute();
+				oa.setAttributeName(attribute);
+				if(previousAttributes.containsKey(attribute)){
+					oa.setPreviousValue(StringUtils.initString((String)previousAttributes.get(attribute)));
+				}
+				if(currentAttributes.containsKey(attribute)){
+					oa.setCurrentValue(StringUtils.initString((String)previousAttributes.get(attribute)));
+				}
+				//
+				logMessage.addObjectAttribute(oa);
+			}
+		}
+		return logMessage;
+		
+	}
+
+	private void addRowToBuffer(Object o)
 	{
-		getBuff().add(sql);
+		
+		getBuff().add(o);
 		setRecordCtr(getRecordCtr() + 1);
 		if (getRecordCtr() >= getMaxBufferSize())
 		{
 			execute();
 		}
-
 	}
 
 	private boolean useFilter()
@@ -233,24 +380,21 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 
 	private void execute()
 	{
-
 		List rows = getBuff();
 		setBuff(new ArrayList());
 		setRecordCtr(0);
 		JDBCExecutor exe = new JDBCExecutor(rows);
-		exe.setDbDriverClass(getDbDriverClass());
-		exe.setDbPwd(getDbPwd());
-		exe.setDbUrl(getDbUrl());
-		exe.setDbUser(getDbUser());
 
 		// execute the batch insert
 		new Thread(exe).start();
-
 	}
 
+
+	
+	
 	protected static String getThrowable(LoggingEvent le)
 	{
-		return Utils.getThrowable(le);
+		return AppenderUtils.getThrowable(le);
 	}
 
 	public boolean requiresLayout()
@@ -276,7 +420,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 	/**
 	 * @return Returns the server.
 	 */
-	public static String getServer()
+	public  String getServer()
 	{
 		return server;
 	}
@@ -285,7 +429,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 	 * @param server
 	 * The server to set.
 	 */
-	public static void setServer(String server)
+	public static  void setServer(String server)
 	{
 		JDBCAppender.server = server;
 	}
@@ -425,4 +569,6 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 	{
 		this.useFilter = useFilter;
 	}
+
+
 }

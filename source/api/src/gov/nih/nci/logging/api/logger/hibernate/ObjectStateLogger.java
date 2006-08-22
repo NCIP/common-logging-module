@@ -8,6 +8,7 @@ package gov.nih.nci.logging.api.logger.hibernate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.*;
 import org.hibernate.type.Type;
@@ -16,6 +17,7 @@ import gov.nih.nci.logging.api.logger.util.ApplicationProperties;
 import gov.nih.nci.logging.api.logger.util.MessageGenerator;
 import gov.nih.nci.logging.api.logger.util.ThreadVariable;
 import gov.nih.nci.logging.api.user.UserInfo;
+import gov.nih.nci.logging.api.util.StringUtils;
 
 /**
  * @author Ekagra Software Technologes Limited ('Ekagra')
@@ -53,23 +55,78 @@ public class ObjectStateLogger
 	 */
 	public  void logMessage(Object obj, Serializable id, Object[] currentState, Object[] prevState, String[] propertyNames, Type[] types, String operation)
 	{
+		
+		
 		if (ApplicationProperties.getInstance().isLoggingEnabled())
 		{						
-			System.out.println("isEnabled " + ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj));
+			//System.out.println("isEnabled " + ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj));
 			if (ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj) == true)
 			{
-				if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.messageLoggingStringFormat)){
+				//get Object State Comment by Client(app).
+				String comment = getComment();
+				// get Object ID by Client(app).
+				String objectID = getIdentifierAttributeValue(obj, propertyNames, currentState);
+				
+				if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.OBJECT_STATE_LOGGER_MESSAGE_FORMAT_STRING)){
+					
 					String myMessage = null;
-					myMessage = MessageGenerator.generateStringMessage(obj, id, currentState, prevState, propertyNames, types, operation);
+					myMessage = MessageGenerator.generateStringMessage(obj, id, currentState, prevState, propertyNames, types, operation, comment,objectID);
 					logMessage(myMessage);
 					}
-				else if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.messageLoggingXMLFormat))
+				else if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.OBJECT_STATE_LOGGER_MESSAGE_FORMAT_XML))
 				{
 					String outfileName = obj.getClass().getName() + System.currentTimeMillis() + ".xml";
-					MessageGenerator.generateXMLMessage(obj, id, currentState, prevState, propertyNames, types, operation, outfileName);
+					MessageGenerator.generateXMLMessage(obj, id, currentState, prevState, propertyNames, types, operation, comment,objectID, outfileName);
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * This method gets the identifier Attribute of the object from ApplicationProperties and returns the value for the identifier attribute.
+	 * @param obj The Object whose state change is being logged.
+	 * @param objpropertyNames Array of property/attribute names
+	 * @param objcurrentState Array of current state values for Object attribute/property
+	 * @return identifierAttributeValue 
+	 */
+	private String getIdentifierAttributeValue(Object obj, final  String[] objpropertyNames, final Object[] objcurrentState) {
+		String identifierAttributeValue ="";
+		
+		if(obj==null) return null;
+		
+		String identifierAttributes = ApplicationProperties.getInstance().getIdentifierAttribute(obj);
+		
+		StringTokenizer tknzr = new StringTokenizer(identifierAttributes,",");
+		while(tknzr.hasMoreElements()){
+			String identifierAttribute = (String) tknzr.nextElement();
+			
+			for(int i=0;i<objpropertyNames.length; i++){
+				if(objpropertyNames[i].equalsIgnoreCase(identifierAttribute)){
+					identifierAttributeValue = identifierAttributeValue + " " + (String) objcurrentState[i];
+				}
+			}
+		}
+		return identifierAttributeValue;
+	}
+
+
+
+	/**
+	 * Object State Log Comment from Client Application.
+	 * The comment is reset and is only available for current operation.
+	 * @return Comment.
+	 */
+	private String getComment(){
+		String comment = "";
+		
+		UserInfo userInfo = (UserInfo) ThreadVariable.get();
+		if (null != userInfo){
+			comment = StringUtils.initString(userInfo.getComment());
+			userInfo.setComment(null);
+			ThreadVariable.set(userInfo);
+		}
+		return comment;
 	}
 
 	/**
@@ -88,9 +145,8 @@ public class ObjectStateLogger
 		}
 		else
 		{
+			// 
 			log(message);
-			System.out.println("-- start to write the msgs to database for user: " + userInfo.getUsername());
-			System.out.println(message);
 		}
 	}
 
@@ -101,7 +157,6 @@ public class ObjectStateLogger
 	 */
 	public  void logToBuffer(String msg)
 	{
-		 
 			UserInfo userInfo = (UserInfo) ThreadVariable.get();
 			if (null == userInfo)
 				userInfo = new UserInfo();
