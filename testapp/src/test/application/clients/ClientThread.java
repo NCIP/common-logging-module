@@ -6,13 +6,13 @@ package test.application.clients;
  * <!-- LICENSE_TEXT_END -->
  */
 
-import java.util.Set;
 import gov.nih.nci.logging.api.logger.hibernate.HibernateSessionFactoryHelper;
 import gov.nih.nci.logging.api.user.UserInfoHelper;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import test.application.domainobjects.Customer;
 import test.application.domainobjects.Item;
 
@@ -25,7 +25,7 @@ import test.application.domainobjects.Item;
 
 public class ClientThread extends Thread
 {
-	public static Logger log = Logger.getLogger("TEST");
+	public static Logger log = Logger.getLogger("ObjectStateLogger");
 	private String x = null;
 	private int customerid;
 	private int itemid;
@@ -45,11 +45,7 @@ public class ClientThread extends Thread
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
+
 	public void run()
 	{
 
@@ -59,14 +55,16 @@ public class ClientThread extends Thread
 		}
 		catch (Exception e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 		// get the Auditing session
 		Session session = HibernateSessionFactoryHelper.getDefaultAuditSession();
 		// set the userName and sessionID
-		UserInfoHelper.setUserInfo(new String("NAME" + x), new String("sessionId" + x));
+		UserInfoHelper.setUserInfo(new String("NAME" + x), new String("sessionId" + x), new String("OrganizationA"));
+		UserInfoHelper.setObjectStateChangeComment("Save Comment");
+		String obectID = new String("NAME" + x);
+		UserInfoHelper.setObjectID(obectID);
 		// create a new customer object
 		Customer customer = new Customer();
 		customer.setId(customerid);
@@ -93,7 +91,7 @@ public class ClientThread extends Thread
 			tx = session.beginTransaction();
 			session.save(customer);
 			tx.commit();
-			UserInfoHelper.setUserInfo( "" , new String("NAMEAGAIN" + x));
+			//UserInfoHelper.setUserInfo( "" , new String("NAMEAGAIN" + x));
 			
 		}
 		catch (Exception e)
@@ -107,7 +105,7 @@ public class ClientThread extends Thread
 			session.close();
 		}
 
-		try
+		/*try
 		{
 			Set items = customer.getItems();
 			Item itema = (Item) items.iterator().next();
@@ -137,7 +135,7 @@ public class ClientThread extends Thread
 		finally
 		{
 			session.close();
-		}
+		}*/
 
 	}
 

@@ -7,7 +7,7 @@ package test.gov.nih.nci.logging.api.appender.jdbc;
  * <!-- LICENSE_TEXT_END -->
  */
 
-import gov.nih.nci.logging.api.util.Constants;
+
 
 import org.apache.log4j.Category;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -18,7 +18,7 @@ import org.apache.log4j.xml.DOMConfigurator;
  * @author Ekagra Software Technologies Limited ('Ekagra')
  * 
  */
-public class JDBCAppenderTest extends junit.framework.TestCase implements Constants
+public class JDBCAppenderTest extends junit.framework.TestCase 
 {
 	protected static java.util.Random random = new java.util.Random();
 	private final static char[] chars;
@@ -53,17 +53,18 @@ public class JDBCAppenderTest extends junit.framework.TestCase implements Consta
 
 	public static void testAppend() throws Exception
 	{
-		DOMConfigurator.configure("sample_log4j_config.xml");
+		DOMConfigurator.configure("resources/sample_log4j_config.xml");
 
-		// System.setProperty( "java.library.path", "/oracle/product/9i/bin" );
+		
 		long startTime = System.currentTimeMillis();
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 1000; i++)
 		{
 
 			cat.debug("DEBUG");
 			cat.info("INFO");
 			cat.error("ERROR");
 			cat.fatal("FATAL");
+			cat.fatal("WARN");
 
 		}
 		long endTime = System.currentTimeMillis();
