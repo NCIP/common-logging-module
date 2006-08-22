@@ -8,7 +8,6 @@ package gov.nih.nci.logging.api.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author Ekagra Software Technologes Limited ('Ekagra')
@@ -19,9 +18,13 @@ import java.util.HashMap;
 public class UserInfo implements Serializable
 {
 	private String userName;
+	private String organization;
 	private String sessionId;
 	private boolean isIntransaction;
 	private ArrayList transactionLogs;
+	private String comment;
+	private String objectIDKey;
+	
 
 	public String getUsername()
 	{
@@ -65,5 +68,36 @@ public class UserInfo implements Serializable
 	}
 
 	private static final long serialVersionUID = 7526471155622776147L;
+
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return Returns the objectID.
+	 */
+	public String getObjectIDKey() {
+		return objectIDKey;
+	}
+
+	/**
+	 * @param objectID The objectID to set.
+	 */
+	public void setObjectIDKey(String objectIDKey) {
+		this.objectIDKey = objectIDKey;
+	}
 
 }

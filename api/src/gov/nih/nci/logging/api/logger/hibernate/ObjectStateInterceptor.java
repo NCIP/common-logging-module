@@ -81,7 +81,7 @@ public class ObjectStateInterceptor extends EmptyInterceptor
 		{
 			for (Iterator it = user.getTransactionLogs().iterator(); it.hasNext();)
 			{
-				System.out.println("-- start to write the msgs to database for user: " + user.getUsername());
+//				System.out.println("-- start to write the msgs to database for user: " + user.getUsername());
 				logger.log(it.next().toString());
 				// remove this msg from the Buffer
 				it.remove();

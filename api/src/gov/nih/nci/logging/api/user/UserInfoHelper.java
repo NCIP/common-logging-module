@@ -16,7 +16,7 @@ import gov.nih.nci.logging.api.logger.util.ThreadVariable;
  */
 public class UserInfoHelper
 {
-	public static void setUserInfo(String userName, String sessionID)
+	public static void setUserInfo(String userName, String sessionID, String organization)
 	{
 		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
 		  if (null == userInfo)
@@ -25,6 +25,30 @@ public class UserInfoHelper
 		   userInfo.setUsername(userName);
 		  if (!(null == sessionID || sessionID.trim().length() == 0))
 		  userInfo.setSessionID(sessionID);
+		  if (!(null == organization || organization.trim().length() == 0))
+			  userInfo.setOrganization(organization);
+		  ThreadVariable.set(userInfo);
+	}
+	
+	public static void setObjectStateChangeComment( String comment)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  if (!(null == comment || comment.trim().length() == 0)){
+			  userInfo.setComment(comment);
+		  }
+		  ThreadVariable.set(userInfo);
+	}
+	
+	public static void setObjectID( String objectIDKey)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  if (!(null == objectIDKey|| objectIDKey.trim().length() == 0)){
+			  userInfo.setObjectIDKey(objectIDKey);
+		  }
 		  ThreadVariable.set(userInfo);
 	}
 

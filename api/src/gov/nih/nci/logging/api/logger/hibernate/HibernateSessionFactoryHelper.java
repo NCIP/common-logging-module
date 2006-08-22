@@ -5,8 +5,12 @@ package gov.nih.nci.logging.api.logger.hibernate;
  * <!-- LICENSE_TEXT_END -->
  */
 
-import org.hibernate.*;
-import org.hibernate.cfg.*;
+import gov.nih.nci.logging.api.util.ObjectFactory;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  * @author Ekagra Software Technologes Limited ('Ekagra')
@@ -19,6 +23,8 @@ import org.hibernate.cfg.*;
 public class HibernateSessionFactoryHelper
 {
 
+	
+	private static SessionFactory sessionFactory;
     /**
      * Private Constructor to aviod intialization
      */
@@ -27,7 +33,7 @@ public class HibernateSessionFactoryHelper
     }
 
 	/**
-	 * @param sessionFactory TODO
+	 * @param sessionFactory 
 	 * @return - Returns a Hibernate session with audit interceptor from the
 	 * passed in session factory
 	 * @throws HibernateException
@@ -46,6 +52,7 @@ public class HibernateSessionFactoryHelper
 	{
 	   Configuration cfg = new Configuration();
 	   return cfg.configure().buildSessionFactory().openSession(new ObjectStateInterceptor());
+	
 	}
 	
 }

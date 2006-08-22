@@ -1,4 +1,4 @@
-package gov.nih.nci.logging.api.util;
+package gov.nih.nci.logging.api.appender.util;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -18,7 +18,7 @@ import org.apache.log4j.spi.ThrowableInformation;
  * @author Ekagra Software Technologies Limited ('Ekagra')
  * 
  */
-public class Utils
+public class AppenderUtils
 {
 
 	/**

@@ -6,117 +6,155 @@ package gov.nih.nci.logging.api.logger.util;
  * <!-- LICENSE_TEXT_END -->
  */
 
-import java.io.InputStream;
+import gov.nih.nci.logging.api.util.StringUtils;
+
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
 
 /**
  * @author Ekagra Software Technologes Limited ('Ekagra')
  * 
- * This class is a singleton to get property values for logging
+ * This class is a singleton to get Object State Logging Configuration
+ * properties.
  * 
  */
 
-public class ApplicationProperties implements Constants
-{
-	private static Logger logger = Logger.getLogger(ApplicationProperties.class);
+public class ApplicationProperties implements ApplicationConstants {
+	private static Logger logger = Logger
+			.getLogger(ApplicationProperties.class);
 	private static ApplicationProperties myInstance;
-	private static List objectNamesList = new ArrayList();
+	private static List domainObjectList = new ArrayList();
+	private static Map identifierAttributes = new HashMap();
 	private static String loggerName = null;
 	private static boolean isLoggingEnabled = false;
 	private static String messageLoggingFormat = null;
 	private static String loggingConfigFile = null;
 	private static String logLevel = null;
 
-	private ApplicationProperties()
-	{
-		try
-		{
+	ApplicationProperties() {
+		try {
+			ApplicationPropertiesHelper aph = new ApplicationPropertiesHelper();
+			// Get Logging Config File Name.
+			loggingConfigFile = aph.getLoggerConfigFile();
+			// Get Logger Name/
+			loggerName = aph.getLoggerName();
+			// Get Log Level
+			logLevel = aph.getLogLevel();
+			// Get Message Type/
+			messageLoggingFormat = aph.getMessageLoggingFormat();
+			// Get Logging Enabled.
+			isLoggingEnabled = aph.getLoggingEnabled();
+			// Get Domain Objects List.
+			domainObjectList = aph.getDomainObjectsList();
+			// Get HashMap of Identifier Attributes <ObjectName,Attribute>
+			identifierAttributes = aph.getIdentifierAttributes();
 
-			InputStream in = PropertyFileLoader.getInstance().loadPropertyFile(ApplicationPropertyFile);
-			Document configDocument = null;
-			SAXBuilder builder = new SAXBuilder();
-			configDocument = builder.build(in);
-			Element loggingConfig = configDocument.getRootElement();
-			loggingConfigFile = loggingConfig.getChild("logger-config-file").getText().trim();
-			loggerName = loggingConfig.getChild("logger-name").getText().trim();
-			logLevel = loggingConfig.getChild("log-level").getText().trim();
-			messageLoggingFormat = loggingConfig.getChild(ObjectStateLoggerMessageFormat).getText().trim();			
-			if (loggingConfig.getChild(ObjectStateLoggingSwitch).getText().trim().equalsIgnoreCase("true"))
-			{
-				isLoggingEnabled = true;
-			}
-			else
-				isLoggingEnabled = false;
-			Element DomainObjectList = loggingConfig.getChild(ObjectStateLoggerDomainObjectAuditingList);
-			List objNamesList = DomainObjectList.getChildren("object-name");
-			Iterator objIterator = objNamesList.iterator();
-			while (objIterator.hasNext())
-			{
-				Element object = (Element) objIterator.next();
-				String objNameValue = object.getText().trim();
-				objectNamesList.add(objNameValue);
-			}
-
-		}
-		catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			if (logger.isDebugEnabled())
-				logger.debug("Error reading the Config File " + ex.getMessage());
+				logger
+						.debug("Error reading the Config File "
+								+ ex.getMessage());
+		}
+
+	}
+
+	ApplicationProperties(String propertyFile) {
+		try {
+			ApplicationPropertiesHelper aph;
+			if (StringUtils.isBlank(propertyFile)) {
+				aph = new ApplicationPropertiesHelper();
+			} else {
+				aph = new ApplicationPropertiesHelper(propertyFile);
+			}
+			// Get Logging Config File Name.
+			loggingConfigFile = aph.getLoggerConfigFile();
+			// Get Logger Name/
+			loggerName = aph.getLoggerName();
+			// Get Log Level
+			logLevel = aph.getLogLevel();
+			// Get Message Type/
+			messageLoggingFormat = aph.getMessageLoggingFormat();
+			// Get Logging Enabled.
+			isLoggingEnabled = aph.getLoggingEnabled();
+			// Get Domain Objects List.
+			domainObjectList = aph.getDomainObjectsList();
+			// Get HashMap of Identifier Attributes <ObjectName,Attribute>
+			identifierAttributes = aph.getIdentifierAttributes();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			if (logger.isDebugEnabled())
+				logger
+						.debug("Error reading the Config File "
+								+ ex.getMessage());
 		}
 
 	}
 
 	/**
+	 * Determines of ObjectState Logging is enabled for this particular
+	 * domainObject
+	 * 
 	 * @param obj
 	 *            to be determined if audited or not
 	 * @return boolean value
 	 */
-	public boolean isObjectStateLoggingEnabled(Object obj)
-	{
-		if (objectNamesList.contains(obj.getClass().getName()))
-		{
+	public boolean isObjectStateLoggingEnabled(Object domainObject) {
+		if (domainObjectList.contains(domainObject.getClass().getName())) {
 			return true;
-		}
-		else
+		} else
 			return false;
+	}
+
+	/**
+	 * Method checks the ObjectStateLogger Configuration for IdentifierAttribute
+	 * for particular Domain Object.
+	 * 
+	 * @param domainObject
+	 *            The domainObject for which identifierAttributes are requested.
+	 * @return String If available returns the identifier attribute value from
+	 *         the configuration file else returns null.
+	 */
+	public String getIdentifierAttribute(Object domainObject) {
+
+		if (identifierAttributes.containsKey(domainObject.getClass().getName())) {
+			String ia = (String) identifierAttributes.get(domainObject
+					.getClass().getName());
+			if (!StringUtils.isBlank(ia))
+				return ia;
+		}
+		return null;
 	}
 
 	/**
 	 * @return -- Returns the logging configuration file
 	 */
-	public String getConfigFile()
-	{
+	public String getConfigFile() {
 		return loggingConfigFile;
 	}
 
 	/**
 	 * @return -- Returns the log level
 	 */
-	public String getLogLevel()
-	{
+	public String getLogLevel() {
 		return logLevel;
 	}
 
 	/**
 	 * @return -- Returns the logging configuration file
 	 */
-	public String getLoggerName()
-	{
+	public String getLoggerName() {
 		return loggerName;
 	}
 	/**
 	 * @return returns message logging format
 	 */
-	public String getMessageLoggingFormat()
-	{
+	public String getMessageLoggingFormat() {
 		return messageLoggingFormat;
 	}
 
@@ -124,22 +162,40 @@ public class ApplicationProperties implements Constants
 	 * @return -- Returns the boolean value indicating if the logging is enabled
 	 *         or disabled
 	 */
-	public boolean isLoggingEnabled()
-	{
+	public boolean isLoggingEnabled() {
 		return isLoggingEnabled;
 	}
 
 	/**
 	 * @return Returns the single instance of this class
 	 */
-	public static ApplicationProperties getInstance()
-	{
-		if (myInstance == null)
-		{
-			myInstance = new ApplicationProperties();
+	public static ApplicationProperties getInstance() {
+
+		if (myInstance == null) {
+				myInstance = new ApplicationProperties();
 		}
 		logger.info("Inside ApplicationProperties " + myInstance);
 		return myInstance;
+
+	}
+	
+	/**
+	 * @return Returns the single instance of this class
+	 */
+	public static ApplicationProperties getInstance(String propertyFile) {
+
+		if (myInstance == null) {
+			if (StringUtils.isBlank(propertyFile)) {
+				myInstance = new ApplicationProperties();
+			} else {
+				myInstance = new ApplicationProperties(propertyFile);
+			}
+		}
+		logger.info("Inside ApplicationProperties " + myInstance);
+		return myInstance;
+
 	}
 
+	
+	
 }

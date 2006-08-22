@@ -9,7 +9,7 @@ package gov.nih.nci.logging.api.appender.jdbc;
  * 
  * <!-- LICENSE_TEXT_END -->
  */
-import gov.nih.nci.logging.api.util.Utils;
+import gov.nih.nci.logging.api.appender.util.AppenderUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -55,7 +55,7 @@ public class JDBCAppenderFilter
 			String throwable = "";
 			if (event.getThrowableInformation() != null)
 			{
-				throwable = Utils.getThrowable(event);
+				throwable = AppenderUtils.getThrowable(event);
 			}
 
 			String str = msg + throwable;

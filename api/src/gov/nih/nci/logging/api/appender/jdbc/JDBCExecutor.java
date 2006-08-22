@@ -6,15 +6,18 @@ package gov.nih.nci.logging.api.appender.jdbc;
  * 
  * <!-- LICENSE_TEXT_END -->
  */
-import gov.nih.nci.logging.api.util.Utils;
+import gov.nih.nci.logging.api.appender.util.AppenderUtils;
+import gov.nih.nci.logging.api.util.HibernateUtil;
 
-import java.util.*;
-import java.sql.*;
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * 
- * Runnable class responsible for inserting the batch sql insert statements (aka
- * log Messages).
+ * Runnable class responsible for inserting the log messages in batch 
  * 
  * @author Ekagra Software Technologies Limited ('Ekagra')
  * 
@@ -23,20 +26,16 @@ public class JDBCExecutor implements java.lang.Runnable
 {
 
 	private List buff;
-	private String dbUrl = null;
-	private String dbDriverClass = null;
-	private String dbUser = null;
-	private String dbPwd = null;
+	
 
 	/**
 	 * Constructor for JDBCExcecutor.
 	 * 
 	 * @param rows -
-	 * list of sql insert statements
 	 */
-	public JDBCExecutor(List rows)
+	public JDBCExecutor(List messages)
 	{
-		setBuff(rows);
+		setBuff(messages);
 	}
 
 	/*
@@ -54,65 +53,31 @@ public class JDBCExecutor implements java.lang.Runnable
 		}
 		catch (Exception ex)
 		{
-			Utils.writeMsgToTmpFile(ex);
+			AppenderUtils.writeMsgToTmpFile(ex);
 		}
 	}
 
-	private void insert() throws java.sql.SQLException
-	{
-		Connection conn = null;
-		Statement stmt = null;
-		try
+	private void insert() throws Exception{
+		
+		Session session = HibernateUtil.currentSession();
+		Transaction tx = session.beginTransaction();
+		Iterator iterator = getBuff().iterator();
+		int i=0;
+		while (iterator.hasNext())
 		{
-			conn = createConn();
-			stmt = conn.createStatement();
-			Iterator i = getBuff().iterator();
-			String insertStmt = null;
-			while (i.hasNext())
-			{
-				insertStmt = (String) i.next();
-				stmt.addBatch(insertStmt);
-			}
-
-			stmt.executeBatch();
-
+			Object o  = (Object) iterator.next();
+		    session.save(o);
 		}
-		finally
-		{
-			try
-			{
-				stmt.close();
-			}
-			catch (Exception ex)
-			{
-			}
-			try
-			{
-				conn.close();
-			}
-			catch (Exception ex)
-			{
-			}
-		}
+		session.flush();
+        session.clear();
+		
+		tx.commit();
+		session.close();
 	}
-
-	protected Connection createConn()
-	{
-		Connection con = null;
-		try
-		{
-			if (getDbDriverClass() != null)
-			{
-				Class.forName(getDbDriverClass());
-			}
-			con = DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPwd());
-		}
-		catch (Throwable t)
-		{
-			t.printStackTrace();
-		}
-		return con;
-	}
+	
+	
+	
+	
 
 	/**
 	 * @return Returns the buff.
@@ -131,71 +96,5 @@ public class JDBCExecutor implements java.lang.Runnable
 		this.buff = buff;
 	}
 
-	/**
-	 * @return Returns the dbDriverClass.
-	 */
-	public String getDbDriverClass()
-	{
-		return dbDriverClass;
-	}
-
-	/**
-	 * @param dbDriverClass
-	 * The dbDriverClass to set.
-	 */
-	public void setDbDriverClass(String dbDriverClass)
-	{
-		this.dbDriverClass = dbDriverClass;
-	}
-
-	/**
-	 * @return Returns the dbPwd.
-	 */
-	public String getDbPwd()
-	{
-		return dbPwd;
-	}
-
-	/**
-	 * @param dbPwd
-	 * The dbPwd to set.
-	 */
-	public void setDbPwd(String dbPwd)
-	{
-		this.dbPwd = dbPwd;
-	}
-
-	/**
-	 * @return Returns the dbUrl.
-	 */
-	public String getDbUrl()
-	{
-		return dbUrl;
-	}
-
-	/**
-	 * @param dbUrl
-	 *  The dbUrl to set.
-	 */
-	public void setDbUrl(String dbUrl)
-	{
-		this.dbUrl = dbUrl;
-	}
-
-	/**
-	 * @return Returns the dbUser.
-	 */
-	public String getDbUser()
-	{
-		return dbUser;
-	}
-
-	/**
-	 * @param dbUser
-	 * The dbUser to set.
-	 */
-	public void setDbUser(String dbUser)
-	{
-		this.dbUser = dbUser;
-	}
+	
 }
