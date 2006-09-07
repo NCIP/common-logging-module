@@ -12,7 +12,7 @@ public interface Constants {
 	
 	// Log Message fields.
 	 static String _APPLICATION = "application";
-	 static String _LOG_LEVEL = "category";
+	 static String _LOG_LEVEL = "logLevel";
 	 static String _DATE = "created_on";
 	 static String _OBJECT_ID = "object_id";
 	 static String _OBJECT_NAME = "object_name";
@@ -22,7 +22,7 @@ public interface Constants {
 	 static String _SERVER = "server";
 	 static String _SESSION_ID = "sessionID";
 	 static String _THROWABLE = "throwable";
-	 static String _USER = "user";
+	 static String _USERNAME = "userName";
 	 static String _MESSAGE = "message";
 	 static String _NDC = "ndc";
 	 static String _THREAD = "thread";
@@ -40,7 +40,7 @@ public interface Constants {
 	public static String SORT_BY_PARAMETER_SERVER = "server";
 	public static String SORT_BY_PARAMETER_SESSION_ID = "sessionID";
 	public static String SORT_BY_PARAMETER_THROWABLE = "throwable";
-	public static String SORT_BY_PARAMETER_USER = "user";
+	public static String SORT_BY_PARAMETER_USERNAME = "userName";
 
 	
 	//	Log Type

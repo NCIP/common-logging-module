@@ -1,6 +1,7 @@
 package gov.nih.nci.logging.api.applicationservice;
 
 import gov.nih.nci.logging.api.applicationservice.exception.QuerySpecificationException;
+import gov.nih.nci.logging.api.applicationservice.exception.SearchCriteriaSpecificationException;
 
 import java.util.Collection;
 
@@ -20,8 +21,9 @@ public interface Query extends Constants {
 	 * 
 	 * @param searchCriteria
 	 * @throws QuerySpecificationException 
+	 * @throws SearchCriteriaSpecificationException 
 	 */
-	void setCriteria(final SearchCriteria searchCriteria) throws QuerySpecificationException;
+	void setCriteria(final SearchCriteria searchCriteria) throws QuerySpecificationException, SearchCriteriaSpecificationException;
 	
 	/**
 	 * Query based on search criteria. Returns all results.
