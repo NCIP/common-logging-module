@@ -4,42 +4,69 @@
 package gov.nih.nci.logging.webapp.action;
 
 import gov.nih.nci.logging.webapp.form.LoginForm;
+import gov.nih.nci.logging.webapp.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 
-/** 
+/**
  * Creation date: 08-18-2006
  */
-public class LoginAction extends Action {
+public class LoginAction extends Action
+{
 
-	// --------------------------------------------------------- Instance Variables
-
-	// --------------------------------------------------------- Methods
-
-	/** 
+	/**
 	 * Method execute
+	 * 
 	 * @param mapping
 	 * @param form
 	 * @param request
 	 * @param response
 	 * @return ActionForward
 	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response) {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	{
 		LoginForm loginForm = (LoginForm) form;
-		// TODO Auto-generated method stub
-		//return mapping.findForward("showQuery");
-		return mapping.findForward("showPublicHome");
+
+		
+		ActionErrors errors = new ActionErrors();
+		ActionMessages messages = new ActionMessages();
+		
+		errors.clear();
+		try
+		{
+			if (isAuthenticated(loginForm))
+			{
+			
+				// Perform Authentication here.
+				HttpSession session = request.getSession(true);
+				session.setAttribute(Constants.LOGIN_OBJECT, form);
+				return (mapping.findForward(Constants.FORWARD_HOME));
+			}
+			
+		}
+		catch (Exception ex)
+		{
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(Constants.ERROR_ID, "Unable to read the UPT Context Name from Security Config File"));
+			saveErrors(request, errors);
+		}
+		return mapping.findForward(Constants.FORWARD_PUBLIC_LOGIN);
+
+	}
+
+	private boolean isAuthenticated(LoginForm loginForm)
+	{
+		// TODO 
+		return true;
 	}
 
 }
-

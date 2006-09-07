@@ -4,7 +4,6 @@
 package gov.nih.nci.logging.webapp.action;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import gov.nih.nci.logging.api.applicationservice.Query;
@@ -12,7 +11,7 @@ import gov.nih.nci.logging.api.applicationservice.QueryImpl;
 import gov.nih.nci.logging.api.applicationservice.SearchCriteria;
 import gov.nih.nci.logging.api.applicationservice.exception.QuerySpecificationException;
 import gov.nih.nci.logging.api.applicationservice.exception.SearchCriteriaSpecificationException;
-import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
+import gov.nih.nci.logging.webapp.form.LogMessageForm;
 import gov.nih.nci.logging.webapp.form.QueryForm;
 import gov.nih.nci.logging.webapp.util.Constants;
 import gov.nih.nci.logging.webapp.util.StringUtils;
@@ -29,7 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 
-public class QueryAction extends Action
+/** 
+ */
+public class QueryResultsPagingAction extends Action
 {
 
 	/**
@@ -48,50 +49,35 @@ public class QueryAction extends Action
 		ActionMessages messages = new ActionMessages();
 
 		HttpSession session = request.getSession();
-
-		QueryForm queryForm = (QueryForm) form;
+		LogMessageForm logMessageForm = (LogMessageForm) form;
 
 		if (session.isNew() || (session.getAttribute(Constants.LOGIN_OBJECT) == null))
 		{
 			return mapping.findForward(Constants.FORWARD_PUBLIC_LOGIN);
 		}
 
-		if (!StringUtils.isBlankOrNull(queryForm.getActivity()))
-		{
-
-			queryForm.setActivity(null);
-			session.setAttribute(Constants.CURRENT_FORM, queryForm);
-
-			session.removeAttribute(Constants.SEARCH_RESULTS_PAGE);
-			session.removeAttribute(Constants.VIEW_PAGE_NUMBER);
-
-			boolean success = false;
-			success = performQuery(queryForm, session);
-			
-			if (success)
-			{
-				return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
-			}
-		}else{
-			//set Query Form default Values.
-			
-			java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
-			java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat(ApplicationConstants.TIME_FORMAT);
-			
-			Date currentDate = new Date(System.currentTimeMillis());
-			queryForm.setStartDate(dateFormat.format(currentDate));
-			queryForm.setStartTime(timeFormat.format(currentDate));
-			queryForm.setEndDate(dateFormat.format(currentDate));
-			queryForm.setEndTime(timeFormat.format(currentDate));
-			queryForm.setRecordCount(new Integer(100).toString());
-			queryForm.setActivity(null);
-			session.setAttribute(Constants.CURRENT_FORM, queryForm);
-			
+		QueryForm queryForm=null;
+		if(session.getAttribute(Constants.CURRENT_FORM)!=null){
+			queryForm = (QueryForm) session.getAttribute(Constants.CURRENT_FORM);
 		}
-		return mapping.findForward(Constants.FORWARD_QUERY);
+		
+		
+		boolean success=false;
+		success = performQuery(queryForm,session);
+		if (success)
+		{
+			return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
+		}
+		
+		
+		
+		
+		
+		return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
 
 	}
 
+	
 	private boolean performQuery(QueryForm queryForm, HttpSession session)
 	{
 		try
@@ -103,21 +89,37 @@ public class QueryAction extends Action
 
 			if (totalResultSize > 0)
 			{
-				// Query results
-				Collection resultCollection = query.query(Constants.DEFAULT_PAGE_NUMBER, Constants.DEFAULT_PAGE_SIZE);
-				List resultList = (List) resultCollection;
+				int currentPageNumber  = Constants.DEFAULT_PAGE_NUMBER;
+				
+				if(session.getAttribute(Constants.VIEW_PAGE_NUMBER)!=null){	
+					Integer cpn = (Integer) session.getAttribute(Constants.VIEW_PAGE_NUMBER);
+					if(cpn!=null){
+						currentPageNumber = cpn.intValue();
+					}
+				}
+				
+				int currentOffSet = currentPageNumber * Constants.DEFAULT_PAGE_SIZE;
 
-				// Set Search Result Page information
+				//Set Search Result Page information
 				SearchResultPage searchResultPage = new SearchResultPage();
 				searchResultPage.setTotalResultSize(totalResultSize);
 				searchResultPage.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-				searchResultPage.setCurrentPageNumber(Constants.DEFAULT_PAGE_NUMBER);
-				searchResultPage.setSearchResultMessage(Constants.RESULTS_MESSAGE);
-				searchResultPage.setSearchResultObjects(resultList);
+				searchResultPage.setCurrentPageNumber(currentPageNumber);	
+				
+				if(searchResultPage.getLastPageNumber() <= currentPageNumber){
+					// Query results
+					Collection resultCollection = query.query(currentOffSet,Constants.DEFAULT_PAGE_SIZE);
+					List resultList = (List) resultCollection;
+					
+					searchResultPage.setSearchResultMessage(Constants.RESULTS_MESSAGE);
+					searchResultPage.setSearchResultObjects(resultList);
+				}else{
+					searchResultPage.setSearchResultMessage(Constants.NO_MORE_RESULTS_MESSAGE);
+					searchResultPage.setSearchResultObjects(null);
+				}
 
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-				session.setAttribute(Constants.VIEW_PAGE_NUMBER, searchResultPage.getCurrentPageNumber());
 				return true;
 			}
 			else
@@ -129,7 +131,6 @@ public class QueryAction extends Action
 
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-				session.setAttribute(Constants.VIEW_PAGE_NUMBER, searchResultPage.getCurrentPageNumber());
 				return false;
 			}
 		}
@@ -171,4 +172,5 @@ public class QueryAction extends Action
 
 		return searchCriteria;
 	}
+	
 }

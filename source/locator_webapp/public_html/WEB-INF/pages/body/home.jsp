@@ -1,3 +1,10 @@
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-template" prefix="template"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-nested" prefix="nested"%>
+
 <tr>
                 <td width="100%" valign="top">
                   
@@ -20,11 +27,11 @@
                             
                               <!-- welcome begins -->
                               <table summary="" cellpadding="0" cellspacing="0" border="0" width="390" height="100%">
-                                <tr><td class="welcomeTitle" height="20">WELCOME TO SITE NAME</td>
+                                <tr><td class="welcomeTitle" height="20"><bean:message key="label.home_welcome_message_header" /></td>
                                 </tr>
                                 <tr>
                                   <td class="welcomeContent" valign="top">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+                                    <bean:message key="label.home_welcome_message" />
                                   </td>
                                 </tr>
                               </table>
@@ -37,33 +44,7 @@
                               <table summary="" cellpadding="0" cellspacing="0" border="0" height="100%">
                                 
                                 <!-- login begins -->
-                                <tr>
-                                  <td valign="top">
-                                    <table summary="" cellpadding="2" cellspacing="0" border="0" width="100%" class="sidebarSection">
-                                      <tr>
-                                        <td class="sidebarTitle" height="20">LOGIN TO SITE NAME</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="sidebarContent">
-                                          <table cellpadding="2" cellspacing="0" border="0">
-                                            <tr>
-                                              <td class="sidebarLogin" align="right"><label for="loginID">LOGIN ID</label></td>
-                                              <td class="formFieldLogin"><input class="formField" type="text" name="loginID" size="14" /></td>
-                                            </tr>
-                                            <tr>
-                                              <td class="sidebarLogin" align="right"><label for="password">PASSWORD</label></td>
-                                              <td class="formFieldLogin"><input class="formField" type="password" name="password" size="14" /></td>
-                                            </tr>
-                                            <tr>
-                                              <td>&nbsp;</td>
-                                              <td><input class="actionButton" type="submit" value="Login" /></td>
-                                            </tr>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                </tr>
+                                
                                 <!-- login ends -->
                                 
                                 <!-- what's new begins -->
