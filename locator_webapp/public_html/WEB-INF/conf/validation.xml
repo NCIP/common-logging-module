@@ -6,104 +6,179 @@
 
 <form-validation>
 
-<!--
-     This is a blank Validator form file with a commented examples.
--->
-
-    <global>
-
-        <!-- An example global constant
-        <constant>
-            <constant-name>postalCode</constant-name>
-            <constant-value>^\d{5}\d*$</constant-value>
-        </constant>
-        end example-->
-
-    </global>
-
-    <formset>
 
 
-        <form name="queryForm">
-            <field
-                property="startDate"
-                depends="date">
-                <msg
-                    name="date"
-                    key="query.date.msg"/>
-                <arg0 key="query.startDate" />
-                <var>
-                   <var-name>datePatternStrict</var-name>
-                   <var-value>MM/dd/yyyy</var-value>
-                </var>
-            </field>
-            <field
-                property="endDate"
-                depends="date">
-                <msg
-                    name="date"
-                    key="query.date.msg"/>
-                <arg0 key="query.endDate" />
-                <var>
-                   <var-name>datePatternStrict</var-name>
-                   <var-value>MM/dd/yyyy</var-value>
-                </var>
-            </field>
-               <field
-                property="endTime"
-                depends="date">
-                <msg
-                    name="date"
-                    key="query.time.msg"/>
-                <arg0 key="query.endTime" />
-                <var>
-                   <var-name>datePattern</var-name>
-                   <var-value>h:mm a</var-value>
-                </var>
-            </field>
-             <field
-                property="startTime"
-                depends="date">
-                <msg
-                    name="date"
-                    key="query.time.msg"/>
-                <arg0 key="query.startTime" />
-                <var>
-                   <var-name>datePattern</var-name>
-                   <var-value>h:mm a</var-value>
-                </var>
-            </field>
+	<global>
+		
+	</global>
 
-              <field
-                property="maxRecordCount"
-                depends="integer,range">
-                <arg0 key="query.maxRecordCount" />
-                <arg1 name="range" key="${var:min}" resource="false" />
-                <arg2 name="range" key="${var:max}" resource="false" />
-                <var>
-                    <var-name>min</var-name>
-                    <var-value>1</var-value>
-                </var>
-                <var>
-                     <var-name>max</var-name>
-                     <var-value>9999</var-value>
-                </var>
-              </field>
+	<formset>
+		<form name="loginForm">
+			<field property="loginID" depends="required">
+				<arg0 key="label.login_id" />
+			</field>
+			<field property="password" depends="required">
+				<arg0 key="label.login_password" />
+			</field>
+			<field property="application"
+				depends="required">
+				<arg0 key="label.login_application" />
+			</field>
+		</form>
 
-        </form>
+		<form name="queryForm">
+			<field property="logLevel" depends="required">
+				<arg0 key="label.loglevel_type" />
+			</field>
+			<field property="application" depends="maxlength">
+				<arg0 key="label.application" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1</var-value>
+				</var>
+			</field>
+			<field property="server" depends="maxlength">
+				<arg0 key="label.server" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="user" depends="maxlength">
+				<arg0 key="label.user" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="organization" depends="maxlength">
+				<arg0 key="label.organization" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="sessionID" depends="maxlength">
+				<arg0 key="label.session_id" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="message" depends="maxlength">
+				<arg0 key="label.message" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="ndc" depends="maxlength">
+				<arg0 key="label.ndc" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="thread" depends="maxlength">
+				<arg0 key="label.thread" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="objectID" depends="maxlength">
+				<arg0 key="label.object_id" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="objectName" depends="maxlength">
+				<arg0 key="label.objectName" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="application" depends="maxlength">
+				<arg0 key="label.application" />
+				<arg1 name="maxlength" key="${var:maxlength}"
+					resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			<field property="startDate" depends="date,required">
+				<msg name="date" key="query.date.msg" />
+				<arg0 key="query.startDate" />
+				<var>
+					<var-name>datePatternStrict</var-name>
+					<var-value>MM/dd/yyyy</var-value>
+				</var>
+			</field>
+			<field property="startTime" depends="date,required">
+				<msg name="date" key="query.time.msg" />
+				<arg0 key="query.startTime" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>h:mm a</var-value>
+				</var>
+			</field>
+			<field property="endDate" depends="date">
+				<msg name="date" key="query.date.msg" />
+				<arg0 key="query.startDate" />
+				<var>
+					<var-name>datePatternStrict</var-name>
+					<var-value>MM/dd/yyyy</var-value>
+				</var>
+			</field>
+			<field property="startTime" depends="date,required">
+				<msg name="date" key="query.time.msg" />
+				<arg0 key="query.startTime" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>h:mm a</var-value>
+				</var>
+			</field>
+			<field property="maxRecordCount" depends="integer,range">
+				<arg0 key="query.maxRecordCount" />
+				<arg1 name="range" key="${var:min}" resource="false" />
+				<arg2 name="range" key="${var:max}" resource="false" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>9999</var-value>
+				</var>
+			</field>
+
+		</form>
+
+	</formset>
 
 
-    </formset>
-
-    <!-- An example formset for another locale
-    <formset language="fr">
-
-        <constant>
-            <constant-name>postalCode</constant-name>
-            <constant-value>^[0-9a-zA-Z]*$</constant-value>
-        </constant>
-
-   </formset>
-   -->
 
 </form-validation>
