@@ -4,6 +4,7 @@ import gov.nih.nci.logging.api.applicationservice.Query;
 import gov.nih.nci.logging.api.applicationservice.QueryImpl;
 import gov.nih.nci.logging.api.applicationservice.SearchCriteria;
 import gov.nih.nci.logging.api.applicationservice.exception.QuerySpecificationException;
+import gov.nih.nci.logging.api.applicationservice.exception.SearchCriteriaSpecificationException;
 
 import java.util.Collection;
 
@@ -43,6 +44,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(true);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(true);
+		}
 	}
 	public void testSetCriteriaNotNull(){
 		assertNotNull(query);
@@ -50,6 +55,10 @@ public class QueryTestCase extends TestCase {
 			query.setCriteria(getSearchCriteriaThatGivesResults());
 			assertTrue(true);
 		} catch (QuerySpecificationException e) {
+			assertTrue(false);
+		}
+		catch (SearchCriteriaSpecificationException e)
+		{
 			assertTrue(false);
 		}
 	}
@@ -62,6 +71,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(false);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testEstimatedResultSize_WithResults(){
 		assertNotNull(query);
@@ -72,6 +85,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(false);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testQuery_NoResults(){
 		assertNotNull(query);
@@ -80,6 +97,10 @@ public class QueryTestCase extends TestCase {
 			Collection collection = query.query();
 			assertTrue("Expected Result Collection should  be null.", collection==null);
 		} catch (QuerySpecificationException e) {
+			assertTrue(false);
+		}
+		catch (SearchCriteriaSpecificationException e)
+		{
 			assertTrue(false);
 		}
 	}	
@@ -93,6 +114,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(false);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testQuery_MaxSize_NoResults(){
 		assertNotNull(query);
@@ -101,6 +126,10 @@ public class QueryTestCase extends TestCase {
 			Collection collection = query.query(50);
 			assertTrue("Expected Result Collection should  be null.", collection==null);
 		} catch (QuerySpecificationException e) {
+			assertTrue(false);
+		}
+		catch (SearchCriteriaSpecificationException e)
+		{
 			assertTrue(false);
 		}
 	}	
@@ -114,6 +143,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(false);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testQuery_OffSet_0_RecordCount_0(){
 		assertNotNull(query);
@@ -123,6 +156,10 @@ public class QueryTestCase extends TestCase {
 			assertTrue(false);
 		} catch (QuerySpecificationException e) {
 			assertTrue(true);
+		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
 		}
 	}
 	public void testQuery_OffSet_Not0_RecordCount0(){
@@ -134,6 +171,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(true);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testQuery_OffSet_0_RecordCount_Not0(){
 		assertNotNull(query);
@@ -144,6 +185,10 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(true);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			assertTrue(false);
+		}
 	}
 	public void testQuery_OffSet_Not0_RecordCount_Not0_NoResults(){
 		assertNotNull(query);
@@ -152,6 +197,10 @@ public class QueryTestCase extends TestCase {
 			Collection collection = query.query(1,10);
 			assertTrue("Expected Result Collection should  be null.", collection==null);
 		} catch (QuerySpecificationException e) {
+			assertTrue(false);
+		}
+		catch (SearchCriteriaSpecificationException e)
+		{
 			assertTrue(false);
 		}
 	}
@@ -165,17 +214,44 @@ public class QueryTestCase extends TestCase {
 		} catch (QuerySpecificationException e) {
 			assertTrue(false);
 		}
+		catch (SearchCriteriaSpecificationException e)
+		{
+			e.printStackTrace();
+			assertTrue(false);
+		}
 	}
     
 	private SearchCriteria getSearchCriteriaThatGivesResults() {
 		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setApplication("test");
+		searchCriteria.setLogLevel("WARN");
+				
+		String ll ="1155756542578";
+		
+		java.util.Date d = new java.util.Date();
+		long l = new Long(ll).longValue();
+		d.setTime(l);
+		d.toString();
+		
+		
+		searchCriteria.setStartDate("01/01/2006");
+		searchCriteria.setStartTime("00:00 AM");
+		searchCriteria.setEndDate("08/01/2006");
+		searchCriteria.setEndTime("00:00 AM");
+		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
+		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
 		return searchCriteria;
 	}
 	private SearchCriteria getSearchCriteriaThatGivesNoResults(){
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setApplication("ZZZZZZZZZZZZZZZZZ");
+		searchCriteria.setLogLevel("WARN");
+		searchCriteria.setStartDate("01/01/2006");
+		searchCriteria.setStartTime("00:00 AM");
+		searchCriteria.setEndDate("08/01/2006");
+		searchCriteria.setEndTime("00:00 AM");
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
-		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USER);
+		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
 
 		return searchCriteria;
 	}

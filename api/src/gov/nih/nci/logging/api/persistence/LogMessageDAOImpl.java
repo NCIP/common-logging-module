@@ -2,6 +2,7 @@ package gov.nih.nci.logging.api.persistence;
 
 import gov.nih.nci.logging.api.applicationservice.SearchCriteria;
 import gov.nih.nci.logging.api.domain.LogMessage;
+import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
 import gov.nih.nci.logging.api.util.HibernateUtil;
 import gov.nih.nci.logging.api.util.StringUtils;
 
@@ -161,8 +162,8 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 		if (!StringUtils.isBlank(searchCriteria.getThreadName())) {
 			criteria.add(Expression.like(_THREAD, "%"+searchCriteria.getThreadName()+"%"));
 		}
-		if (!StringUtils.isBlank(searchCriteria.getUser())) {
-			criteria.add(Expression.eq(_USER, searchCriteria.getUser()));
+		if (!StringUtils.isBlank(searchCriteria.getUserName())) {
+			criteria.add(Expression.eq(_USERNAME, searchCriteria.getUserName()));
 		}
 
 		// Sort By criteria.
@@ -173,10 +174,10 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 				 String key= (String) iter.next();
 				 String value = (String) lhp.get(key);
 				 if(SORT_ORDER_ASCENDING.equalsIgnoreCase(value)){
-					 criteria.add((Criterion) Order.asc(key));
+					 criteria.addOrder(Order.asc(key));
 				 }
 				 if(SORT_ORDER_DESCENDING.equalsIgnoreCase(value)){
-					 criteria.add((Criterion) Order.desc(key));
+					 criteria.addOrder(Order.desc(key));
 				 }
 			}
 		}	
@@ -217,8 +218,8 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	 * @return Date and Time in milliseconds
 	 */
 	private Long getDateTime(String date, String time, boolean isStart) {
-		final String DISPLAY_DATE_FORMAT = "MM/dd/yyyy , h:mm a";
-		final SimpleDateFormat sdf = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
+		
+		final SimpleDateFormat sdf = new SimpleDateFormat(ApplicationConstants.DISPLAY_DATE_FORMAT);
 		
 		Long datetime=null;
 		

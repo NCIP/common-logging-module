@@ -13,7 +13,7 @@ import java.util.Map;
  * 		SearchCriteria searchCriteria = new SearchCriteria();
  * 		searchCriteria.setApplication("CSM");
  * 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
- * 		searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USER);
+ * 		searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
  * 
  * 
  * @author parmarv
@@ -47,7 +47,7 @@ public class SearchCriteria implements Constants {
 	 */
 	private String endTime;
 
-	private String user;
+	private String userName;
 
 	private String sessionID;
 
@@ -336,18 +336,18 @@ public class SearchCriteria implements Constants {
 	}
 
 	/**
-	 * @return Returns the user.
+	 * @return Returns the userName.
 	 */
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
 
 	/**
-	 * @param user
-	 *            The user to set.
+	 * @param userName
+	 *            The userName to set.
 	 */
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	/**

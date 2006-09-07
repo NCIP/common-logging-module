@@ -33,7 +33,7 @@ public class StringUtils {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isBlank(final String str) {
+	public static boolean isBlank(String str) {
 		boolean test = false;
 		if (str == null) {
 			test = true;
