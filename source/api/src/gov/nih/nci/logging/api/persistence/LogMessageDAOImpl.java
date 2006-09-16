@@ -68,7 +68,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 		// set Start Off set.
 		criteria.setFirstResult(currentStartOffSet);
 		// Set Number of Records
-		criteria.setFetchSize(currentRecordCount);
+		criteria.setMaxResults(currentRecordCount);
 		
 		// get Results.
 		Collection logMessageCollection= criteria.list();
@@ -95,6 +95,18 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 
 	}
 	
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.logging.api.persistence.LogMessageDAO#retrieveServer()
+	 */
+	public Collection retrieveServer(){
+		String queryStr = "select distinct log.server from gov.nih.nci.logging.api.domain.LogMessage log where log.server is not null";
+		Collection  col =  getHibernateTemplate().find(queryStr);
+		return col;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gov.nih.nci.logging.api.persistence.LogMessageDAO#estimateResultSize(gov.nih.nci.logging.api.applicationservice.SearchCriteria)
+	 */
 	public int estimateResultSize(SearchCriteria searchCriteria) {
 		
 		
@@ -127,10 +139,10 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 		criteria.add(createExpressionForDate(searchCriteria));
 		
 		if (!StringUtils.isBlank(searchCriteria.getApplication())) {
-			criteria.add(Expression.ge(_APPLICATION, searchCriteria.getApplication()));
+			criteria.add(Expression.eq(_APPLICATION, searchCriteria.getApplication().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getLogLevel())) {
-			criteria.add(Expression.ge(_LOG_LEVEL, searchCriteria.getLogLevel()));
+			criteria.add(Expression.eq(_LOG_LEVEL, searchCriteria.getLogLevel().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getMessage())) {
 			criteria.add(Expression.like(_MESSAGE, "%"+searchCriteria.getMessage()+"%"));
@@ -139,31 +151,31 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 			criteria.add(Expression.like(_NDC, "%"+searchCriteria.getNdc()+"%"));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getObjectID())) {
-			criteria.add(Expression.eq(_OBJECT_ID, searchCriteria.getObjectID()));
+			criteria.add(Expression.eq(_OBJECT_ID, searchCriteria.getObjectID().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getObjectName())) {
-			criteria.add(Expression.eq(_OBJECT_NAME, searchCriteria.getObjectName()));
+			criteria.add(Expression.eq(_OBJECT_NAME, searchCriteria.getObjectName().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getOperation())) {
-			criteria.add(Expression.eq(_OPERATION, searchCriteria.getOperation()));
+			criteria.add(Expression.eq(_OPERATION, searchCriteria.getOperation().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getOrganization())) {
 			criteria.add(Expression.like(_ORGANIZATION, "%"+searchCriteria.getOrganization()+"%"));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getServer())) {
-			criteria.add(Expression.eq(_SERVER, searchCriteria.getServer()));
+			criteria.add(Expression.eq(_SERVER, searchCriteria.getServer().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getSessionID())) {
-			criteria.add(Expression.eq(_SESSION_ID, searchCriteria.getSessionID()));
+			criteria.add(Expression.eq(_SESSION_ID, searchCriteria.getSessionID().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getThrowable())) {
-			criteria.add(Expression.eq(_THROWABLE, searchCriteria.getThrowable()));
+			criteria.add(Expression.eq(_THROWABLE, searchCriteria.getThrowable().trim()));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getThreadName())) {
 			criteria.add(Expression.like(_THREAD, "%"+searchCriteria.getThreadName()+"%"));
 		}
 		if (!StringUtils.isBlank(searchCriteria.getUserName())) {
-			criteria.add(Expression.eq(_USERNAME, searchCriteria.getUserName()));
+			criteria.add(Expression.eq(_USERNAME, searchCriteria.getUserName().trim()));
 		}
 
 		// Sort By criteria.
@@ -277,6 +289,8 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 		
 	}
 
+	
+	
 
 
 	

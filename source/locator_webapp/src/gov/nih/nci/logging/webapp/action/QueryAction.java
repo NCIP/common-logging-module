@@ -16,6 +16,7 @@ import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
 import gov.nih.nci.logging.webapp.form.QueryForm;
 import gov.nih.nci.logging.webapp.util.Constants;
 import gov.nih.nci.logging.webapp.util.StringUtils;
+import gov.nih.nci.logging.webapp.util.SystemManager;
 import gov.nih.nci.logging.webapp.viewobjects.SearchResultPage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,15 @@ public class QueryAction extends Action
 			return mapping.findForward(Constants.FORWARD_PUBLIC_LOGIN);
 		}
 
+		if(session.getAttribute(Constants.LOGLEVEL_MAP)==null){
+			session.setAttribute(Constants.LOGLEVEL_MAP, SystemManager.getLogLevelMap());
+		}
+		if(session.getAttribute(Constants.SERVER_NAME_COLLECTION)==null){
+			session.setAttribute(Constants.SERVER_NAME_COLLECTION, SystemManager.getServerNameCollection());
+		}
+		
+		
+		
 		if (!StringUtils.isBlankOrNull(queryForm.getActivity()))
 		{
 
@@ -67,14 +77,13 @@ public class QueryAction extends Action
 
 			boolean success = false;
 			success = performQuery(queryForm, session);
-			
-			if (success)
-			{
-				return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
-			}
+		
+			return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
+
 		}else{
-			//set Query Form default Values.
+			queryForm.setActivity(null);
 			
+			//set Query Form default Values.
 			java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
 			java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat(ApplicationConstants.TIME_FORMAT);
 			
@@ -83,10 +92,9 @@ public class QueryAction extends Action
 			queryForm.setStartTime(timeFormat.format(currentDate));
 			queryForm.setEndDate(dateFormat.format(currentDate));
 			queryForm.setEndTime(timeFormat.format(currentDate));
-			queryForm.setRecordCount(new Integer(100).toString());
-			queryForm.setActivity(null);
-			session.setAttribute(Constants.CURRENT_FORM, queryForm);
+			queryForm.setRecordCount(new Integer(Constants.DEFAULT_PAGE_SIZE).toString());
 			
+			session.setAttribute(Constants.CURRENT_FORM, queryForm);
 		}
 		return mapping.findForward(Constants.FORWARD_QUERY);
 
@@ -104,17 +112,17 @@ public class QueryAction extends Action
 			if (totalResultSize > 0)
 			{
 				// Query results
-				Collection resultCollection = query.query(Constants.DEFAULT_PAGE_NUMBER, Constants.DEFAULT_PAGE_SIZE);
+				Collection resultCollection = query.query( new Integer(queryForm.getRecordCount()).intValue());
 				List resultList = (List) resultCollection;
 
 				// Set Search Result Page information
 				SearchResultPage searchResultPage = new SearchResultPage();
 				searchResultPage.setTotalResultSize(totalResultSize);
-				searchResultPage.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-				searchResultPage.setCurrentPageNumber(Constants.DEFAULT_PAGE_NUMBER);
+				searchResultPage.setPageSize(new Integer(queryForm.getRecordCount()).intValue());
+				searchResultPage.setCurrentPageNumber(1);
 				searchResultPage.setSearchResultMessage(Constants.RESULTS_MESSAGE);
 				searchResultPage.setSearchResultObjects(resultList);
-
+				searchResultPage.getLastPageNumber();
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
 				session.setAttribute(Constants.VIEW_PAGE_NUMBER, searchResultPage.getCurrentPageNumber());
@@ -122,6 +130,7 @@ public class QueryAction extends Action
 			}
 			else
 			{
+				
 				// Set Search Result Page information
 				SearchResultPage searchResultPage = new SearchResultPage();
 				searchResultPage.setTotalResultSize(totalResultSize);
@@ -129,22 +138,22 @@ public class QueryAction extends Action
 
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-				session.setAttribute(Constants.VIEW_PAGE_NUMBER, searchResultPage.getCurrentPageNumber());
+				
 				return false;
 			}
 		}
-		catch (QuerySpecificationException e)
+		catch (Exception e)
 		{
-			// Exception trying to Query.
-			// TODO Show Error to the User
+//			 Set Search Result Page information
+			SearchResultPage searchResultPage = new SearchResultPage();
+			searchResultPage.setTotalResultSize(0);
+			searchResultPage.setSearchResultMessage(Constants.NO_RESULTS_MESSAGE);
+
+			// Set Search Results
+			session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
 			return false;
 		}
-		catch (SearchCriteriaSpecificationException e)
-		{
-			// Exception trying to Query.
-			// TODO Show Error to the User
-			return false;
-		}
+		
 	}
 
 	private SearchCriteria getSearchCriteria(QueryForm queryForm)
@@ -154,7 +163,11 @@ public class QueryAction extends Action
 		searchCriteria.setApplication(!StringUtils.isBlankOrNull(queryForm.getApplication()) ? queryForm.getApplication() : null);
 		searchCriteria.setEndDate(!StringUtils.isBlankOrNull(queryForm.getEndDate()) ? queryForm.getEndDate() : null);
 		searchCriteria.setEndTime(!StringUtils.isBlankOrNull(queryForm.getEndTime()) ? queryForm.getEndTime() : null);
-		searchCriteria.setLogLevel(!StringUtils.isBlankOrNull(queryForm.getLogLevel()) ? queryForm.getLogLevel() : null);
+		if(Constants.ALL.equalsIgnoreCase(queryForm.getLogLevel()) || queryForm.getLogLevel().length()==0){
+			searchCriteria.setLogLevel(null);	
+		}else{
+			searchCriteria.setLogLevel(queryForm.getLogLevel());
+		}
 		searchCriteria.setMessage(!StringUtils.isBlankOrNull(queryForm.getMessage()) ? queryForm.getMessage() : null);
 		searchCriteria.setNdc(!StringUtils.isBlankOrNull(queryForm.getNdc()) ? queryForm.getNdc() : null);
 		searchCriteria.setObjectID(!StringUtils.isBlankOrNull(queryForm.getObjectID()) ? queryForm.getObjectID() : null);

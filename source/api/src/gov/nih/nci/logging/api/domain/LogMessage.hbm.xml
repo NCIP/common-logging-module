@@ -27,7 +27,7 @@
 			update="true" />
 		<property name="ndc" column="NDC" insert="true" update="true" />
 		
-		<property name="created_on" column="CREATED_ON" insert="true"
+		<property name="createdOn" column="CREATED_ON" insert="true"
 			update="true" />
 		<property name="objectID" column="OBJECT_ID" insert="true"
 			update="true" />

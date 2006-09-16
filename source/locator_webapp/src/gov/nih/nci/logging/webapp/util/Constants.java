@@ -7,6 +7,7 @@ public interface Constants
 	//Display and Session Constants.
 	public static final String USER_NAME = "USER_NAME";
 	
+	public static final String ALL = "ALL";
 	public static final String YES = "YES";
 	public static final String NO = "NO";
 	public static final String REQUIRED = "REQUIRED";
@@ -14,14 +15,18 @@ public interface Constants
 
 	public static final boolean NOT_DISABLED = false;
 	public static final boolean DISABLED = true;
-	public static byte ONE = 1;
-	public static byte ZERO = 0;
+	
+	public static String TRUE = "TRUE";
+	public static String FALSE = "FALSE";
+	public static String ONE = "1";
+	public static String ZERO = "0";
 
 
 	// Display Constants
-	
+	public static String SERVER_NAME_COLLECTION = "SERVER_NAME_COLLECTION";
+	public static String LOGLEVEL_MAP= "LOGLEVEL_MAP";
 	public static Integer DEFAULT_PAGE_SIZE = 10;
-	public static Integer DEFAULT_PAGE_NUMBER = 0;
+	public static Integer DEFAULT_PAGE_NUMBER = 1;
 	public static String VIEW_PAGE_SIZE = "ViewPageSize";
 	public static String VIEW_PAGE_NUMBER = "ViewPageNumber";
 	public static String SEARCH_RESULTS_PAGE = "SearchResultsPage";

@@ -74,6 +74,14 @@ public interface Query extends Constants {
 	int totalResultSize() throws QuerySpecificationException;
 
 	/**
+	 * This method returns a collection of server names available in the log message database..
+	 * 
+	 * @return Collection of names of server who have log message available in the database. 
+	 * @throws QuerySpecificationException 
+	 */
+	Collection retrieveServer() throws QuerySpecificationException;
+
+	/**
 	 * Returns a XML representation of Ojbects extending LogMessage.
 	 * 
 	 * @param searchCriteria

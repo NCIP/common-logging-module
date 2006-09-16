@@ -13,9 +13,9 @@ public interface Constants {
 	// Log Message fields.
 	 static String _APPLICATION = "application";
 	 static String _LOG_LEVEL = "logLevel";
-	 static String _DATE = "created_on";
-	 static String _OBJECT_ID = "object_id";
-	 static String _OBJECT_NAME = "object_name";
+	 static String _DATE = "createdOn";
+	 static String _OBJECT_ID = "objectID";
+	 static String _OBJECT_NAME = "objectName";
 	 static String _OPERATION = "operation";
 	 static String _ORGANIZATION = "organization";
 	 static String _PRIORITY = "priority";

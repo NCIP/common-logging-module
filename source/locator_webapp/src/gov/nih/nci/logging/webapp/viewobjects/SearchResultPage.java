@@ -46,11 +46,31 @@ public class SearchResultPage implements Page
 	
 	public boolean isFirstPage()
 	{
-		return getPageNumber() == 0;
+		return getPageNumber() == 1;
+		
 	}
 	public boolean isLastPage()
 	{
-		return getPageNumber() >= getLastPageNumber();
+		return getPageNumber() >= getLastPageNumber();	
+	}
+	
+	public String getIsFirstPage()
+	{
+		if(getPageNumber() == 1){
+			return "TRUE";
+			
+		}else{
+			return "FALSE";
+		}
+	}
+	public String getIsLastPage()
+	{
+		if(getPageNumber() >= getLastPageNumber()){
+			return "TRUE";
+		}else{
+			return "FALSE";
+		}
+		
 	}
 	public boolean hasNextPage()
 	{
@@ -59,7 +79,7 @@ public class SearchResultPage implements Page
 	}
 	public boolean hasPreviousPage()
 	{
-		 return getPageNumber() > 0;
+		 return getPageNumber() > 1;
 	}
 	public int getLastPageNumber()
 	{
@@ -68,7 +88,7 @@ public class SearchResultPage implements Page
 		* (i.e. the first page is page 0).
 		*/
 		double totalResults = new Integer(getTotalNumberOfElements()).doubleValue();
-	    return new Double(Math.floor(totalResults / getPageSize())).intValue();
+	    return new Double(Math.ceil(totalResults / getPageSize())).intValue();
 	}
 	public List getThisPageElements()
 	{
@@ -76,7 +96,7 @@ public class SearchResultPage implements Page
 	}
 	public int getTotalNumberOfElements()
 	{
-		 return totalResultSize - 1;
+		 return totalResultSize ;
 	}
 	public int getThisPageFirstElementNumber()
 	{
