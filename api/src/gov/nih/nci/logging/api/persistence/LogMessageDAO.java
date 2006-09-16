@@ -69,6 +69,13 @@ public interface LogMessageDAO extends Constants {
 	 * @return Query Result size for the Search Criteria
 	 */
 	int estimateResultSize(final SearchCriteria searchCriteria);
+	
+	/**
+	 * This method retrieves as a collection a list of Server's whose log entries are available in the CLM database.
+	 * @return
+	 * @throws DataAccessException
+	 */
+	Collection retrieveServer() throws DataAccessException;
 
 	/**
 	 * @param class1

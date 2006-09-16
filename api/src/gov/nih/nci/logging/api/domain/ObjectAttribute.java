@@ -22,18 +22,18 @@ public class ObjectAttribute implements Serializable {
 	 * The name  of the Object's attribute whose values are being logged. The
 	 * attributeName  is populated by the  ObjectStateInterceptor.
 	 */
-	String attributeName;
+	private String attributeName;
 	/**
 	 * This value would be present only on case of update operations and stores the
 	 * value of the attribute before the update operation.
 	 */
-	String previousValue;
+	private String previousValue;
 	/**
 	 * The current value of the attribute. This value would be present when a new
 	 * object is created or existing object is deleted. In case of update operation it
 	 * store the value of the attribute after the update.
 	 */
-	String currentValue;
+	private String currentValue;
 	
 	
 	/**

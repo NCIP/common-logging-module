@@ -139,6 +139,27 @@ public class QueryImpl implements Query
 		}
 		return this.estimateResultSize;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nih.nci.logging.api.applicationservice.Query#estimateResultSize()
+	 */
+	public Collection retrieveServer() throws QuerySpecificationException
+	{
+		Collection serverNameCollection=null;
+		
+			try
+			{
+				serverNameCollection = logMessageDAO.retrieveServer();
+			}
+			catch (Exception e)
+			{
+				throw new QuerySpecificationException("Unable to obtain the collection of server names.");
+			}
+	
+		return serverNameCollection;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -160,7 +181,7 @@ public class QueryImpl implements Query
 
 			// add logmessage elements
 			sb.append(addElement("Application", logMessage.getApplication()));
-			sb.append(addElement("Created_on", logMessage.getCreatedDate().toString()));
+			sb.append(addElement("Created_on", logMessage.getCreatedDate()));
 			sb.append(addElement("LogLevel", logMessage.getLogLevel()));
 			sb.append(addElement("Message", logMessage.getMessage()));
 			sb.append(addElement("Ndc", logMessage.getNdc()));
@@ -241,10 +262,10 @@ public class QueryImpl implements Query
 		{
 			exceptionMessage.append(ApplicationConstants.EXCEPTION_APPLICATION);
 		}
-		if (StringUtils.isBlank(searchCriteria.getLogLevel()))
+		/*if (StringUtils.isBlank(searchCriteria.getLogLevel()))
 		{
 			exceptionMessage.append(ApplicationConstants.EXCEPTION_LOGLEVEL);
-		}
+		}*/
 		if (!StringUtils.isBlank(searchCriteria.getStartDate()))
 		{
 			if (!validDateFormat(searchCriteria.getStartDate()))

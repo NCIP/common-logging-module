@@ -77,8 +77,7 @@ public class MessageGenerator {
 							+ ApplicationConstants.OBJECT_STATE_MESSAGE_PREVIOUS_ATTRIBUTES
 							+ "=[");
 				}
-				System.out.println("currentstate is "
-						+ obj.getClass().getName() + currentState);
+				//System.out.println("currentstate is "				+ obj.getClass().getName() + currentState);
 				for (int index = 0; index < currentState.length; index++) {
 					if (index == 0) {
 						if (previousState != null) {
@@ -87,7 +86,7 @@ public class MessageGenerator {
 									+ "="
 									+ String.valueOf(previousState[index]));
 						} else {
-							System.out.println("Prev State was null");
+							//System.out.println("Prev State was null");
 						}
 						if (currentState != null) {
 							messageCurrentState
@@ -97,7 +96,7 @@ public class MessageGenerator {
 											+ String
 													.valueOf(currentState[index]));
 						} else {
-							System.out.println("Curr State was null");
+							//System.out.println("Curr State was null");
 						}
 					} else {
 						if (previousState != null) {
@@ -106,7 +105,7 @@ public class MessageGenerator {
 									+ "="
 									+ String.valueOf(previousState[index]));
 						} else {
-							System.out.println("Prev State was null");
+							//System.out.println("Prev State was null");
 						}
 						if (currentState != null) {
 							messageCurrentState
@@ -117,7 +116,7 @@ public class MessageGenerator {
 											+ String
 													.valueOf(currentState[index]));
 						} else {
-							System.out.println("Curr State was null");
+							//System.out.println("Curr State was null");
 						}
 					}
 
@@ -182,7 +181,7 @@ public class MessageGenerator {
 											+ String
 													.valueOf(currentState[index]));
 						} else {
-							System.out.println("State was null");
+							//System.out.println("State was null");
 						}
 					} else {
 						if (currentState != null) {
@@ -194,7 +193,7 @@ public class MessageGenerator {
 											+ String
 													.valueOf(currentState[index]));
 						} else {
-							System.out.println("State was null");
+							//System.out.println("State was null");
 						}
 					}
 				}

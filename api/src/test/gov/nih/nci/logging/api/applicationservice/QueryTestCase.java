@@ -225,7 +225,7 @@ public class QueryTestCase extends TestCase {
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setApplication("test");
 		searchCriteria.setLogLevel("WARN");
-				
+		searchCriteria.setObjectID("Bill Burke");
 		String ll ="1155756542578";
 		
 		java.util.Date d = new java.util.Date();
@@ -234,9 +234,9 @@ public class QueryTestCase extends TestCase {
 		d.toString();
 		
 		
-		searchCriteria.setStartDate("01/01/2006");
+		searchCriteria.setStartDate("01/01/2005");
 		searchCriteria.setStartTime("00:00 AM");
-		searchCriteria.setEndDate("08/01/2006");
+		searchCriteria.setEndDate("09/13/2006");
 		searchCriteria.setEndTime("00:00 AM");
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
@@ -245,7 +245,7 @@ public class QueryTestCase extends TestCase {
 	private SearchCriteria getSearchCriteriaThatGivesNoResults(){
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setApplication("ZZZZZZZZZZZZZZZZZ");
-		searchCriteria.setLogLevel("WARN");
+		searchCriteria.setLogLevel("DEBUG");
 		searchCriteria.setStartDate("01/01/2006");
 		searchCriteria.setStartTime("00:00 AM");
 		searchCriteria.setEndDate("08/01/2006");
@@ -255,6 +255,18 @@ public class QueryTestCase extends TestCase {
 
 		return searchCriteria;
 	}
+	
+	  public void testRetrieveServer(){
+		  assertNotNull(query);
+			try {
+				Collection collection = query.retrieveServer();
+				assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);
+			} catch (QuerySpecificationException e) {
+				assertTrue(false);
+			}
+
+	    }
+
 	
 }
 
