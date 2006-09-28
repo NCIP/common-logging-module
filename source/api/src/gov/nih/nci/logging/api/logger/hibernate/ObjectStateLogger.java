@@ -59,7 +59,7 @@ public class ObjectStateLogger
 		
 		if (ApplicationProperties.getInstance().isLoggingEnabled())
 		{						
-			//System.out.println("isEnabled " + ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj));
+			
 			if (ApplicationProperties.getInstance().isObjectStateLoggingEnabled(obj) == true)
 			{
 				//get Object State Comment by Client(app).
