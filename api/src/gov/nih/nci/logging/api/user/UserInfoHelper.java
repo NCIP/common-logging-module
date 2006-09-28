@@ -30,6 +30,38 @@ public class UserInfoHelper
 		  ThreadVariable.set(userInfo);
 	}
 	
+	public static void setUserName( String userName)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  if (!(null == userName || userName.trim().length() == 0)){
+			  userInfo.setUsername(userName);
+		  }
+		  ThreadVariable.set(userInfo);
+	}
+	public static void setSessionID( String sessionID)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  if (!(null == sessionID || sessionID.trim().length() == 0)){
+			  userInfo.setSessionID(sessionID);
+		  }
+		  ThreadVariable.set(userInfo);
+	}
+	public static void setOrganization( String organization)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  if (!(null == organization || organization.trim().length() == 0)){
+			  userInfo.setUsername(organization);
+		  }
+		  ThreadVariable.set(userInfo);
+	}
+
+	
 	public static void setObjectStateChangeComment( String comment)
 	{
 		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
