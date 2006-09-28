@@ -1,9 +1,9 @@
 <?xml version="1.0"  encoding="windows-1252"?>
-<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2006-08-18 11:18:34">
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2006-09-12 16:53:30">
 	<XMI.header>
 		<XMI.documentation>
 			<XMI.exporter>Enterprise Architect</XMI.exporter>
-			<XMI.exporterVersion>4.1RR</XMI.exporterVersion>
+			<XMI.exporterVersion>2.5</XMI.exporterVersion>
 		</XMI.documentation>
 	</XMI.header>
 	<XMI.content>
@@ -37,346 +37,191 @@
 "/>
 																			</UML:ModelElement.taggedValue>
 																			<UML:Classifier.feature>
-																				<UML:Attribute name="id" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="id" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid0"/>
+																						<UML:Classifier xmi.idref="eaxmiid0"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="Primary Key of the Log Message Object"/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="logLevel" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="logLevel" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="LogLevel indicates the log level to be logged. Possible values are the Log4j Log Levels specified in org.apache.log4j.Level. Check the class for all possible values. Example values are OFF, FATAL, ERROR, WARN, INFO, DEBUG and ALL."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="thread" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="thread" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The name of thread object in which this log was generated."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="userName" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="userName" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The login username of the user. The user is the end user of the client application which uses CLM for logging. This way we can retrieve and audit all the logs generated by a particular user."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="sessionID" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="sessionID" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The HTTP Session Id of the logged in user in case of a web application. This field is useful to track all the operations that are performed by the user during a session."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="message" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="message" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="This is a free form text message provided by the application during logging of the event. It could represent an event, data etc. In case of Object State Change logs, this field would store the comment or reason for the object state change."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="throwable" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="throwable" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="Throwable error message. It is the string reprentation of the throwable (throwable.toString()).  ThrowableInformation is log4j's internal representation of throwables. It essentially consists of a string array, called 'rep', where the first element, that is rep[0], represents the string representation of the throwable (i.e. the value you get when you do throwable.toString()) and subsequent elements correspond the stack trace with the top most entry of the stack corresponding to the second entry of the 'rep' array that is rep[1]."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="ndc" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="ndc" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="Nested Diagnostic Context. A Nested Diagnostic Context, or NDC in short, is an instrument to distinguish interleaved log output from different sources. Log output is typically interleaved when a server handles multiple clients near-simultaneously."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="createdDate" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="createdDate" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid2"/>
+																						<UML:Classifier xmi.idref="eaxmiid2"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The date and time  of when the log is created."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
 																				<UML:Attribute name="created_on" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid3"/>
+																						<UML:Classifier xmi.idref="eaxmiid3"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The date and time in milliseconds when the log is created."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="application" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="application" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The name of the application from which the log message originated.  Example: CSM, caMatch.."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="server" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="server" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The name of the server from which the log message originated."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="objectID" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="objectID" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="ObjectID is used when the log message is of Object state. For event log message objectID its value is null. The object property value of the Identifier Attribute is saved in ObjectID column. The value of ObjectID will be matched with query Object ID for retrieval. Example: For object 'Customer' with attributes: 'personname', 'street', 'zip'. If the Identifier Attribute is 'personname', objectID will have possible values of personname attribute.  Example: For object 'Customer' with attributes: first, last, street, zip. If the Identifier Attribute is 'first,last', objectID will have possible values of 'first+&quot; &quot;+last'. if first = &quot;John&quot;, last = &quot;Smith&quot;, then the value of objectID = &quot;John Smith&quot;."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="objectName" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="objectName" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The fully qualified name of the object whose object state is available in this log message.  Example : For object 'Customer', its qualified class name is objectName. Example : 'test.package.Customer' (without quotes)"/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="organization" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="organization" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The name of the organization to which the user or the logs generated belongs."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="operation" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="operation" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="It is the name of the database operation which generated this object state log . For event log messages its value is null. Example values : update, insert, delete"/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="objectAttributeCollection" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="objectAttributeSet" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid4"/>
+																						<UML:Classifier xmi.idref="eaxmiid4"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The set of ObjectAttribute containing all attributes of the object for which the object state log message is generated."/>
-																					</UML:ModelElement.taggedValue>
-																				</UML:Attribute>
-																				<UML:Attribute name="objectAttributes" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
-																					<UML:Attribute.initialValue>
-																						<UML:Expression/>
-																					</UML:Attribute.initialValue>
-																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid4"/>
-																					</UML:StructuralFeature.type>
-																					<UML:ModelElement.taggedValue>
-																						<UML:TaggedValue tag="description" value="The set of ObjectAttribute Objects containing all attributes of the object for which the object state log message is generated."/>
-																					</UML:ModelElement.taggedValue>
-																				</UML:Attribute>
-																				<UML:Attribute name="objectIdentifierValue" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
-																					<UML:Attribute.initialValue>
-																						<UML:Expression/>
-																					</UML:Attribute.initialValue>
-																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
-																					</UML:StructuralFeature.type>
-																					<UML:ModelElement.taggedValue>
-																						<UML:TaggedValue tag="description" value="ObjectIdentifierValue is used when the log message is of Object state. For event log message objectID its value is null. The object property value of the Identifier Attribute is saved in ObjectID column. The value of ObjectID will be matched with query Object ID for retrieval. Example: For object 'Customer' with attributes: 'personname', 'street', 'zip'. If the Identifier Attribute is 'personname', objectID will have possible values of personname attribute. Example: For object 'Customer' with attributes: first, last, street, zip. If the Identifier Attribute is 'first,last', objectID will have possible values of 'first+&quot; &quot;+last'. if first = &quot;John&quot;, last = &quot;Smith&quot;, then the value of objectID = &quot;John Smith&quot;."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
 																				<UML:Operation name="isObjectStateLog" visibility="public" ownerScope="instance" isQuery="false" concurrency="sequential">
@@ -386,7 +231,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid5"/>
+																								<UML:Classifier xmi.idref="eaxmiid5"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -402,7 +247,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -416,7 +261,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -425,7 +270,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="application" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The application to set."/>
@@ -443,7 +288,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -457,7 +302,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -466,7 +311,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="message" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The message to set."/>
@@ -484,7 +329,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -498,7 +343,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -507,7 +352,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="ndc" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The ndc to set."/>
@@ -525,7 +370,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -539,7 +384,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -548,7 +393,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="server" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The server to set."/>
@@ -566,7 +411,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -580,7 +425,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -589,7 +434,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="sessionID" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The sessionID to set."/>
@@ -607,7 +452,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -621,7 +466,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -630,7 +475,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="thread" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The thread to set."/>
@@ -648,7 +493,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -662,7 +507,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -671,7 +516,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="throwable" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The throwable to set."/>
@@ -689,7 +534,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -703,7 +548,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -712,7 +557,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="userName" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The userName to set."/>
@@ -728,7 +573,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -742,7 +587,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -751,7 +596,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="objectID" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -765,7 +610,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -779,7 +624,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -788,7 +633,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="objectName" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -802,7 +647,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -816,7 +661,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -825,7 +670,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="organization" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -839,7 +684,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -853,7 +698,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -862,7 +707,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="operation" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -876,7 +721,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid0"/>
+																								<UML:Classifier xmi.idref="eaxmiid0"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -890,7 +735,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -899,7 +744,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="id" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid0"/>
+																								<UML:Classifier xmi.idref="eaxmiid0"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -915,7 +760,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid2"/>
+																								<UML:Classifier xmi.idref="eaxmiid2"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -929,7 +774,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -938,7 +783,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="createdDate" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid2"/>
+																								<UML:Classifier xmi.idref="eaxmiid2"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The createdDate to set."/>
@@ -956,7 +801,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -970,7 +815,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -979,7 +824,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="logLevel" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The logLevel to set."/>
@@ -995,7 +840,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid4"/>
+																								<UML:Classifier xmi.idref="eaxmiid4"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1009,7 +854,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1018,7 +863,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="objectAttributeSet" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid4"/>
+																								<UML:Classifier xmi.idref="eaxmiid4"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1032,7 +877,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1041,9 +886,50 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="objectAttribute" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid7"/>
+																								<UML:Classifier xmi.idref="eaxmiid7"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
+																							<UML:Parameter.defaultValue>
+																								<UML:Expression/>
+																							</UML:Parameter.defaultValue>
+																						</UML:Parameter>
+																					</UML:BehavioralFeature.parameter>
+																				</UML:Operation>
+																				<UML:Operation name="getCreated_on" visibility="private" ownerScope="instance" isQuery="false" concurrency="sequential">
+																					<UML:ModelElement.taggedValue>
+																						<UML:TaggedValue tag="documentation" value="@return Returns the created_on."/>
+																					</UML:ModelElement.taggedValue>
+																					<UML:BehavioralFeature.parameter>
+																						<UML:Parameter kind="return" visibility="public">
+																							<UML:Parameter.type>
+																								<UML:Classifier xmi.idref="eaxmiid3"/>
+																							</UML:Parameter.type>
+																							<UML:ModelElement.taggedValue/>
+																							<UML:Parameter.defaultValue>
+																								<UML:Expression/>
+																							</UML:Parameter.defaultValue>
+																						</UML:Parameter>
+																					</UML:BehavioralFeature.parameter>
+																				</UML:Operation>
+																				<UML:Operation name="setCreated_on" visibility="private" ownerScope="instance" isQuery="false" concurrency="sequential">
+																					<UML:ModelElement.taggedValue/>
+																					<UML:BehavioralFeature.parameter>
+																						<UML:Parameter kind="return" visibility="public">
+																							<UML:Parameter.type>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
+																							</UML:Parameter.type>
+																							<UML:ModelElement.taggedValue/>
+																							<UML:Parameter.defaultValue>
+																								<UML:Expression/>
+																							</UML:Parameter.defaultValue>
+																						</UML:Parameter>
+																						<UML:Parameter name="created_on" kind="in" visibility="public">
+																							<UML:Parameter.type>
+																								<UML:Classifier xmi.idref="eaxmiid3"/>
+																							</UML:Parameter.type>
+																							<UML:ModelElement.taggedValue>
+																								<UML:TaggedValue tag="note" value="The created_on to set."/>
+																							</UML:ModelElement.taggedValue>
 																							<UML:Parameter.defaultValue>
 																								<UML:Expression/>
 																							</UML:Parameter.defaultValue>
@@ -1055,24 +941,10 @@
 																		<UML:Association xmi.id="EAID_CFB61836_EF9A_4ab9_B461_AB9073B4ADD6" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
 																			<UML:ModelElement.taggedValue/>
 																			<UML:Association.connection>
-																				<UML:AssociationEnd visibility="public" multiplicity="0..*" name="objectAttributeCollection" aggregation="none" isOrdered="false" isNavigable="false" type="EAID_315543DF_0D10_418d_AA20_401A0C82D549">
-																					<UML:AssociationEnd.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="0" upper="-1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:AssociationEnd.multiplicity>
+																				<UML:AssociationEnd visibility="public" multiplicity="0..*" name="objectAttributeSet" aggregation="none" isOrdered="false" isNavigable="false" type="EAID_315543DF_0D10_418d_AA20_401A0C82D549">
 																					<UML:ModelElement.taggedValue/>
 																				</UML:AssociationEnd>
-																				<UML:AssociationEnd visibility="public" multiplicity="1" name="id" aggregation="aggregate" isOrdered="false" isNavigable="true" type="EAID_0F6E8179_DF04_4f01_B6A0_491348578E47">
-																					<UML:AssociationEnd.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:AssociationEnd.multiplicity>
+																				<UML:AssociationEnd visibility="public" multiplicity="1" name="id" aggregation="composite" isOrdered="false" isNavigable="true" type="EAID_0F6E8179_DF04_4f01_B6A0_491348578E47">
 																					<UML:ModelElement.taggedValue/>
 																				</UML:AssociationEnd>
 																			</UML:Association.connection>
@@ -1084,72 +956,44 @@
 																			</UML:ModelElement.taggedValue>
 																			<UML:Classifier.feature>
 																				<UML:Attribute name="id" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid3"/>
+																						<UML:Classifier xmi.idref="eaxmiid3"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="Primary key of ObjectAttribute object."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="attributeName" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="attributeName" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The name  of the Object's attribute whose values are being logged. The attributeName  is populated by the  ObjectStateInterceptor."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="previousValue" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="previousValue" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="This value would be present only on case of update operations and stores the value of the attribute before the update operation."/>
 																					</UML:ModelElement.taggedValue>
 																				</UML:Attribute>
-																				<UML:Attribute name="currentValue" changeable="none" visibility="protected" ownerScope="instance" targetScope="instance">
-																					<UML:StructuralFeature.multiplicity>
-																						<UML:Multiplicity>
-																							<UML:Multiplicity.range>
-																								<UML:MultiplicityRange lower="1" upper="1"/>
-																							</UML:Multiplicity.range>
-																						</UML:Multiplicity>
-																					</UML:StructuralFeature.multiplicity>
+																				<UML:Attribute name="currentValue" changeable="none" visibility="private" ownerScope="instance" targetScope="instance">
 																					<UML:Attribute.initialValue>
 																						<UML:Expression/>
 																					</UML:Attribute.initialValue>
 																					<UML:StructuralFeature.type>
-																						<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																						<UML:Classifier xmi.idref="eaxmiid1"/>
 																					</UML:StructuralFeature.type>
 																					<UML:ModelElement.taggedValue>
 																						<UML:TaggedValue tag="description" value="The current value of the attribute. This value would be present when a new object is created or existing object is deleted. In case of update operation it store the value of the attribute after the update."/>
@@ -1162,7 +1006,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1176,7 +1020,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1185,7 +1029,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="attributeName" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The attributeName to set."/>
@@ -1203,7 +1047,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1219,7 +1063,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1228,7 +1072,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="CurrentValue" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1244,7 +1088,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid3"/>
+																								<UML:Classifier xmi.idref="eaxmiid3"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1258,7 +1102,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1267,7 +1111,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="id" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid3"/>
+																								<UML:Classifier xmi.idref="eaxmiid3"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The id to set."/>
@@ -1285,7 +1129,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1299,7 +1143,7 @@
 																					<UML:BehavioralFeature.parameter>
 																						<UML:Parameter kind="return" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid6"/>
+																								<UML:Classifier xmi.idref="eaxmiid6"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue/>
 																							<UML:Parameter.defaultValue>
@@ -1308,7 +1152,7 @@
 																						</UML:Parameter>
 																						<UML:Parameter name="previousValue" kind="in" visibility="public">
 																							<UML:Parameter.type>
-																								<Foundation.Core.Classifier xmi.idref="eaxmiid1"/>
+																								<UML:Classifier xmi.idref="eaxmiid1"/>
 																							</UML:Parameter.type>
 																							<UML:ModelElement.taggedValue>
 																								<UML:TaggedValue tag="note" value="The previousValue to set."/>
@@ -1345,11 +1189,6 @@
 				<UML:DataType xmi.id="eaxmiid7" name="ObjectAttribute" visibility="private" isRoot="false" isLeaf="false" isAbstract="false"/>
 			</UML:Namespace.ownedElement>
 		</UML:Model>
-		<UML:Stereotype xmi.id="eaxmiid8" visibility="private" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" baseClass="Association">
-			<UML:Stereotype.extendedElement>
-				<Foundation.Core.ModelElement xmi.idref="EAID_CFB61836_EF9A_4ab9_B461_AB9073B4ADD6"/>
-			</UML:Stereotype.extendedElement>
-		</UML:Stereotype>
 	</XMI.content>
 	<XMI.difference/>
 	<XMI.extensions xmi.extender="Enterprise Architect 2.5"/>
