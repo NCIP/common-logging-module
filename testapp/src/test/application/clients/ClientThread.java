@@ -6,6 +6,8 @@ package test.application.clients;
  * <!-- LICENSE_TEXT_END -->
  */
 
+import java.util.Set;
+
 import gov.nih.nci.logging.api.logger.hibernate.HibernateSessionFactoryHelper;
 import gov.nih.nci.logging.api.user.UserInfoHelper;
 
@@ -51,7 +53,7 @@ public class ClientThread extends Thread
 
 		try
 		{
-			sleep((long) (Math.random() * 1000));
+			sleep((long) (Math.random() * 13000));
 		}
 		catch (Exception e1)
 		{
@@ -105,8 +107,8 @@ public class ClientThread extends Thread
 			session.close();
 		}
 
-		/*try
-		{
+		
+		try{
 			Set items = customer.getItems();
 			Item itema = (Item) items.iterator().next();
 			itema.setmanufacturer("Griffin Solutions");
@@ -135,7 +137,7 @@ public class ClientThread extends Thread
 		finally
 		{
 			session.close();
-		}*/
+		}
 
 	}
 

@@ -144,7 +144,7 @@ public class LogMessage implements Serializable {
 	 */
 	public boolean isObjectStateLog() {
 
-		if (objectAttributeSet == null) {
+		if (objectAttributeSet == null || objectAttributeSet.size()==0) {
 			return false;
 		} else {
 			return true;

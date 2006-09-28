@@ -66,7 +66,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 		populateCriteria(searchCriteria, criteria);
 		
 		// set Start Off set.
-		criteria.setFirstResult(currentStartOffSet);
+		criteria.setFirstResult(currentStartOffSet-1);
 		// Set Number of Records
 		criteria.setMaxResults(currentRecordCount);
 		

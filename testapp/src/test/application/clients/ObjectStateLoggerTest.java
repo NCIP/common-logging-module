@@ -33,8 +33,8 @@ public class ObjectStateLoggerTest
 	public static void main(String[] args)
 	{
 		
-		int iteration = 3;
-		int arraybounds = 5;
+		int iteration = 30;
+		int arraybounds = 50;
 		Configuration cfg = new Configuration();
 		SessionFactory sessionFactory = cfg.configure().buildSessionFactory();
 		Thread x[] = new Thread[arraybounds];

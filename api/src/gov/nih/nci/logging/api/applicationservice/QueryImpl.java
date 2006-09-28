@@ -94,7 +94,7 @@ public class QueryImpl implements Query
 	 */
 	public Collection query(int currentStartOffSet, int currentRecordCount) throws QuerySpecificationException
 	{
-		if (currentStartOffSet == 0 && currentRecordCount == 0)
+		/*if (currentStartOffSet == 0 && currentRecordCount == 0)
 		{
 			throw new QuerySpecificationException("Parameter currentStartOffSet and currentRecordCount value should be greater than zero.");
 		}
@@ -107,7 +107,7 @@ public class QueryImpl implements Query
 		{
 			throw new QuerySpecificationException("Parameter currentStartOffSet is not specified. Parameter currentStartOffSet value should be greater than zero.");
 		}
-
+*/
 		try
 		{
 			return logMessageDAO.retrieve(this.searchCriteria, currentStartOffSet, currentRecordCount);
