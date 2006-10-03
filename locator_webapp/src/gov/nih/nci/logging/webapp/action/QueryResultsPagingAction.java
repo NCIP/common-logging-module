@@ -85,7 +85,11 @@ public class QueryResultsPagingAction extends Action
 			if (totalResultSize > 0)
 			{
 				// Query results
-				Collection resultCollection = query.query(new Integer(queryResultsPagingForm.getTargetPageNumber()).intValue() , new Integer(queryForm.getRecordCount()).intValue());
+				int currentStartOffSet = 0;
+				int maxSize = 0;
+				currentStartOffSet = (new Integer(queryResultsPagingForm.getTargetPageNumber()).intValue()-1)* new Integer(queryForm.getRecordCount()).intValue() + 1;
+				maxSize =  new Integer(queryForm.getRecordCount()).intValue();
+				Collection resultCollection = query.query(currentStartOffSet,maxSize);
 				List resultList = (List) resultCollection;
 
 				// Set Search Result Page information

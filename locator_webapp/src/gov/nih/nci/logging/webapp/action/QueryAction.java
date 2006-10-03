@@ -52,10 +52,18 @@ public class QueryAction extends Action
 
 		QueryForm queryForm = (QueryForm) form;
 
+		
+		
 		if (session.isNew() || (session.getAttribute(Constants.LOGIN_OBJECT) == null))
 		{
 			return mapping.findForward(Constants.FORWARD_PUBLIC_LOGIN);
 		}
+		String applicationName = "";
+		if (session.getAttribute(Constants.LOGIN_OBJECT) != null)
+		{
+			applicationName = (String) session.getAttribute(Constants.APPLICATION_NAME);
+		}
+		
 
 		if(session.getAttribute(Constants.LOGLEVEL_MAP)==null){
 			session.setAttribute(Constants.LOGLEVEL_MAP, SystemManager.getLogLevelMap());
@@ -92,6 +100,8 @@ public class QueryAction extends Action
 			queryForm.setStartTime(timeFormat.format(currentDate));
 			queryForm.setEndDate(dateFormat.format(currentDate));
 			queryForm.setEndTime(timeFormat.format(currentDate));
+			queryForm.setApplication(applicationName);
+			
 			queryForm.setRecordCount(new Integer(Constants.DEFAULT_PAGE_SIZE).toString());
 			
 			session.setAttribute(Constants.CURRENT_FORM, queryForm);
@@ -112,7 +122,7 @@ public class QueryAction extends Action
 			if (totalResultSize > 0)
 			{
 				// Query results
-				Collection resultCollection = query.query( new Integer(queryForm.getRecordCount()).intValue());
+				Collection resultCollection = query.query( 1, new Integer(queryForm.getRecordCount()).intValue());
 				List resultList = (List) resultCollection;
 
 				// Set Search Result Page information

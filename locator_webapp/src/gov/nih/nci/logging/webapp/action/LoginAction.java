@@ -50,6 +50,7 @@ public class LoginAction extends Action
 				// Perform Authentication here.
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.LOGIN_OBJECT, form);
+				session.setAttribute(Constants.APPLICATION_NAME, loginForm.getApplication());
 				return (mapping.findForward(Constants.FORWARD_HOME));
 			}
 			

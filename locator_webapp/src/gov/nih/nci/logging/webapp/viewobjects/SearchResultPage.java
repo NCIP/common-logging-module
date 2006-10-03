@@ -100,11 +100,11 @@ public class SearchResultPage implements Page
 	}
 	public int getThisPageFirstElementNumber()
 	{
-		 return getPageNumber() * getPageSize() + 1;
+		 return (getPageNumber() * getPageSize()-1) + 1;
 	}
 	public int getThisPageLastElementNumber()
 	{
-		 int fullPage = getThisPageFirstElementNumber() + getPageSize() - 1;
+		 int fullPage = getThisPageFirstElementNumber() + (getPageSize()+1) - 1;
 		    return getTotalNumberOfElements() < fullPage ?
 		            getTotalNumberOfElements() :
 		            fullPage;
