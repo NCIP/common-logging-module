@@ -5,11 +5,6 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-template" prefix="template"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-nested" prefix="nested"%>
 
-	
-		
-	
-
-
 <tr>
 	<td width="100%" valign="top"><!-- target of anchor to skip menus --><a
 		name="content" />
@@ -65,19 +60,20 @@
 									 	</tr>
 										<tr>
 											<td class="sidebarLogin" align="right"><label for="loginID"><bean:message key="label.login_id" /></label></td>
-											<td class="formFieldLogin"><input class="formField" type="text" name="loginID" size="14" /></td>
+											<td class="formFieldLogin"><html:text style="formField"	size="14" property="loginID" value="" /></td>
 										</tr>
 										<tr>
 											<td class="sidebarLogin" align="right"><label for="password"><bean:message key="label.login_password" /></label></td>
-											<td class="formFieldLogin"><input class="password" type="password" name="password" size="14" /></td>
+											<td class="formFieldLogin"><html:password style="formField" size="14" property="password" value="" /></td>
 										</tr>
 										<tr>
 											<td class="sidebarLogin" align="right"><label for="application"><bean:message key="label.login_application" /></label></td>
-											<td class="formFieldLogin"><input class="formField" type="text" name="application" size="14" /></td>
+											<td class="formFieldLogin"><html:text style="formField"	size="14" property="application" value="" /></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-											<td><input class="actionButton" type="submit" value="Login" /></td>
+											<td><html:submit style="actionButton" value="Login" />
+											</td>
 										</tr>
 										</html:form>
 									</table>

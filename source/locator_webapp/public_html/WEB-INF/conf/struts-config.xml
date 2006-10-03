@@ -8,8 +8,8 @@
 			type="gov.nih.nci.logging.webapp.form.LoginForm" />
 		<form-bean name="queryForm"
 			type="gov.nih.nci.logging.webapp.form.QueryForm" />
-		<form-bean name="logMessageForm"
-			type="gov.nih.nci.logging.webapp.form.LogMessageForm" />
+		<form-bean name="queryResultsPagingForm"
+			type="gov.nih.nci.logging.webapp.form.QueryResultsPagingForm" />
 
 	</form-beans>
 
@@ -51,8 +51,8 @@
 			<forward name="showQueryResults" path="page.query.results" />
 		</action>
 
-		<action attribute="logMessageForm"
-			input="page.query.results" name="logMessageForm"
+		<action attribute="queryResultsPagingForm"
+			input="page.query.results" name="queryResultsPagingForm"
 			path="/QueryResultsPaging" scope="request"
 			type="gov.nih.nci.logging.webapp.action.QueryResultsPagingAction">
 			<forward name="showPublicLogin" path="page.public.home" />

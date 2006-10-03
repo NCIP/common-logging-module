@@ -36,11 +36,9 @@
 			<!-- application hdr ends -->
 
 			<tr>
-				<td width="190" valign="top" class="subMenu"><tiles:get
-					name="query_side_menu" /></td>
+				<td width="100" valign="top" class="subMenu"><tiles:get	name="query_side_menu" /></td>
 				<td valign="top" width="100%">
-				<table summary="" cellpadding="0" cellspacing="0" border="0"
-					width="100%" height="100%">
+					<table summary="" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 					<tr>
 						<td height="20" width="100%" class="mainMenu"><!-- main menu begins -->
 						<tiles:get name="menu" /> <!-- main menu ends --></td>
