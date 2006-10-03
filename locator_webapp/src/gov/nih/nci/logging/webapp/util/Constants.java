@@ -31,13 +31,14 @@ public interface Constants
 	public static String VIEW_PAGE_NUMBER = "ViewPageNumber";
 	public static String SEARCH_RESULTS_PAGE = "SearchResultsPage";
 	
-	public static String RESULTS_MESSAGE = "";
-	public static String NO_RESULTS_MESSAGE = "NO_RESULTS_MESSAGE details";
-	public static String NO_MORE_RESULTS_MESSAGE = "NO_MORE_RESULTS_MESSAGE details";
+	public static String RESULTS_MESSAGE = "Found results.";
+	public static String NO_RESULTS_MESSAGE = "No Log Messages found for the given search criteria. Modify the search criteria and try again.";
+	public static String NO_MORE_RESULTS_MESSAGE = "No Log Messages found for the given search criteria. Modify the search criteria and try again.";
 	
 	
 	
 	//Session Constants
+	public static final String  APPLICATION_NAME = "APPLICATION_NAME";
 	public static final String PASSWORD = "PASSWORD";
 	public static final String SEARCH_RESULT = "SEARCH_RESULT";
 	public static final String CURRENT_FORM = "CURRENT_FORM";
