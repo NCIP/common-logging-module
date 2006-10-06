@@ -27,7 +27,7 @@ public class PropertyFileLoader
 
 	private static final String SUFFIX = ".xml";
 
-	private PropertyFileLoader()
+	PropertyFileLoader()
 	{
 	} 
 
