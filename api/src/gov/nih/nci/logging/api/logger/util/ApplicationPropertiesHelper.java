@@ -3,6 +3,7 @@ package gov.nih.nci.logging.api.logger.util;
 import gov.nih.nci.logging.api.util.StringUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,10 +42,12 @@ public class ApplicationPropertiesHelper implements ApplicationConstants {
 		try {
 
 			// Using factory get an instance of document builder
+			PropertyFileLoader propertyFileLoader = new PropertyFileLoader();
+			InputStream propertyFileStream = propertyFileLoader.loadPropertyFile(propertyFile); 
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			// parse using builder to get DOM representation of the XML file
-			dom = db.parse(propertyFile);
+			dom = db.parse(propertyFileStream);
 
 			// get the root elememt
 			documentRootElement = dom.getDocumentElement();
@@ -66,12 +69,15 @@ public class ApplicationPropertiesHelper implements ApplicationConstants {
 		// get the factory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
+			
+			PropertyFileLoader propertyFileLoader = new PropertyFileLoader();
+			InputStream propertyFileStream = propertyFileLoader.loadPropertyFile(ApplicationPropertyFile);
 
 			// Using factory get an instance of document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			// parse using builder to get DOM representation of the XML file
-			dom = db.parse(ApplicationPropertyFile);
+			dom = db.parse(propertyFileStream);
 
 			// get the root elememt
 			documentRootElement = dom.getDocumentElement();
