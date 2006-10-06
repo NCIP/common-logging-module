@@ -97,7 +97,10 @@ public class ObjectStateLogger
 		
 		String identifierAttributes = ApplicationProperties.getInstance().getIdentifierAttribute(obj);
 		
-		StringTokenizer tknzr = new StringTokenizer(identifierAttributes,",");
+		if(StringUtils.isBlank(identifierAttributes)) return identifierAttributeValue;
+		
+		StringTokenizer tknzr = new StringTokenizer(StringUtils.initString(identifierAttributes),",");
+		
 		while(tknzr.hasMoreElements()){
 			String identifierAttribute = (String) tknzr.nextElement();
 			
