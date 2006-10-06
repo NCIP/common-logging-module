@@ -5,49 +5,49 @@ import junit.framework.TestCase;
 
 public class ApplicationPropertiesTest extends TestCase {
 	
-	
+	final String objectStateLoggerFileName = "sample_ObjectStateLoggerConfig.xml";
 	public void testApplicationProperties(){
 	
-		ApplicationProperties applicationProperties = ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml");
+		ApplicationProperties applicationProperties = ApplicationProperties.getInstance(objectStateLoggerFileName);
 		assertTrue("ApplicationProperties instance should not be null.", applicationProperties!=null);
 		
 	}
 	public void testApplicationProperties_ObjectStateLoggerName(){
-		String s = ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getLoggerName();
+		String s = ApplicationProperties.getInstance(objectStateLoggerFileName).getLoggerName();
 		assertTrue("Logger Name  value should not be null.",s!=null);
 		
 	}
 	
 	public void testApplicationProperties_LoggerConfigurationFile(){
-		assertTrue("Config File  value should not be null.", ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getConfigFile()!=null);
+		assertTrue("Config File  value should not be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getConfigFile()!=null);
 		
 	}
 	public void testApplicationProperties_LogLevel(){
-		assertTrue(" LogLevel value should not be null.", ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getLogLevel()!=null);
+		assertTrue(" LogLevel value should not be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getLogLevel()!=null);
 		
 	}
 	public void testApplicationProperties_LoggingEnabled(){
-		boolean loggingenabled = ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").isLoggingEnabled();
+		boolean loggingenabled = ApplicationProperties.getInstance(objectStateLoggerFileName).isLoggingEnabled();
 		assertTrue(loggingenabled);
 	}
 	public void testApplicationProperties_ObjectStateLoggerMessageFormat(){
-		assertTrue(" MessageLoggingFormat value should not be null.", ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getMessageLoggingFormat()!=null);
+		assertTrue(" MessageLoggingFormat value should not be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getMessageLoggingFormat()!=null);
 	}
 	public void testApplicationProperties_DomainObjectList(){
 		Object obj = new Object();
 		String s= new String();
-		assertTrue(ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").isObjectStateLoggingEnabled(obj));
+		assertTrue(ApplicationProperties.getInstance(objectStateLoggerFileName).isObjectStateLoggingEnabled(obj));
 		
-		assertTrue(ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").isObjectStateLoggingEnabled(s)==false);
+		assertTrue(ApplicationProperties.getInstance(objectStateLoggerFileName).isObjectStateLoggingEnabled(s)==false);
 	}
 	public void testApplicationProperties_IdentifierAttributeMap(){	
 		Object obj = new Object();
 		
-		assertTrue(" Identifier Attribute value should not be null.", ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getIdentifierAttribute(obj)!=null);
+		assertTrue(" Identifier Attribute value should not be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getIdentifierAttribute(obj)!=null);
 	}
 	public void testApplicationProperties_IdentifierAttribute_(){
 		String s = new String();
-		assertTrue(" Identifier Attribute value should be null.", ApplicationProperties.getInstance("api/resources/sample_ObjectStateLoggerConfig.xml").getIdentifierAttribute(s)==null);
+		assertTrue(" Identifier Attribute value should be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getIdentifierAttribute(s)==null);
 	}
 	
 	
