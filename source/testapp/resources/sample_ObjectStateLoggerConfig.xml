@@ -73,7 +73,7 @@ Name of the Log4j Config file. Example: sample-log4j-config.xml
 		</DomainObject>
 		<DomainObject>
 			<ObjectName>test.application.domainobjects.Item</ObjectName>
-			<IdentifierAttribute>personName</IdentifierAttribute>
+			<IdentifierAttribute>name</IdentifierAttribute>
 		</DomainObject>
 	</DomainObjectList>
 </ObjectStateLoggerConfig>
