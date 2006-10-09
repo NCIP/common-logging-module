@@ -16,7 +16,7 @@ public class ApplicationPropertiesTest extends TestCase {
 		String s = ApplicationProperties.getInstance(objectStateLoggerFileName).getLoggerName();
 		assertTrue("Logger Name  value should not be null.",s!=null);
 		
-	}
+	} 
 	
 	public void testApplicationProperties_LoggerConfigurationFile(){
 		assertTrue("Config File  value should not be null.", ApplicationProperties.getInstance(objectStateLoggerFileName).getConfigFile()!=null);
