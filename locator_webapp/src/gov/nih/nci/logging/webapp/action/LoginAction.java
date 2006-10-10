@@ -5,6 +5,8 @@ package gov.nih.nci.logging.webapp.action;
 
 import gov.nih.nci.logging.webapp.form.LoginForm;
 import gov.nih.nci.logging.webapp.util.Constants;
+import gov.nih.nci.logging.webapp.util.StringUtils;
+import gov.nih.nci.logging.webapp.util.SecurityManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,17 +59,29 @@ public class LoginAction extends Action
 		}
 		catch (Exception ex)
 		{
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(Constants.ERROR_ID, "Unable to read the UPT Context Name from Security Config File"));
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(Constants.ERROR_ID, ex.getMessage()));
 			saveErrors(request, errors);
 		}
 		return mapping.findForward(Constants.FORWARD_PUBLIC_LOGIN);
 
 	}
 
-	private boolean isAuthenticated(LoginForm loginForm)
+	private boolean isAuthenticated(LoginForm loginForm) throws Exception
 	{
-		// TODO 
-		return true;
+		boolean loginResult = SecurityManager.login(loginForm.getLoginID(),loginForm.getPassword());
+		if (false == loginResult)
+		{
+			throw new Exception("Invalid User Credentials");
+		}
+		else
+		{
+			loginResult = SecurityManager.checkPermission(loginForm.getApplication(),loginForm.getLoginID(),Constants.APPLICATION_NAME_ATTRIBUTE, loginForm.getApplication());
+			if (false == loginResult)
+			{
+				throw new Exception ("User does not have access permission to view the logs for the " + loginForm.getApplication() + " Application.");
+			}
+		}
+		return loginResult;
 	}
 
 }

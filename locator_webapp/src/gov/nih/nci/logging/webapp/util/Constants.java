@@ -3,7 +3,18 @@ package gov.nih.nci.logging.webapp.util;
 
 public interface Constants
 {
-
+	
+	// Application Context Name for CSM
+	public static final String APPLICATION_CONTEXT_NAME = "CLM";
+	public static final String PRIVILEGE = "READ";
+	
+	public static String APPLICATION_NAME_ATTRIBUTE = "APPLICATION_NAME";
+	public static String LOG_LEVEL_ATTRIBUTE = "LOG_LEVEL";
+	public static String ORGANIZATION_ATTRIBUTE = "ORGANIZATION";
+	public static String USER_ATTRIBUTE = "USER";
+	public static String OBJECT_NAME_ATTRIBUTE = "OBJECT_NAME";
+	
+	
 	//Display and Session Constants.
 	public static final String USER_NAME = "USER_NAME";
 	
@@ -34,8 +45,6 @@ public interface Constants
 	public static String RESULTS_MESSAGE = "Found results.";
 	public static String NO_RESULTS_MESSAGE = "No Log Messages found for the given search criteria. Modify the search criteria and try again.";
 	public static String NO_MORE_RESULTS_MESSAGE = "No Log Messages found for the given search criteria. Modify the search criteria and try again.";
-	
-	
 	
 	//Session Constants
 	public static final String  APPLICATION_NAME = "APPLICATION_NAME";

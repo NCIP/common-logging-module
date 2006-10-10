@@ -7,7 +7,7 @@
   	<property file="${basedir}/script/local.properties" />	
   	<!-- Set up the classpath required to compile -->
   	<path id="classpath">
-		<fileset dir="WebRoot/WEB-INF/lib">
+		<fileset dir="public_html/WEB-INF/lib">
 			<include name="**/*.jar"/>
 		</fileset>
 	</path>

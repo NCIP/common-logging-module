@@ -13,8 +13,10 @@ import gov.nih.nci.logging.api.applicationservice.SearchCriteria;
 import gov.nih.nci.logging.api.applicationservice.exception.QuerySpecificationException;
 import gov.nih.nci.logging.api.applicationservice.exception.SearchCriteriaSpecificationException;
 import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
+import gov.nih.nci.logging.webapp.form.LoginForm;
 import gov.nih.nci.logging.webapp.form.QueryForm;
 import gov.nih.nci.logging.webapp.util.Constants;
+import gov.nih.nci.logging.webapp.util.SecurityManager;
 import gov.nih.nci.logging.webapp.util.StringUtils;
 import gov.nih.nci.logging.webapp.util.SystemManager;
 import gov.nih.nci.logging.webapp.viewobjects.SearchResultPage;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -84,8 +87,19 @@ public class QueryAction extends Action
 			session.removeAttribute(Constants.VIEW_PAGE_NUMBER);
 
 			boolean success = false;
-			success = performQuery(queryForm, session);
-		
+			try
+			{
+				success = performQuery(queryForm, session);
+			}
+			catch (Exception e)
+			{
+				// Set Search Result Page information
+				SearchResultPage searchResultPage = new SearchResultPage();
+				searchResultPage.setTotalResultSize(0);
+				searchResultPage.setSearchResultMessage(e.getMessage());
+				// Set Search Results
+				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);				
+			}
 			return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
 
 		}else{
@@ -110,19 +124,58 @@ public class QueryAction extends Action
 
 	}
 
-	private boolean performQuery(QueryForm queryForm, HttpSession session)
+	private boolean performQuery(QueryForm queryForm, HttpSession session) throws Exception
 	{
-		try
-		{
+//		try
+//		{
 			Query query = new QueryImpl();
-			query.setCriteria(getSearchCriteria(queryForm));
+			try
+			{
+				query.setCriteria(getSearchCriteria(queryForm,session));
+			}
+			catch (QuerySpecificationException e1)
+			{
+				e1.printStackTrace();
+				throw e1;
+			}
+			catch (SearchCriteriaSpecificationException e1)
+			{
+				e1.printStackTrace();
+				throw e1;
+			}
+			catch (Exception e1)
+			{
+				e1.printStackTrace();
+				throw e1;
+			}
 
-			int totalResultSize = query.totalResultSize();
+			int totalResultSize = 0;
+			try
+			{
+				totalResultSize = query.totalResultSize();
+			}
+			catch (QuerySpecificationException e)
+			{
+				e.printStackTrace();
+				throw e;
+			}
 
 			if (totalResultSize > 0)
 			{
 				// Query results
-				Collection resultCollection = query.query( 1, new Integer(queryForm.getRecordCount()).intValue());
+				Collection resultCollection = null;
+				try
+				{
+					resultCollection = query.query( 1, new Integer(queryForm.getRecordCount()).intValue());
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
+				catch (QuerySpecificationException e)
+				{
+					e.printStackTrace();
+				}
 				List resultList = (List) resultCollection;
 
 				// Set Search Result Page information
@@ -151,46 +204,76 @@ public class QueryAction extends Action
 				
 				return false;
 			}
-		}
-		catch (Exception e)
-		{
-//			 Set Search Result Page information
-			SearchResultPage searchResultPage = new SearchResultPage();
-			searchResultPage.setTotalResultSize(0);
-			searchResultPage.setSearchResultMessage(Constants.NO_RESULTS_MESSAGE);
-
-			// Set Search Results
-			session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-			return false;
-		}
+//		}
+//		catch (Exception e)
+//		{
+////			 Set Search Result Page information
+//			SearchResultPage searchResultPage = new SearchResultPage();
+//			searchResultPage.setTotalResultSize(0);
+//			searchResultPage.setSearchResultMessage(Constants.NO_RESULTS_MESSAGE);
+//
+//			// Set Search Results
+//			session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
+//			return false;
+//		}
 		
 	}
 
-	private SearchCriteria getSearchCriteria(QueryForm queryForm)
+	private SearchCriteria getSearchCriteria(QueryForm queryForm, HttpSession session) throws Exception
 	{
+		String applicationName = ((LoginForm)session.getAttribute(Constants.LOGIN_OBJECT)).getApplication();
+		String userName = ((LoginForm)session.getAttribute(Constants.LOGIN_OBJECT)).getLoginID();
+		
 		SearchCriteria searchCriteria = new SearchCriteria();
-
-		searchCriteria.setApplication(!StringUtils.isBlankOrNull(queryForm.getApplication()) ? queryForm.getApplication() : null);
-		searchCriteria.setEndDate(!StringUtils.isBlankOrNull(queryForm.getEndDate()) ? queryForm.getEndDate() : null);
-		searchCriteria.setEndTime(!StringUtils.isBlankOrNull(queryForm.getEndTime()) ? queryForm.getEndTime() : null);
-		if(Constants.ALL.equalsIgnoreCase(queryForm.getLogLevel()) || queryForm.getLogLevel().length()==0){
-			searchCriteria.setLogLevel(null);	
-		}else{
-			searchCriteria.setLogLevel(queryForm.getLogLevel());
+		
+		// Check Permission for Log Level
+		if (SecurityManager.checkPermission(applicationName,userName,Constants.LOG_LEVEL_ATTRIBUTE, queryForm.getLogLevel()))
+		{
+			if(Constants.ALL.equalsIgnoreCase(queryForm.getLogLevel()) || queryForm.getLogLevel().length()==0){
+				searchCriteria.setLogLevel(null);	
+			}else{
+				searchCriteria.setLogLevel(queryForm.getLogLevel());
+			}
 		}
+		else
+			throw new Exception ("User does not have access permission to query for the provided value of the Log Level attribute");
+
+		// Check Permission for Application
+		if (SecurityManager.checkPermission(applicationName,userName,Constants.APPLICATION_NAME_ATTRIBUTE, queryForm.getApplication()))
+			searchCriteria.setApplication(!StringUtils.isBlankOrNull(queryForm.getApplication()) ? queryForm.getApplication() : null);
+		else
+			throw new Exception ("User does not have access permission to query for the provided value of the Application attribute");
+				
+		// Check Permission for Organziation
+		if (SecurityManager.checkPermission(applicationName,userName,Constants.ORGANIZATION_ATTRIBUTE, queryForm.getOrganization()))
+			searchCriteria.setOrganization(!StringUtils.isBlankOrNull(queryForm.getOrganization()) ? queryForm.getOrganization() : null);
+		else
+			throw new Exception ("User does not have access permission to query for the provided value of the Organization attribute");
+
+		// Check Permission for User
+		if (SecurityManager.checkPermission(applicationName,userName,Constants.USER_ATTRIBUTE, queryForm.getUser()))
+			searchCriteria.setUserName(!StringUtils.isBlankOrNull(queryForm.getUser()) ? queryForm.getUser() : null);
+		else
+			throw new Exception ("User does not have access permission to query for the provided value of the User attribute");
+
+		// Check Permission for Object Name
+		if (SecurityManager.checkPermission(applicationName,userName,Constants.OBJECT_NAME_ATTRIBUTE, queryForm.getObjectName()))
+			searchCriteria.setObjectName(!StringUtils.isBlankOrNull(queryForm.getObjectName()) ? queryForm.getObjectName() : null);
+		else
+			throw new Exception ("User does not have access permission to query for the provided value of the Object Name attribute");
+		
 		searchCriteria.setMessage(!StringUtils.isBlankOrNull(queryForm.getMessage()) ? queryForm.getMessage() : null);
 		searchCriteria.setNdc(!StringUtils.isBlankOrNull(queryForm.getNdc()) ? queryForm.getNdc() : null);
 		searchCriteria.setObjectID(!StringUtils.isBlankOrNull(queryForm.getObjectID()) ? queryForm.getObjectID() : null);
-		searchCriteria.setObjectName(!StringUtils.isBlankOrNull(queryForm.getObjectName()) ? queryForm.getObjectName() : null);
-		searchCriteria.setOperation(!StringUtils.isBlankOrNull(queryForm.getOperation()) ? queryForm.getOperation() : null);
-		searchCriteria.setOrganization(!StringUtils.isBlankOrNull(queryForm.getOrganization()) ? queryForm.getOrganization() : null);
+		searchCriteria.setOperation(!StringUtils.isBlankOrNull(queryForm.getOperation()) ? queryForm.getOperation() : null);			
 		searchCriteria.setServer(!StringUtils.isBlankOrNull(queryForm.getServer()) ? queryForm.getServer() : null);
 		searchCriteria.setSessionID(!StringUtils.isBlankOrNull(queryForm.getSessionID()) ? queryForm.getSessionID() : null);
 		searchCriteria.setStartDate(!StringUtils.isBlankOrNull(queryForm.getStartDate()) ? queryForm.getStartDate() : null);
 		searchCriteria.setStartTime(!StringUtils.isBlankOrNull(queryForm.getStartTime()) ? queryForm.getStartTime() : null);
+		searchCriteria.setEndDate(!StringUtils.isBlankOrNull(queryForm.getEndDate()) ? queryForm.getEndDate() : null);
+		searchCriteria.setEndTime(!StringUtils.isBlankOrNull(queryForm.getEndTime()) ? queryForm.getEndTime() : null);
 		searchCriteria.setThreadName(!StringUtils.isBlankOrNull(queryForm.getThread()) ? queryForm.getThread() : null);
 		searchCriteria.setThrowable(!StringUtils.isBlankOrNull(queryForm.getThrowable()) ? queryForm.getThrowable() : null);
-		searchCriteria.setUserName(!StringUtils.isBlankOrNull(queryForm.getUser()) ? queryForm.getUser() : null);
 
 		return searchCriteria;
 	}
