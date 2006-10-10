@@ -4,7 +4,7 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-template" prefix="template"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-nested" prefix="nested"%>
-<%@ page import="gov.nih.nci.logging.webapp.util.*"%>
+<%@ page import="gov.nih.nci.logging.webapp.util.Constants"%>
 <%@ page import="gov.nih.nci.logging.webapp.viewobjects.*"%>
 
 <table summary="" cellpadding="0" cellspacing="0" border="0" width="150" height="100%">

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security-config>
+	<application-list>
+		<application>
+			<name>test</name>
+			<secured-attribute>ORGANIZATION</secured-attribute>
+		</application>
+	</application-list>
+</security-config>
