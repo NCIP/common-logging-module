@@ -36,8 +36,8 @@ public interface Constants
 	// Display Constants
 	public static String SERVER_NAME_COLLECTION = "SERVER_NAME_COLLECTION";
 	public static String LOGLEVEL_MAP= "LOGLEVEL_MAP";
-	public static Integer DEFAULT_PAGE_SIZE = 10;
-	public static Integer DEFAULT_PAGE_NUMBER = 1;
+	public static int DEFAULT_PAGE_SIZE = 10;
+	public static int DEFAULT_PAGE_NUMBER = 1;
 	public static String VIEW_PAGE_SIZE = "ViewPageSize";
 	public static String VIEW_PAGE_NUMBER = "ViewPageNumber";
 	public static String SEARCH_RESULTS_PAGE = "SearchResultsPage";

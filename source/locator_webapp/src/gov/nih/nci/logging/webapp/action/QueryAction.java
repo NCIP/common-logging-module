@@ -188,7 +188,7 @@ public class QueryAction extends Action
 				searchResultPage.getLastPageNumber();
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-				session.setAttribute(Constants.VIEW_PAGE_NUMBER, searchResultPage.getCurrentPageNumber());
+				session.setAttribute(Constants.VIEW_PAGE_NUMBER, new Integer(searchResultPage.getCurrentPageNumber()));
 				return true;
 			}
 			else
