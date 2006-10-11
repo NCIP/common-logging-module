@@ -11,6 +11,7 @@ import gov.nih.nci.logging.api.util.HibernateUtil;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,6 +27,7 @@ public class JDBCExecutor implements java.lang.Runnable
 {
 
 	private List buff;
+	private Properties props;
 	
 
 	/**
@@ -33,10 +35,13 @@ public class JDBCExecutor implements java.lang.Runnable
 	 * 
 	 * @param rows -
 	 */
-	public JDBCExecutor(List messages)
+	public JDBCExecutor(List messages, Properties props)
 	{
 		setBuff(messages);
+		setProps(props);
 	}
+
+	
 
 	/*
 	 * Executes a batch insert of the messages into the RDBMS.
@@ -53,12 +58,14 @@ public class JDBCExecutor implements java.lang.Runnable
 		}
 		catch (Exception ex)
 		{
+			ex.printStackTrace();
 			AppenderUtils.writeMsgToTmpFile(ex);
 		}
 	}
 
 	private void insert() throws Exception{
 		
+		HibernateUtil.setProperties(this.props);
 		Session session = HibernateUtil.currentSession();
 		Transaction tx = session.beginTransaction();
 		Iterator iterator = getBuff().iterator();
@@ -68,10 +75,11 @@ public class JDBCExecutor implements java.lang.Runnable
 			Object o  = (Object) iterator.next();
 		    session.save(o);
 		}
+		tx.commit();
 		session.flush();
         session.clear();
 		
-		tx.commit();
+		
 		session.close();
 	}
 	
@@ -94,6 +102,14 @@ public class JDBCExecutor implements java.lang.Runnable
 	public void setBuff(List buff)
 	{
 		this.buff = buff;
+	}
+
+	public Properties getProps() {
+		return props;
+	}
+
+	public void setProps(Properties props) {
+		this.props = props;
 	}
 
 	

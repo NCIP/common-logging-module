@@ -10,7 +10,7 @@
       <param name="dbDriverClass" value="com.mysql.jdbc.Driver" />
       <param name="dbUrl" value="jdbc:mysql://localhost:3306/clm" />
       <param name="dbUser" value="root" />
-      <param name="dbPwd" value="mysql" />
+      <param name="dbPwd" value="admin" />
 	  <param name="useFilter" value="true" />
       <layout class="org.apache.log4j.PatternLayout">
            <param name="ConversionPattern"
