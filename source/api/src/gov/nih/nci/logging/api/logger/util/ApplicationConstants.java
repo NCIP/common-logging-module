@@ -77,6 +77,13 @@ public interface ApplicationConstants
 	public static final String EXCEPTION_END_TIME_FORMAT = "End Time provided is not in "+ApplicationConstants.TIME_FORMAT+" \n";
 	
 	
+	// Dialects
+	
+	public static final String MYSQL_DIALECT = "org.hibernate.dialect.MySQLDialect";
+	public static final String ORACLE_DIALECT = "org.hibernate.dialect.OracleDialect";
+	public static final String SQLSERVER_DIALECT = "org.hibernate.dialect.SQLServerDialect";
+	
+	
 	
 	
 
