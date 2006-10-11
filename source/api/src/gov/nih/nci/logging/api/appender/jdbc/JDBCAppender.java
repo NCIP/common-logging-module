@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.AppenderSkeleton;
@@ -383,7 +384,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		List rows = getBuff();
 		setBuff(new ArrayList());
 		setRecordCtr(0);
-		JDBCExecutor exe = new JDBCExecutor(rows);
+		JDBCExecutor exe = new JDBCExecutor(rows,getJDBCProperties() );
 
 		// execute the batch insert
 		new Thread(exe).start();
@@ -392,6 +393,27 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 
 	
 	
+	private Properties getJDBCProperties() {
+		Properties props = new Properties();
+        props.setProperty("hibernate.connection.driver_class",getDbDriverClass());
+        props.setProperty("hibernate.connection.url",getDbUrl());
+        props.setProperty("hibernate.connection.username",getDbUser());	
+        props.setProperty("hibernate.connection.password",getDbPwd());
+        
+        if(getDbUrl().indexOf(":mysql")> -1){
+        	props.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+        }
+        if(getDbUrl().indexOf(":oracle")> -1){
+        	props.setProperty("hibernate.dialect","org.hibernate.dialect.OracleDialect");
+        }
+        if(getDbUrl().indexOf(":sqlserver")> -1){
+        	props.setProperty("hibernate.dialect","org.hibernate.dialect.SQLServerDialect");
+        }
+        
+        
+        return props;
+	}
+
 	protected static String getThrowable(LoggingEvent le)
 	{
 		return AppenderUtils.getThrowable(le);

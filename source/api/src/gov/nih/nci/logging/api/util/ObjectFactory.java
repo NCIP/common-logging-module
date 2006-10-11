@@ -1,42 +1,81 @@
 package gov.nih.nci.logging.api.util;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
-
 /**
  * ObjectFactory
- *
+ * 
  */
-public class ObjectFactory
-{
-	private static XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("clm_spring-config.xml"));;
-	
+public class ObjectFactory {
+	private static XmlBeanFactory factory;
+
+	private static XmlBeanFactory fact;
+
 	public static final String LogMessageDAO = "LogMessageDAO";
-	public static final String HibernateSessionFactory= "HibernateSessionFactory";
+
+	public static final String HibernateSessionFactory = "HibernateSessionFactory";
+
 	public static final String TestDAO = "TestDAO";
-	
-	private ObjectFactory()
-	{
+
+	static {
+
+					factory = new XmlBeanFactory(new ClassPathResource("clm_spring-config.xml"));
+		
+		/*java.io.InputStream inputStream = FileLoader.getInstance()
+				.getFileAsStream("clm.properties");
+		Properties properties = new Properties();
+		if (inputStream != null) {
+
+			try {
+				properties.load(inputStream);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			validateProperties(properties);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+
+		if (properties.size() > 0) {
+
+			PropertyOverrideConfigurer cfg = new PropertyOverrideConfigurer();
+			
+			cfg.setProperties(properties);
+			cfg.postProcessBeanFactory(fact);
+			
+		}
+
+		factory = fact;
+*/
 	}
 
-	/**
-	 * Returns an instance of the Object Factory. Since it is implemented as a singleton, 
-	 * only one instance will be created during the lifecycle of JVM 
-	 * @return
-	 */
+	private ObjectFactory() {
+	}
 
+	
 	/**
-	 *  get Object instance from the class name.
+	 * get Object instance from the class name.
+	 * 
 	 * @param classname
 	 * @return
 	 */
-	public static Object getObject(String classname){
-		
-		return  factory.getBean(classname);
-	}
-	
+	public static Object getObject(String classname) {
 
-	
-	
+		return factory.getBean(classname);
+	}
+
 }

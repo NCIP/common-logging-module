@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
@@ -100,8 +101,13 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	 */
 	public Collection retrieveServer(){
 		String queryStr = "select distinct log.server from gov.nih.nci.logging.api.domain.LogMessage log where log.server is not null";
-		Collection  col =  getHibernateTemplate().find(queryStr);
-		return col;
+		
+		Session session = HibernateUtil.currentSession();
+		
+		Query query = session.createQuery(queryStr);		
+		List results = query.list();
+		
+		return (Collection) results;
 	}
 	
 	/* (non-Javadoc)
