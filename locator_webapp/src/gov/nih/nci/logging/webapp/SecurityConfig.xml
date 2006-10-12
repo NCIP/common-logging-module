@@ -2,7 +2,7 @@
 <security-config>
 	<application-list>
 		<application>
-			<name>test</name>
+			<name>HUB</name>
 			<secured-attribute>ORGANIZATION</secured-attribute>
 		</application>
 	</application-list>
