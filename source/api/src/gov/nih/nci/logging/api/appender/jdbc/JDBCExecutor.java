@@ -7,6 +7,7 @@ package gov.nih.nci.logging.api.appender.jdbc;
  * <!-- LICENSE_TEXT_END -->
  */
 import gov.nih.nci.logging.api.appender.util.AppenderUtils;
+import gov.nih.nci.logging.api.domain.LogMessage;
 import gov.nih.nci.logging.api.util.HibernateUtil;
 import gov.nih.nci.logging.api.util.StringUtils;
 
@@ -100,8 +101,8 @@ public class JDBCExecutor implements java.lang.Runnable
 			Iterator iterator = getBuff().iterator();
 			while (iterator.hasNext())
 			{
-				Object o  = (Object) iterator.next();
-				List l =  SQLGenerator.getSQLStatements(o);
+				LogMessage logMessage  = (LogMessage) iterator.next();
+				List l =  SQLGenerator.getSQLStatements(logMessage);
 				list.addAll(l);
 				
 			    
