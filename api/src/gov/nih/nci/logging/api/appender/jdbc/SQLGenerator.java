@@ -41,21 +41,16 @@ public class SQLGenerator {
 	
 	
 
-	public static List getSQLStatements(Object object) {
-		List  l = new ArrayList();
+	public static List getSQLStatements(LogMessage logMessage) {
+		if(logMessage==null) return new ArrayList();
 		
-		if (object instanceof LogMessage) {
-
-			LogMessage logMessage = (LogMessage) object;
-			if (logMessage.isObjectStateLog()) {
-				return getObjectStateSQLStatements(logMessage);
-			} else {
-				List list = new ArrayList();
-				list.add(getLogMessageSQLStatement(logMessage));
-				return list;
-			}
+		if (logMessage.isObjectStateLog()) {
+			return getObjectStateSQLStatements(logMessage);
+		} else {
+			List list = new ArrayList();
+			list.add(getLogMessageSQLStatement(logMessage));
+			return list;
 		}
-		return new ArrayList();
 	}
 
 	private static List getObjectStateSQLStatements(LogMessage logMessage) {
