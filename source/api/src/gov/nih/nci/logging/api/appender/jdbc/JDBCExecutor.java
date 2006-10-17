@@ -112,6 +112,10 @@ public class JDBCExecutor implements java.lang.Runnable
 				stmt.execute((String)iter.next());
 			}
 			conn.commit();
+		}catch(Exception e){
+			conn.rollback();
+			conn.close();
+			throw e;
 		}
 		finally
 		{
