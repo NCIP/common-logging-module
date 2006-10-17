@@ -8,7 +8,12 @@ package gov.nih.nci.logging.api.appender.jdbc;
  */
 import gov.nih.nci.logging.api.appender.util.AppenderUtils;
 import gov.nih.nci.logging.api.util.HibernateUtil;
+import gov.nih.nci.logging.api.util.StringUtils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -28,7 +33,11 @@ public class JDBCExecutor implements java.lang.Runnable
 
 	private List buff;
 	private Properties props;
-	
+	private String dbUrl = null;
+	private String dbDriverClass = null;
+	private String dbUser = null;
+	private String dbPwd = null;
+
 
 	/**
 	 * Constructor for JDBCExcecutor.
@@ -39,9 +48,23 @@ public class JDBCExecutor implements java.lang.Runnable
 	{
 		setBuff(messages);
 		setProps(props);
+		setDBProperties();
 	}
 
 	
+
+	private void setDBProperties() {
+		if(this.props!=null){
+			
+			this.setDbDriverClass(StringUtils.initString(this.props.getProperty("hibernate.connection.driver_class")));
+			this.setDbPwd(StringUtils.initString(this.props.getProperty("hibernate.connection.password")));
+			this.setDbUser(StringUtils.initString(this.props.getProperty("hibernate.connection.username")));
+			this.setDbUrl(StringUtils.initString(this.props.getProperty("hibernate.connection.url")));
+		}
+		
+	}
+
+
 
 	/*
 	 * Executes a batch insert of the messages into the RDBMS.
@@ -65,25 +88,70 @@ public class JDBCExecutor implements java.lang.Runnable
 
 	private void insert() throws Exception{
 		
-		HibernateUtil.setProperties(this.props);
-		Session session = HibernateUtil.currentSession();
-		Transaction tx = session.beginTransaction();
-		Iterator iterator = getBuff().iterator();
-		int i=0;
-		while (iterator.hasNext())
+		Connection conn = null;
+		Statement stmt = null;
+		try
 		{
-			Object o  = (Object) iterator.next();
-		    session.save(o);
+			conn = createConn();
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			Iterator i = getBuff().iterator();
+			List list = new ArrayList();
+			Iterator iterator = getBuff().iterator();
+			while (iterator.hasNext())
+			{
+				Object o  = (Object) iterator.next();
+				List l =  SQLGenerator.getSQLStatements(o);
+				list.addAll(l);
+				
+			    
+			    
+			}
+			Iterator iter = list.iterator();
+			while(iter.hasNext()){
+				stmt.execute((String)iter.next());
+			}
+			conn.commit();
 		}
-		tx.commit();
-		session.flush();
-        session.clear();
-		
-		
-		session.close();
+		finally
+		{
+			try
+			{
+				stmt.close();
+			}
+			catch (Exception ex)
+			{
+			}
+			try
+			{
+				conn.close();
+			}
+			catch (Exception ex)
+			{
+			}
+		}
 	}
 	
-	
+
+
+
+	protected Connection createConn()
+	{
+		Connection con = null;
+		try
+		{
+			if (getDbDriverClass() != null)
+			{
+				Class.forName(getDbDriverClass());
+			}
+			con = DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPwd());
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		return con;
+	}
 	
 	
 
@@ -110,6 +178,56 @@ public class JDBCExecutor implements java.lang.Runnable
 
 	public void setProps(Properties props) {
 		this.props = props;
+	}
+
+
+
+	public String getDbDriverClass() {
+		
+		return dbDriverClass;
+	}
+
+
+
+	public void setDbDriverClass(String dbDriverClass) {
+		this.dbDriverClass = dbDriverClass;
+	}
+
+
+
+	public String getDbPwd() {
+		return dbPwd;
+	}
+
+
+
+	public void setDbPwd(String dbPwd) {
+		this.dbPwd = dbPwd;
+	}
+
+
+
+	public String getDbUrl() {
+		
+		return dbUrl;
+	}
+
+
+
+	public void setDbUrl(String dbUrl) {
+		this.dbUrl = dbUrl;
+	}
+
+
+
+	public String getDbUser() {
+		return dbUser;
+	}
+
+
+
+	public void setDbUser(String dbUser) {
+		this.dbUser = dbUser;
 	}
 
 	
