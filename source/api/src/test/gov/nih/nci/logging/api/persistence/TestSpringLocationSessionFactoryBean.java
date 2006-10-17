@@ -12,7 +12,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
-public class Testjunk {
+public class TestSpringLocationSessionFactoryBean {
 
 	/**
 	 * @param args

@@ -74,7 +74,7 @@ public class TestSQLInserts {
 
 
 
-	private static Object getLogMessage_NonObjectState() {
+	private static LogMessage getLogMessage_NonObjectState() {
 
 		LogMessage lm = new LogMessage();
 		
