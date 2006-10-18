@@ -31,7 +31,7 @@ public interface Constants {
 	// Sort Parameters
 	public static String SORT_BY_PARAMETER_APPLICATION = "application";
 	public static String SORT_BY_PARAMETER_LOG_LEVEL = "category";
-	public static String SORT_BY_PARAMETER_DATE = "created_on";
+	public static String SORT_BY_PARAMETER_DATE = "createdOn";
 	public static String SORT_BY_PARAMETER_OBJECT_ID = "object_id";
 	public static String SORT_BY_PARAMETER_OBJECT_NAME = "object_name";
 	public static String SORT_BY_PARAMETER_OPERATION = "operation";
@@ -44,8 +44,8 @@ public interface Constants {
 
 	
 	//	Log Type
-	public static String EVENT_LOG_TYPE = "ascending";
-	public static String OBJECT_STATE_LOG_TYPE= "descending";
+	public static String EVENT_LOG_TYPE = "eventLog";
+	public static String OBJECT_STATE_LOG_TYPE= "objectStateLog";
 	
 	// Sort Order
 	public static String SORT_ORDER_ASCENDING = "ascending";

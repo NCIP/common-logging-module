@@ -37,7 +37,7 @@
 			name="loginForm" path="/Login" scope="request" validate="true"
 			type="gov.nih.nci.logging.webapp.action.LoginAction">
 			<forward name="showPublicLogin" path="page.public.home" />
-			<forward name="showHome" path="page.home" />
+			<forward name="showHome" path="/Query.do" />
 			<forward name="showQuery" path="page.query" />
 			<forward name="showQueryResults" path="page.query.results" />
 		</action>

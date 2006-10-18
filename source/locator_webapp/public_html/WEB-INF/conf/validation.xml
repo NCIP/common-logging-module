@@ -130,7 +130,7 @@
 				</var>
 			</field>
 			<field property="startDate" depends="date,required">
-				<msg name="date" key="query.date.msg" />
+				<msg name="date" key="label.start_date" />
 				<arg0 key="query.startDate" />
 				<var>
 					<var-name>datePatternStrict</var-name>
@@ -138,7 +138,7 @@
 				</var>
 			</field>
 			<field property="startTime" depends="date,required">
-				<msg name="date" key="query.time.msg" />
+				<msg name="date" key="label.start_time" />
 				<arg0 key="query.startTime" />
 				<var>
 					<var-name>datePattern</var-name>
@@ -146,23 +146,23 @@
 				</var>
 			</field>
 			<field property="endDate" depends="date">
-				<msg name="date" key="query.date.msg" />
+				<msg name="date" key="label.end_date" />
 				<arg0 key="query.startDate" />
 				<var>
 					<var-name>datePatternStrict</var-name>
 					<var-value>MM/dd/yyyy</var-value>
 				</var>
 			</field>
-			<field property="startTime" depends="date,required">
-				<msg name="date" key="query.time.msg" />
+			<field property="endTime" depends="date,required">
+				<msg name="date" key="label.end_time" />
 				<arg0 key="query.startTime" />
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>h:mm a</var-value>
 				</var>
 			</field>
-			<field property="maxRecordCount" depends="integer,range">
-				<arg0 key="query.maxRecordCount" />
+			<field property="recordCount" depends="integer,range">
+				<arg0 key="label.records_per_page" />
 				<arg1 name="range" key="${var:min}" resource="false" />
 				<arg2 name="range" key="${var:max}" resource="false" />
 				<var>

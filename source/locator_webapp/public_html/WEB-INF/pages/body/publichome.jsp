@@ -54,8 +54,8 @@
 										<html:form  styleId="LoginForm" action="/Login">
 										
 										<tr>
-											<td colspan="2">
-										 		<html:errors/>
+											<td colspan="2"><font color="red"">
+										 		<html:errors/></font>
 										 	</td>
 									 	</tr>
 										<tr>
