@@ -174,7 +174,7 @@ public class ApplicationProperties implements ApplicationConstants {
 		if (myInstance == null) {
 				myInstance = new ApplicationProperties();
 		}
-		logger.info("Inside ApplicationProperties " + myInstance);
+		//logger.info("Inside ApplicationProperties " + myInstance);
 		return myInstance;
 
 	}
@@ -191,7 +191,7 @@ public class ApplicationProperties implements ApplicationConstants {
 				myInstance = new ApplicationProperties(propertyFile);
 			}
 		}
-		logger.info("Inside ApplicationProperties " + myInstance);
+		//logger.info("Inside ApplicationProperties " + myInstance);
 		return myInstance;
 
 	}

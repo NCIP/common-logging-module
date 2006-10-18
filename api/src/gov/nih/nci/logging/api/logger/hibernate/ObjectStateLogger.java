@@ -72,6 +72,7 @@ public class ObjectStateLogger
 					String myMessage = null;
 					myMessage = MessageGenerator.generateStringMessage(obj, id, currentState, prevState, propertyNames, types, operation, comment,objectID);
 					logMessage(myMessage);
+					
 					}
 				else if (ApplicationProperties.getInstance().getMessageLoggingFormat().equalsIgnoreCase(ApplicationProperties.OBJECT_STATE_LOGGER_MESSAGE_FORMAT_XML))
 				{
