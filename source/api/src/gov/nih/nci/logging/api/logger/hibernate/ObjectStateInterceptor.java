@@ -79,16 +79,13 @@ public class ObjectStateInterceptor extends EmptyInterceptor
 		UserInfo user = (UserInfo) ThreadVariable.get();
 		if (arg0.wasCommitted() && user.getTransactionLogs()!= null )
 		{
-			for (Iterator it = user.getTransactionLogs().iterator(); it.hasNext();)
-			{
-//				System.out.println("-- start to write the msgs to database for user: " + user.getUsername());
-				logger.log(it.next().toString());
-				// remove this msg from the Buffer
+			Iterator it = user.getTransactionLogs().iterator(); 
+			while(it.hasNext()){
+				String str = (String)it.next();
+				logger.log(str);
 				it.remove();
 			}
-		}
-
-		else
+		}else
 		{
 			// clear the logs Buffer
 			clearTransactionLogs();

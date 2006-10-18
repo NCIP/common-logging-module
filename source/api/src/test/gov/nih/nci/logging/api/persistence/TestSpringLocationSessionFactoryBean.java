@@ -51,7 +51,7 @@ public class TestSpringLocationSessionFactoryBean {
         props.setProperty("hibernate.connection.driver_class","com.mysql.jdbc.Driver");
         props.setProperty("hibernate.connection.url","jdbc:mysql://localhost:3306/clm");
         props.setProperty("hibernate.connection.username","root");	
-        props.setProperty("hibernate.connection.password","mysql");
+        props.setProperty("hibernate.connection.password","admin");
         props.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
         props.setProperty("jdbc.batch_size","30");
         return props;
@@ -62,7 +62,7 @@ public class TestSpringLocationSessionFactoryBean {
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUrl("jdbc:mysql://localhost:3306/clm");
         ds.setUsername("root");	
-        ds.setPassword("mysql");
+        ds.setPassword("admin");
         /*props.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
         props.setProperty("jdbc.batch_size","30");*/
         return ds;

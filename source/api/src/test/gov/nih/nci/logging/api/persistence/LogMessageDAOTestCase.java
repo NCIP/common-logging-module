@@ -99,11 +99,12 @@ public class LogMessageDAOTestCase extends TestCase
 
 	public void testRetrieveByID()
 	{
+		try{
 		logMessageDAO = (LogMessageDAO) ObjectFactory.getObject(ObjectFactory.LogMessageDAO);
 		assertNotNull(logMessageDAO);
 
 		LogMessage logmessage = null;
-		logmessage = (LogMessage) logMessageDAO.retrieveObjectById(LogMessage.class, new Long(3714));
+		logmessage = (LogMessage) logMessageDAO.retrieveObjectById(LogMessage.class, new Long(1083));
 
 		LogMessage oslm = (LogMessage) logmessage;
 		// System.out.println("Object State Log.");
@@ -127,6 +128,9 @@ public class LogMessageDAOTestCase extends TestCase
 			LogMessage elm = (LogMessage) logmessage;
 			// System.out.println("Event Log.");
 			System.out.println(elm.getMessage());
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
@@ -165,19 +169,15 @@ public class LogMessageDAOTestCase extends TestCase
 			Iterator iter = collection.iterator();
 			while (iter.hasNext())
 			{
-				Object logmessage = (Object) iter.next();
-				if (logmessage.getClass().getName() == LogMessage.class.getName())
-				{
-					LogMessage elm = (LogMessage) logmessage;
+				LogMessage logmessage = (LogMessage) iter.next();
+				
+				
+					LogMessage lm = (LogMessage) logmessage;
 					// System.out.println("Event Log Message:
 					// "+elm.getMessage());
-				}
-				if (logmessage.getClass().getName() == LogMessage.class.getName())
-				{
-					LogMessage oslm = (LogMessage) logmessage;
-					// System.out.println("Object State Log Message:
-					// "+oslm.getComment());
-				}
+					if(lm.isObjectStateLog()){
+						System.out.println(lm.getObjectID());
+					}
 			}
 		}
 	}
@@ -236,7 +236,7 @@ public class LogMessageDAOTestCase extends TestCase
 	private SearchCriteria getSearchCriteriaThatGivesResults()
 	{
 		SearchCriteria searchCriteria = new SearchCriteria();
-		searchCriteria.setApplication("test");
+		searchCriteria.setApplication("csm");
 
 		String ll = "1155756542578";
 
@@ -245,10 +245,10 @@ public class LogMessageDAOTestCase extends TestCase
 		d.setTime(l);
 		d.toString();
 
-		searchCriteria.setStartDate("01/01/2005");
-		searchCriteria.setStartTime("00:00 AM");
-		searchCriteria.setEndDate("09/15/2006");
-		searchCriteria.setEndTime("07:00 PM");
+		//searchCriteria.setStartDate("01/01/2005");
+		//searchCriteria.setStartTime("00:00 AM");
+	//	searchCriteria.setEndDate("09/15/2006");
+	//	searchCriteria.setEndTime("07:00 PM");
 		//searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
 		//searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
 		return searchCriteria;

@@ -223,9 +223,9 @@ public class QueryTestCase extends TestCase {
     
 	private SearchCriteria getSearchCriteriaThatGivesResults() {
 		SearchCriteria searchCriteria = new SearchCriteria();
-		searchCriteria.setApplication("test");
-		searchCriteria.setLogLevel("WARN");
-		searchCriteria.setObjectID("Bill Burke");
+		searchCriteria.setApplication("csm");
+		//searchCriteria.setLogLevel("WARN");
+		//searchCriteria.setObjectID("Bill Burke");
 		String ll ="1155756542578";
 		
 		java.util.Date d = new java.util.Date();
