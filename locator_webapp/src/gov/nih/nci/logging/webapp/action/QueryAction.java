@@ -3,6 +3,8 @@
 
 package gov.nih.nci.logging.webapp.action;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -75,28 +77,34 @@ public class QueryAction extends Action
 			session.setAttribute(Constants.SERVER_NAME_COLLECTION, SystemManager.getServerNameCollection());
 		}
 		
+		// Set Search Result Page information
+		SearchResultPage searchResultPage = new SearchResultPage();
+		searchResultPage.setTotalResultSize(0);
+		
 		
 		
 		if (!StringUtils.isBlankOrNull(queryForm.getActivity()))
 		{
-
 			queryForm.setActivity(null);
+			if(!isQueryFormValidated(queryForm, searchResultPage)){
+				
+				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
+				return mapping.findForward(Constants.FORWARD_QUERY_RESULTS);
+			}
+			
+			
 			session.setAttribute(Constants.CURRENT_FORM, queryForm);
 
 			session.removeAttribute(Constants.SEARCH_RESULTS_PAGE);
 			session.removeAttribute(Constants.VIEW_PAGE_NUMBER);
 
-			boolean success = false;
 			try
 			{
-				success = performQuery(queryForm, session);
+				boolean	success = performQuery(queryForm, session);
 			}
 			catch (Exception e)
 			{
-				// Set Search Result Page information
-				SearchResultPage searchResultPage = new SearchResultPage();
-				searchResultPage.setTotalResultSize(0);
-				searchResultPage.setSearchResultMessage(e.getMessage());
+				searchResultPage.setSearchResultMessage(e.getMessage());	
 				// Set Search Results
 				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);				
 			}
@@ -110,10 +118,17 @@ public class QueryAction extends Action
 			java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat(ApplicationConstants.TIME_FORMAT);
 			
 			Date currentDate = new Date(System.currentTimeMillis());
-			queryForm.setStartDate(dateFormat.format(currentDate));
-			queryForm.setStartTime(timeFormat.format(currentDate));
-			queryForm.setEndDate(dateFormat.format(currentDate));
-			queryForm.setEndTime(timeFormat.format(currentDate));
+			Calendar cal = Calendar.getInstance();  
+			cal.setTime(currentDate);
+			queryForm.setEndDate(dateFormat.format(cal.getTime()));
+			queryForm.setEndTime(timeFormat.format(cal.getTime()));
+			
+			cal.add(Calendar.HOUR,-1);
+			
+			queryForm.setStartDate(dateFormat.format(cal.getTime()));
+			queryForm.setStartTime(timeFormat.format(cal.getTime()));
+			
+			
 			queryForm.setApplication(applicationName);
 			
 			queryForm.setRecordCount(new Integer(Constants.DEFAULT_PAGE_SIZE).toString());
@@ -122,6 +137,64 @@ public class QueryAction extends Action
 		}
 		return mapping.findForward(Constants.FORWARD_QUERY);
 
+	}
+
+	private boolean isQueryFormValidated(final QueryForm queryForm, SearchResultPage searchResultPage) {
+
+		//
+		
+			
+			StringBuffer message = new StringBuffer();
+			
+			try{
+				int recordCount = new Integer(queryForm.getRecordCount()).intValue();
+				if(recordCount < 1 || recordCount > 999){
+					throw new Exception();
+				}
+			}catch(Exception e){
+				message.append("\nRecord Count should be in the range of 1 to 999");
+			}
+			
+			try{
+				java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat(ApplicationConstants.DISPLAY_DATE_FORMAT);
+				
+				String startDateTime = queryForm.getStartDate()+" , "+queryForm.getStartTime();
+				Date start=null; 
+				try {
+					start= dateFormat.parse(startDateTime);
+					if(start== null) throw new Exception(); 
+				} catch (Exception e) {
+					message.append("Start Date and/or Time is invalid. Please correct the start date and time format.");
+				}
+				
+				
+				String endDateTime = queryForm.getEndDate()+" , "+queryForm.getEndTime();
+				Date end = null;
+				try {
+					end = dateFormat.parse(endDateTime);
+					if(end == null) throw new Exception();
+				} catch (Exception e) {
+					message.append("End Date and/or Time is invalid. Please correct the end date and time format.");
+				}
+				
+				if(start!=null && end!=null){
+					if(start.compareTo(end) > 0){
+						message.append("\nStart Date and Time should be less than End Date and Time. Please correct the date and time.");
+						
+					}
+				}
+			}catch(Exception e){
+				message.append("\nStart Date and Time should be less than End Date and Time. Please correct the date and time.");
+			}
+		
+			if(message.length()>0){
+				searchResultPage.setSearchResultMessage(message.toString());
+				return false;
+			}
+			
+			
+		
+		return true;
 	}
 
 	private boolean performQuery(QueryForm queryForm, HttpSession session) throws Exception
@@ -274,6 +347,7 @@ public class QueryAction extends Action
 		searchCriteria.setEndTime(!StringUtils.isBlankOrNull(queryForm.getEndTime()) ? queryForm.getEndTime() : null);
 		searchCriteria.setThreadName(!StringUtils.isBlankOrNull(queryForm.getThread()) ? queryForm.getThread() : null);
 		searchCriteria.setThrowable(!StringUtils.isBlankOrNull(queryForm.getThrowable()) ? queryForm.getThrowable() : null);
+		searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_DATE);
 
 		return searchCriteria;
 	}

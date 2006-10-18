@@ -30,17 +30,16 @@
 					<td class="formTitle" height="20" colspan="3"><bean:message
 						key="label.search_criteria" /></td>
 				</tr>
+
 				<tr>
 					<td class=formRequiredNotice width=5>*</td>
 					<td class=formLabel><LABEL for=field1><bean:message
 						key="label.application" /></td>
-					<td class=formField>
-					<logic:present name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class="formField" id="application" size="30" name="application" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="application"/>" readonly="readonly">
-					</logic:present>
-					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class=formField id=application size=30 name=application value="<bean:write name="queryForm" property="application"/>" readonly="readonly">
-					</logic:notPresent>						
+											
+					<td class=formLabelLeft><LABEL for=field1><b>
+					<html:hidden property="application" value="test"/>
+					<bean:write name="queryForm" property="application"/>
+					</b></LABEL>
 					</td>
 				</tr>				
 				<bean:define name="<%=Constants.LOGLEVEL_MAP%>" id="logLevelMap" />
@@ -258,7 +257,7 @@
 						key="label.records_per_page" /></LABEL></td>
 					<td class=formField>
 					<logic:present name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class="formField" id="recordCount" size="10" name="recordCount" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="recordCount"/>" >
+						<INPUT class="formField" type="integer" id="recordCount" size="10" name="recordCount" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="recordCount"/>" >
 					</logic:present>
 					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
 						<INPUT class=formField id=recordCount size=10 name=recordCount value="<bean:write name="queryForm" property="recordCount"/>">
@@ -271,13 +270,16 @@
 						<tr>
 							<td><input class="actionButton" type="submit"
 								value='<bean:message key="label.submit_button"/>' /></td>
-							<td><input class="actionButton" type="reset"
+							</html:form>
+							<html:form  action="/Query">	
+							<td><input class="actionButton" type="submit"
 								value='<bean:message key="label.reset_button"/>' /></td>
+							</html:form>
 						</tr>
 					</table>
 					<!-- action buttons end --></td>
 				</tr>
-			</html:form>
+
 
 		</table>
 		</td>
