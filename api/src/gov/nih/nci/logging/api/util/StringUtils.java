@@ -50,7 +50,7 @@ public class StringUtils {
 	 * @param str
 	 * @return
 	 */
-	public static String initString(final String str) {
+	public static String initString(String str) {
 		String test = "";
 		if (str != null) {
 			test = str;

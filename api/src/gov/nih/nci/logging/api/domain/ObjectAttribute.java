@@ -57,7 +57,7 @@ public class ObjectAttribute implements Serializable {
 	/**
 	 * @param currentValue The currentValue to set.
 	 */
-	public void setCurrentValue(String CurrentValue) {
+	public void setCurrentValue(String currentValue) {
 		this.currentValue = currentValue;
 	}
 	/**
