@@ -21,12 +21,12 @@ public class SystemManager
 
 	/**
 	 * @return
+	 * @throws Exception 
 	 */
-	public static Collection getServerNameCollection()
+	public static Collection getServerNameCollection() throws Exception
 	{
-		if (serverNameCollection == null)
-		{
-			serverNameCollection= new ArrayList();
+		
+			Collection serverNameCollection =	serverNameCollection= new ArrayList();
 			try
 			{
 				Query query = new QueryImpl();
@@ -36,8 +36,10 @@ public class SystemManager
 					serverNameCollection.add(new ServerObject((String)iter.next()));
 				}
 			}
-			catch (QuerySpecificationException e) { 	}
-		}	
+			catch (QuerySpecificationException e) { 
+				throw new Exception("Unable to retrieve list of Servers.");
+			}
+		
 		return serverNameCollection;
 	}
 	
