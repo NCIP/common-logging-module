@@ -350,13 +350,28 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 				ObjectAttribute oa = new ObjectAttribute();
 				oa.setAttributeName(attribute);
 				if(previousAttributes.containsKey(attribute)){
-					oa.setPreviousValue(StringUtils.initString((String)previousAttributes.get(attribute)));
+					String temp = (String)previousAttributes.get(attribute);
+					oa.setPreviousValue(StringUtils.initString(temp));
 				}
 				if(currentAttributes.containsKey(attribute)){
-					oa.setCurrentValue(StringUtils.initString((String)previousAttributes.get(attribute)));
+					String temp = (String)currentAttributes.get(attribute);
+					oa.setCurrentValue(StringUtils.initString(temp));
 				}
 				//
 				logMessage.addObjectAttribute(oa);
+			}
+		}else{
+			if(previousAttributes.size()>0){
+				Iterator iterator = previousAttributes.keySet().iterator();
+				while(iterator.hasNext()){
+					String attribute = (String)iterator.next();
+					ObjectAttribute oa = new ObjectAttribute();
+					oa.setAttributeName(attribute);
+					if(previousAttributes.containsKey(attribute)){
+						oa.setPreviousValue(StringUtils.initString((String)previousAttributes.get(attribute)));
+					}
+					logMessage.addObjectAttribute(oa);
+				}
 			}
 		}
 		return logMessage;
