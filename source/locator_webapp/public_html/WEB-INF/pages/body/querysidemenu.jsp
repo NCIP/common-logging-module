@@ -36,10 +36,13 @@
 					<td class=formLabel><LABEL for=field1><bean:message
 						key="label.application" /></td>
 											
-					<td class=formLabelLeft><LABEL for=field1><b>
-					<html:hidden property="application" value="test"/>
-					<bean:write name="queryForm" property="application"/>
-					</b></LABEL>
+					<td class=formField>
+					<logic:present name="<%=Constants.CURRENT_FORM%>">
+						<INPUT class="formField" id="application" size="30" name="application" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="application"/>" readonly="readonly">
+					</logic:present>
+					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+						<INPUT class=formField id=application size=30 name=application value="<bean:write name="queryForm" property="application"/>" readonly="readonly">
+					</logic:notPresent>						
 					</td>
 				</tr>				
 				<bean:define name="<%=Constants.LOGLEVEL_MAP%>" id="logLevelMap" />
