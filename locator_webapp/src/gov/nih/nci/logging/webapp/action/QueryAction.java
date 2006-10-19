@@ -68,18 +68,25 @@ public class QueryAction extends Action
 		{
 			applicationName = (String) session.getAttribute(Constants.APPLICATION_NAME);
 		}
+
+		//Set Search Result Page information
+		SearchResultPage searchResultPage = new SearchResultPage();
+		searchResultPage.setTotalResultSize(0);
 		
 
 		if(session.getAttribute(Constants.LOGLEVEL_MAP)==null){
 			session.setAttribute(Constants.LOGLEVEL_MAP, SystemManager.getLogLevelMap());
 		}
 		if(session.getAttribute(Constants.SERVER_NAME_COLLECTION)==null){
-			session.setAttribute(Constants.SERVER_NAME_COLLECTION, SystemManager.getServerNameCollection());
+			try {
+				session.setAttribute(Constants.SERVER_NAME_COLLECTION, SystemManager.getServerNameCollection());
+			} catch (Exception e) {
+				searchResultPage.setSearchResultMessage(e.getMessage());	
+				session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
+				return mapping.findForward(Constants.FORWARD_QUERY);
+			}
 		}
 		
-		// Set Search Result Page information
-		SearchResultPage searchResultPage = new SearchResultPage();
-		searchResultPage.setTotalResultSize(0);
 		
 		
 		
