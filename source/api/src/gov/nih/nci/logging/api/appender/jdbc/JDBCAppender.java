@@ -181,7 +181,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		LogMessage logMessage;
 		if(EVENT_LOG_TYPE.equalsIgnoreCase(logType)){
 			logMessage = new LogMessage();
-			logMessage.setApplication(clean(getApplication()));
+			logMessage.setApplication(StringUtils.initString(clean(getApplication())));
 			logMessage.setLogLevel(clean(level));
 			java.util.Date d = new java.util.Date();
 			d.setTime(new Long(System.currentTimeMillis()).longValue());
@@ -261,12 +261,12 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 					
 					String attributeName= temp.substring(0,temp.indexOf("="));
 					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_NAME.equalsIgnoreCase(attributeName)){
-						//String operationName= temp.substring(temp.indexOf("=")+1);
-						logMessage.setOperation(temp.substring(temp.indexOf("=")+1));
+						String operationName= temp.substring(temp.indexOf("=")+1);
+						logMessage.setOperation(StringUtils.initString(operationName));
 					}
 					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_COMMENT.equalsIgnoreCase(attributeName)){
-						//String comment= temp.substring(temp.indexOf("=")+1);
-						logMessage.setMessage(temp.substring(temp.indexOf("=")+1));
+						String comment= temp.substring(temp.indexOf("=")+1);
+						logMessage.setMessage(StringUtils.initString(comment));
 					}
 					
 				}
@@ -282,10 +282,10 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 					
 					String attributeName= temp.substring(0,temp.indexOf("="));
 					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_OBJECT_NAME.equalsIgnoreCase(attributeName)){
-						logMessage.setObjectName(temp.substring(temp.indexOf("=")+1));
+						logMessage.setObjectName(StringUtils.initString(temp.substring(temp.indexOf("=")+1)));
 					}
 					if(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION_OBJECT_IDENTIFIER_ATTRIBUTE_VALUE.equalsIgnoreCase(attributeName)){
-						logMessage.setObjectID(temp.substring(temp.indexOf("=")+1));
+						logMessage.setObjectID(StringUtils.initString(temp.substring(temp.indexOf("=")+1)));
 					}
 				}
 			}

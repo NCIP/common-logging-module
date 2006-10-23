@@ -223,7 +223,7 @@ public class QueryTestCase extends TestCase {
     
 	private SearchCriteria getSearchCriteriaThatGivesResults() {
 		SearchCriteria searchCriteria = new SearchCriteria();
-		searchCriteria.setApplication("csm");
+		searchCriteria.setApplication("test");
 		//searchCriteria.setLogLevel("WARN");
 		//searchCriteria.setObjectID("Bill Burke");
 		String ll ="1155756542578";
@@ -235,9 +235,13 @@ public class QueryTestCase extends TestCase {
 		
 		
 		searchCriteria.setStartDate("01/01/2005");
+		
 		searchCriteria.setStartTime("00:00 AM");
-		searchCriteria.setEndDate("09/13/2006");
+		searchCriteria.setEndDate("10/24/2006");
 		searchCriteria.setEndTime("00:00 AM");
+		searchCriteria.setObjectID("pen");
+		//searchCriteria.setObjectName("test.application.domainobjects.Item");
+		//searchCriteria.setOrganization("OrganizationA");
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
 		return searchCriteria;
