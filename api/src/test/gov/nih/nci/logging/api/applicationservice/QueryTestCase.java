@@ -239,9 +239,9 @@ public class QueryTestCase extends TestCase {
 		searchCriteria.setStartTime("00:00 AM");
 		searchCriteria.setEndDate("10/24/2006");
 		searchCriteria.setEndTime("00:00 AM");
-		searchCriteria.setObjectID("pen");
-		//searchCriteria.setObjectName("test.application.domainobjects.Item");
-		//searchCriteria.setOrganization("OrganizationA");
+		searchCriteria.setObjectID("Bill Burke");
+		searchCriteria.setObjectName("test.application.domainobjects.Customer");
+		searchCriteria.setOrganization("OrganizationA");
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
 		return searchCriteria;
