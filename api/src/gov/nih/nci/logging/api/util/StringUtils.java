@@ -53,7 +53,7 @@ public class StringUtils {
 	public static String initString(String str) {
 		String test = "";
 		if (str != null) {
-			test = str;
+			test = str.trim();
 		}
 		return test;
 	}
