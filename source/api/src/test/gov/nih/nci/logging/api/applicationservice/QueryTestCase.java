@@ -105,10 +105,11 @@ public class QueryTestCase extends TestCase {
 		}
 	}	
 	public void testQuery_WithResults(){
-		assertNotNull(query);
+		//assertNotNull(query);
 		try {
-			query.setCriteria(getSearchCriteriaThatGivesResults());
-			Collection collection = query.query();
+			Query query1 = new QueryImpl();
+			query1.setCriteria(getSearchCriteriaThatGivesResults());
+			Collection collection = query1.query();
 			assertTrue("Expected Result Collection should  Not be null.", collection!=null);
 			assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);
 		} catch (QuerySpecificationException e) {
@@ -134,9 +135,10 @@ public class QueryTestCase extends TestCase {
 		}
 	}	
 	public void testQuery_MaxSize_WithResults(){
-		assertNotNull(query);
+		//assertNotNull(query);
 		try {
-			query.setCriteria(getSearchCriteriaThatGivesResults());
+			Query query1 = new QueryImpl();
+			query1.setCriteria(getSearchCriteriaThatGivesResults());
 			Collection collection = query.query(50);
 			assertTrue("Expected Result Collection should  Not be null.", collection!=null);
 			assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);

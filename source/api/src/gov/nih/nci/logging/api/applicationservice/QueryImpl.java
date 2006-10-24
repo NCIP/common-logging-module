@@ -6,7 +6,7 @@ import gov.nih.nci.logging.api.domain.LogMessage;
 import gov.nih.nci.logging.api.domain.ObjectAttribute;
 import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
 import gov.nih.nci.logging.api.persistence.LogMessageDAO;
-import gov.nih.nci.logging.api.util.ObjectFactory;
+import gov.nih.nci.logging.api.persistence.LogMessageDAOImpl;
 import gov.nih.nci.logging.api.util.StringUtils;
 
 import java.text.ParseException;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class QueryImpl implements Query
 {
 
-	LogMessageDAO logMessageDAO = (LogMessageDAO) ObjectFactory.getObject(ObjectFactory.LogMessageDAO);
+	LogMessageDAO logMessageDAO = new LogMessageDAOImpl(); 
 
 	SearchCriteria searchCriteria;
 	private boolean searchCriteriaChanged = true;
