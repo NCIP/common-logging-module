@@ -214,7 +214,6 @@ function setAndSubmitNext()
 														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="throwable"/></TD>
 													</TR>
 													<% if(logMessage.isObjectStateLog()){ 
-														System.out.println(logMessage.isObjectStateLog());
 													%>	
 
 													<TR>
