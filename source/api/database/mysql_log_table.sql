@@ -1,3 +1,9 @@
+# Replace the <<database_name>> with proper database name that is to be created. 
+
+CREATE DATABASE <<database_name>>;
+
+USE <<database_name>>;
+
 DROP TABLE IF EXISTS log_message;
 CREATE TABLE  log_message (
   LOG_ID bigint(200) NOT NULL auto_increment,
