@@ -170,7 +170,7 @@ public class QueryImpl implements Query
 	{
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("<LogMessage>\r\n");
+		sb.append("<LogMessages>\r\n");
 		if (logMessageCollection == null || logMessageCollection.isEmpty())
 			return null;
 
@@ -178,7 +178,7 @@ public class QueryImpl implements Query
 		while (iterator.hasNext())
 		{
 			LogMessage logMessage = (LogMessage) iterator.next();
-
+			sb.append("<LogMessage>\r\n");
 			// add logmessage elements
 			sb.append(addElement("Application", logMessage.getApplication()));
 			sb.append(addElement("Created_on", logMessage.getCreatedDate()));
@@ -202,8 +202,9 @@ public class QueryImpl implements Query
 				sb.append(addObjectAttributes(logMessage));
 				sb.append("</ObjectAttributes>\r\n");
 			}
+			sb.append("</LogMessage>\r\n");
 		}
-		sb.append("</LogMessage>\r\n");
+		sb.append("</LogMessages>\r\n");
 
 		return sb.toString();
 	}
@@ -247,9 +248,9 @@ public class QueryImpl implements Query
 		String element = "";
 		if (!StringUtils.isBlank(elementName))
 		{
-			element = element + "<" + elementName + ">\r\n";
+			element = element + "<" + elementName + ">";
 			element = element + StringUtils.initString(elementValue);
-			element = element + "<" + elementName + ">\r\n";
+			element = element + "</" + elementName + ">\r\n";
 		}
 		return element;
 	}
