@@ -222,35 +222,12 @@ public class QueryTestCaseQA extends TestCase {
 			assertTrue(false);
 		}
 	}
-	
-	public void testToXML(){
-		//assertNotNull(query);
-		try {
-			Query query1 = new QueryImpl();
-			query1.setCriteria(getSearchCriteriaThatGivesResults());
-			Collection collection = query1.query(25);
-			
-			System.out.println(query1.toXML(collection));
-			
-			assertTrue("Expected Result Collection should  Not be null.", collection!=null);
-			
-			
-			assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);
-			
-		} catch (QuerySpecificationException e) {
-			assertTrue(false);
-		}
-		catch (SearchCriteriaSpecificationException e)
-		{
-			assertTrue(false);
-		}
-	}
     
 	private SearchCriteria getSearchCriteriaThatGivesResults() {
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setApplication("test");
-		searchCriteria.setLogLevel("ALL");
-		//searchCriteria.setObjectID("Bill Burke");
+		searchCriteria.setLogLevel("WARN");
+		searchCriteria.setObjectID("Bill Burke");
 		String ll ="1155756542578";
 		
 		java.util.Date d = new java.util.Date();
@@ -262,9 +239,9 @@ public class QueryTestCaseQA extends TestCase {
 		searchCriteria.setStartDate("01/01/2005");
 		
 		searchCriteria.setStartTime("00:00 AM");
-		searchCriteria.setEndDate("11/03/2006");
+		searchCriteria.setEndDate("10/24/2006");
 		searchCriteria.setEndTime("00:00 AM");
-		//searchCriteria.setObjectID("Bill Burke");
+		searchCriteria.setObjectID("Bill Burke");
 //		searchCriteria.setObjectName("test.application.domainobjects.Customer");
 		//searchCriteria.setOrganization("OrganizationA");
 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
@@ -296,6 +273,29 @@ public class QueryTestCaseQA extends TestCase {
 
 	    }
 
+	  public void testToXML(){
+			//assertNotNull(query);
+			try {
+				Query query1 = new QueryImpl();
+				query1.setCriteria(getSearchCriteriaThatGivesResults());
+				Collection collection = query1.query(25);
+				
+				System.out.println(query1.toXML(collection));
+				
+				assertTrue("Expected Result Collection should  Not be null.", collection!=null);
+				
+				
+				assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);
+				
+			} catch (QuerySpecificationException e) {
+				assertTrue(false);
+			}
+			catch (SearchCriteriaSpecificationException e)
+			{
+				assertTrue(false);
+			}
+		}
+	  
 	
 }
 
