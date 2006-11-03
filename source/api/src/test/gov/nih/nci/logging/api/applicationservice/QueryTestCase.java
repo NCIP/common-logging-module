@@ -273,6 +273,29 @@ public class QueryTestCase extends TestCase {
 
 	    }
 
+	  public void testToXML(){
+			//assertNotNull(query);
+			try {
+				Query query1 = new QueryImpl();
+				query1.setCriteria(getSearchCriteriaThatGivesResults());
+				Collection collection = query1.query(25);
+				
+				System.out.println(query1.toXML(collection));
+				
+				assertTrue("Expected Result Collection should  Not be null.", collection!=null);
+				
+				
+				assertTrue("Expected Result Collection Size should be greater than Zero.", collection.size()!= 0);
+				
+			} catch (QuerySpecificationException e) {
+				assertTrue(false);
+			}
+			catch (SearchCriteriaSpecificationException e)
+			{
+				assertTrue(false);
+			}
+		}
+	  
 	
 }
 
