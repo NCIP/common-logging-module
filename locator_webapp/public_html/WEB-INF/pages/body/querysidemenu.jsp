@@ -51,11 +51,9 @@
 					<td class=formLabel><LABEL for=field3><bean:message
 						key="label.loglevel_type" /></LABEL></td>
 					<td class=formField>
-						<SELECT class=formField id=logLevel size=1 	name=logLevel>
-						<logic:iterate name="logLevelMap" id="logLevelMap" >
-							<option value="<bean:write name="logLevelMap" property="key" />"><bean:write name="logLevelMap" property="value" /></option>
-						</logic:iterate>
-						</SELECT>
+						<html:select property="logLevel">
+							<html:options collection="logLevelMap" property="key" labelProperty="value"/>
+						</html:select>
 					</td>					
 				</tr>
 				
