@@ -6,7 +6,7 @@
 <title><tiles:getAsString name="title" /></title>
 <META name="author" content="Vijay Parmar">
 <META name="keywords"
-	content="Common Logging Module, NCICB , CLM, Logging">
+	content="Common Logging Module, NCICB , CSM, Common Security Module, CLM, Object Stage Logger, Object Stage Logging, Event Logging, Event Log Viewer, Logging, Log Locator Tool">
 <META name="description"
 	content="Log Locator Tool to locate and view logs generated via Common Logging Module">
 
