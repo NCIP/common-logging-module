@@ -27,6 +27,7 @@ public class SystemManager
 	{
 		
 			Collection serverNameCollection =	serverNameCollection= new ArrayList();
+			serverNameCollection.add(new ServerObject("ALL"));
 			try
 			{
 				Query query = new QueryImpl();
