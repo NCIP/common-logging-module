@@ -30,7 +30,7 @@ public class StringUtils {
 	public static String initString(final String str) {
 		String test = "";
 		if (str != null) {
-			test = str;
+			test = str.trim();
 		}
 		return test;
 	}
