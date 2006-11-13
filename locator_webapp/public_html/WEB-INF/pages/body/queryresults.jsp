@@ -203,15 +203,15 @@ function setAndSubmitNext()
 													</TR>
 													<TR>													
 														<TD class=standardTextBold colspan=1 width=10%>Message:</TD>
-														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="message"/></TD>
+														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="message" filter="false" /></TD>
 													</TR>
 													<TR>													
 														<TD class=standardTextBold colspan=1 width=10%>NDC:</TD>
-														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="ndc"/></TD>
+														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="ndc" filter="false" /></TD>
 													</TR>
 													<TR>													
 														<TD class=standardTextBold colspan=1 width=10%>Throwable:</TD>
-														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="throwable"/></TD>
+														<TD class=standardText colspan=5 width=15%><bean:write name="logMessage" property="throwable" filter="false" /></TD>
 													</TR>
 													<% if(logMessage.isObjectStateLog()){ 
 													%>	
@@ -245,9 +245,9 @@ function setAndSubmitNext()
 																<logic:iterate name="objectAttributes" id="objectAttribute" type="ObjectAttribute">																
 																<tr class="dataRowLight">
 																	<td class="dataCellText">&nbsp;<bean:write name="objectAttribute" property="attributeName"/> </td>
-																	<td class="dataCellText">&nbsp;<bean:write name="objectAttribute" property="currentValue"/> </td>
+																	<td class="dataCellText">&nbsp;<bean:write name="objectAttribute" property="currentValue"  filter="false" /> </td>
 																	<logic:equal name="logMessage" property="operation" value="UPDATE">
-																	<td class="dataCellText">&nbsp;<bean:write name="objectAttribute" property="previousValue"/> </td>
+																	<td class="dataCellText">&nbsp;<bean:write name="objectAttribute" property="previousValue" filter="false" /> </td>
 																	</logic:equal>
 																</tr>
 																</logic:iterate>
