@@ -55,7 +55,14 @@
                                         <td class="sidebarTitle" height="20">WHAT'S NEW</td>
                                       </tr>
                                       <tr>
-                                        <td class="sidebarContent">What's new message. What's new message. What's new message. What's new message. What's new message. </td>
+                                        <td class="sidebarContent">
+                                       	<li> All new user interface! 
+										<li>Query on Object ID 
+										<li>Viewable Object attributes 
+										<li>LLT now uses CSM for authentication and authorization 
+ 
+                                        
+										 </td>
                                       </tr>
                                     </table>
                                   </td>
@@ -70,7 +77,11 @@
                                       <td class="sidebarTitle" height="20">DID YOU KNOW?</td>
                                     </tr>
                                     <tr>
-                                      <td class="sidebarContent" valign="top">Did you know message. Did you know message. Did you know message. Did you know message. </td>
+                                      <td class="sidebarContent" valign="top">
+                                    <li>LLT can be customized to view the logs from any application you are developing. 
+									<li>Given proper permissions, you can view log messages from other servers. 
+									<li>You can view log message soon after they occur by providing a future End Date, and resubmitting the search. 
+                                      </td>
                                     </tr>
                                     </table>
                                   </td>
