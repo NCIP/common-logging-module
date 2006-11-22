@@ -167,7 +167,8 @@ public class QueryResultsPagingAction extends Action
 		searchCriteria.setThreadName(!StringUtils.isBlankOrNull(queryForm.getThread()) ? queryForm.getThread() : null);
 		searchCriteria.setThrowable(!StringUtils.isBlankOrNull(queryForm.getThrowable()) ? queryForm.getThrowable() : null);
 		searchCriteria.setUserName(!StringUtils.isBlankOrNull(queryForm.getUser()) ? queryForm.getUser() : null);
-
+		searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_DATE);
+		
 		return searchCriteria;
 	}
 	
