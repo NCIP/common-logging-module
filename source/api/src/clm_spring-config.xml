@@ -60,6 +60,8 @@
 				</prop>
 				<prop key="show_sql">false</prop>
 				<prop key="jdbc.batch_size">30</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+		        <prop key="hibernate.cache.use_second_level_cache">false</prop> 
 			</props>
 		</property>
 	</bean>
