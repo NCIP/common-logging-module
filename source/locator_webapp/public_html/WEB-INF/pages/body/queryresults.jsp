@@ -58,11 +58,11 @@ function shoh(id) {
 
 function setAndSubmitPrevious()
     	{
-    		document.PreviousQueryResultsPagingForm.submit();
+    		document.getElementById('PreviousQueryResultsPagingForm').submit();
     	}
 function setAndSubmitNext()
     	{
-    		document.NextQueryResultsPagingForm.submit();
+    		document.getElementById('NextQueryResultsPagingForm').submit();
     	}
 
 -->
