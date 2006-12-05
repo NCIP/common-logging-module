@@ -32,12 +32,13 @@ import org.apache.log4j.spi.LoggingEvent;
  * A custom Apache Log4J Appender will be responsible for formatting and
  * inserting Log4J messages into the configurable RDBMS.
  * 
- * Features include: --Inserts Logs Messages into the database in near real
- * time --Uses a configurable buffer to perform batch processing --Spawns
- * threads to execute the batch inserts to maximize performance --Prepares all
- * data for RDBMS by escaping quotes.
+ * <br><br>Features include: 
+ * <br>--Inserts Logs Messages into the database in near real time 
+ * <br>--Uses a configurable buffer to perform batch processing 
+ * <br>--Spawns threads to execute the batch inserts to maximize performance 
+ * <br>--Prepares all data for RDBMS by escaping quotes.
  * 
- * @author Ekagra Software Technologies Limited ('Ekagra')
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 public class JDBCAppender extends AppenderSkeleton implements Constants
@@ -243,13 +244,10 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		HashMap previousAttributes= new HashMap();
 		HashMap currentAttributes= new HashMap();
 		
-		//String objectAttributeMessage = "&operation=[name=INSERT;comment=qq]&object=[name=test.application.domainobjects.Customer;ID=0]&attributes=[first=Bill;last=Burke;street=1 Boston Road;city=Newland;state=MA;zip=02115;items=[test.application.domainobjects.Item@fb6354]]";
-		
-		
 		StringTokenizer stringTokenizer = new StringTokenizer(objectAttributeMessage,"&");
 		while(stringTokenizer.hasMoreElements()){
 			String messagetemp = (String) stringTokenizer.nextElement();
-			//System.out.println(messagetemp);
+
 			if(messagetemp.startsWith(ApplicationConstants.OBJECT_STATE_MESSAGE_OPERATION)){
 				StringTokenizer attTknzr = new StringTokenizer(messagetemp,";[]");
 				while(attTknzr.hasMoreElements()){
@@ -394,6 +392,7 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 		return Boolean.valueOf(getUseFilter()).booleanValue();
 	}
 
+
 	private void execute()
 	{
 		List rows = getBuff();
@@ -408,6 +407,11 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 
 	
 	
+	/**
+	 * This method returns the Hibernate Properties.
+	 * 
+	 * @return Properties
+	 */
 	private Properties getJDBCProperties() {
 		Properties props = new Properties();
         props.setProperty("hibernate.connection.driver_class",getDbDriverClass());
@@ -416,13 +420,13 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
         props.setProperty("hibernate.connection.password",getDbPwd());
         
         if(getDbUrl().indexOf(":mysql")> -1){
-        	props.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+        	props.setProperty("hibernate.dialect",ApplicationConstants.MYSQL_DIALECT);
         }
         if(getDbUrl().indexOf(":oracle")> -1){
-        	props.setProperty("hibernate.dialect","org.hibernate.dialect.OracleDialect");
+        	props.setProperty("hibernate.dialect",ApplicationConstants.ORACLE_DIALECT);
         }
         if(getDbUrl().indexOf(":sqlserver")> -1){
-        	props.setProperty("hibernate.dialect","org.hibernate.dialect.SQLServerDialect");
+        	props.setProperty("hibernate.dialect",ApplicationConstants.SQLSERVER_DIALECT);
         }
         
         
@@ -441,7 +445,6 @@ public class JDBCAppender extends AppenderSkeleton implements Constants
 
 	public void close()
 	{
-		//
 	}
 
 	public String getApplication()
