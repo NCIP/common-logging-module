@@ -107,7 +107,7 @@ public class QueryAction extends Action
 
 			try
 			{
-				boolean	success = performQuery(queryForm, session);
+				boolean	success = performQuery(queryForm, request);
 			}
 			catch (Exception e)
 			{
@@ -204,14 +204,15 @@ public class QueryAction extends Action
 		return true;
 	}
 
-	private boolean performQuery(QueryForm queryForm, HttpSession session) throws Exception
+	private boolean performQuery(QueryForm queryForm, HttpServletRequest request) throws Exception
 	{
+		HttpSession session = request.getSession();
 //		try
 //		{
 			Query query = new QueryImpl();
 			try
 			{
-				query.setCriteria(getSearchCriteria(queryForm,session));
+				query.setCriteria(getSearchCriteria(queryForm,request));
 			}
 			catch (QuerySpecificationException e1)
 			{
@@ -299,15 +300,17 @@ public class QueryAction extends Action
 		
 	}
 
-	private SearchCriteria getSearchCriteria(QueryForm queryForm, HttpSession session) throws Exception
+	private SearchCriteria getSearchCriteria(QueryForm queryForm, HttpServletRequest request) throws Exception
 	{
+		HttpSession session = request.getSession();
+		
 		String applicationName = ((LoginForm)session.getAttribute(Constants.LOGIN_OBJECT)).getApplication();
 		String userName = ((LoginForm)session.getAttribute(Constants.LOGIN_OBJECT)).getLoginID();
 		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
 		// Check Permission for Log Level
-		if (SecurityManager.checkPermission(applicationName,userName,Constants.LOG_LEVEL_ATTRIBUTE, queryForm.getLogLevel()))
+		if (SecurityManager.checkPermission(request, applicationName,userName,Constants.LOG_LEVEL_ATTRIBUTE, queryForm.getLogLevel()))
 		{
 			if(Constants.ALL.equalsIgnoreCase(queryForm.getLogLevel()) || queryForm.getLogLevel().length()==0){
 				searchCriteria.setLogLevel(null);	
@@ -319,25 +322,25 @@ public class QueryAction extends Action
 			throw new Exception ("User does not have access permission to query for the provided value of the Log Level attribute");
 
 		// Check Permission for Application
-		if (SecurityManager.checkPermission(applicationName,userName,Constants.APPLICATION_NAME_ATTRIBUTE, queryForm.getApplication()))
+		if (SecurityManager.checkPermission(request, applicationName,userName,Constants.APPLICATION_NAME_ATTRIBUTE, queryForm.getApplication()))
 			searchCriteria.setApplication(!StringUtils.isBlankOrNull(queryForm.getApplication()) ? queryForm.getApplication() : null);
 		else
 			throw new Exception ("User does not have access permission to query for the provided value of the Application attribute");
 				
 		// Check Permission for Organziation
-		if (SecurityManager.checkPermission(applicationName,userName,Constants.ORGANIZATION_ATTRIBUTE, queryForm.getOrganization()))
+		if (SecurityManager.checkPermission(request, applicationName,userName,Constants.ORGANIZATION_ATTRIBUTE, queryForm.getOrganization()))
 			searchCriteria.setOrganization(!StringUtils.isBlankOrNull(queryForm.getOrganization()) ? queryForm.getOrganization() : null);
 		else
 			throw new Exception ("User does not have access permission to query for the provided value of the Organization attribute");
 
 		// Check Permission for User
-		if (SecurityManager.checkPermission(applicationName,userName,Constants.USER_ATTRIBUTE, queryForm.getUser()))
+		if (SecurityManager.checkPermission(request, applicationName,userName,Constants.USER_ATTRIBUTE, queryForm.getUser()))
 			searchCriteria.setUserName(!StringUtils.isBlankOrNull(queryForm.getUser()) ? queryForm.getUser() : null);
 		else
 			throw new Exception ("User does not have access permission to query for the provided value of the User attribute");
 
 		// Check Permission for Object Name
-		if (SecurityManager.checkPermission(applicationName,userName,Constants.OBJECT_NAME_ATTRIBUTE, queryForm.getObjectName()))
+		if (SecurityManager.checkPermission(request, applicationName,userName,Constants.OBJECT_NAME_ATTRIBUTE, queryForm.getObjectName()))
 			searchCriteria.setObjectName(!StringUtils.isBlankOrNull(queryForm.getObjectName()) ? queryForm.getObjectName() : null);
 		else
 			throw new Exception ("User does not have access permission to query for the provided value of the Object Name attribute");
