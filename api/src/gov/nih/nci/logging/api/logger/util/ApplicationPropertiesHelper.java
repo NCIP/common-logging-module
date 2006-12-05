@@ -22,7 +22,8 @@ import org.xml.sax.SAXException;
  * ApplicationPropertyHelper class to parse the ApplicationPropertyFile and return its properties.
  * 
  * Refer the ObjectStateLogger.dtd DTD in api/resources folder for reference.
- * @author Vijay Parmar
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  *
  */
 public class ApplicationPropertiesHelper implements ApplicationConstants {

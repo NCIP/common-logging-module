@@ -12,8 +12,11 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * ObjectFactory
+ * ObjectFactory class creates and returns Beans defined in the Spring Configuration file.
+ * Namely, HibernateSessionFactory object is returned.
+ *
  * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  */
 public class ObjectFactory {
 	private static XmlBeanFactory factory;

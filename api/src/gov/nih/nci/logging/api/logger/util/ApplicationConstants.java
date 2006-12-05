@@ -7,10 +7,9 @@ package gov.nih.nci.logging.api.logger.util;
  */
 
 /**
- * @author Ekagra Software Technologes Limited ('Ekagra')
- * 
  * ApplicationConstants includes for managing the property file and message contents.
  * 
+ * @author Ekagra Software Technologes Limited ('Ekagra')
  */
 
 public interface ApplicationConstants
