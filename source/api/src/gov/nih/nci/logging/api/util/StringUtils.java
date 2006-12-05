@@ -1,5 +1,11 @@
 package gov.nih.nci.logging.api.util;
 
+/**
+ * StringUtils class is a utility class for performing variuos string related conversions.
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
+ *
+ */
 public class StringUtils {
 
 	
