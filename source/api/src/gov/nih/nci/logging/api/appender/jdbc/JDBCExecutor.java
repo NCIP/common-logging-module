@@ -8,7 +8,6 @@ package gov.nih.nci.logging.api.appender.jdbc;
  */
 import gov.nih.nci.logging.api.appender.util.AppenderUtils;
 import gov.nih.nci.logging.api.domain.LogMessage;
-import gov.nih.nci.logging.api.util.HibernateUtil;
 import gov.nih.nci.logging.api.util.StringUtils;
 
 import java.sql.Connection;
@@ -19,14 +18,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 /**
  * 
  * Runnable class responsible for inserting the log messages in batch 
  * 
- * @author Ekagra Software Technologies Limited ('Ekagra')
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 public class JDBCExecutor implements java.lang.Runnable

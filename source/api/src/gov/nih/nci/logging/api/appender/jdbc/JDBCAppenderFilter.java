@@ -23,7 +23,7 @@ import org.apache.log4j.spi.LoggingEvent;
  * Filter for the JDBCAppender. Class is responsible for detecting messages that
  * should be filtered out.
  * 
- * @author Ekagra Software Technologies Limited ('Ekagra')
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 public class JDBCAppenderFilter

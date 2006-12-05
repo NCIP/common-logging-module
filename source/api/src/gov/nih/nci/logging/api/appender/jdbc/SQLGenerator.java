@@ -8,7 +8,12 @@ import java.util.Set;
 import gov.nih.nci.logging.api.domain.LogMessage;
 import gov.nih.nci.logging.api.domain.ObjectAttribute;
 import gov.nih.nci.logging.api.util.StringUtils;
-
+/**
+ * 
+ * SQLGenerator is a utility class that generates SQL Insert statements for persisting LogMessage objects.
+ *   
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
+ */
 public class SQLGenerator {
 
 	public static final String APPLICATION = "APPLICATION";
@@ -41,6 +46,12 @@ public class SQLGenerator {
 	
 	
 
+	/**
+	 * Returns an ArrayList consisting of SQL Insert Statements for LogMessage.
+	 * 
+	 * @param logMessage
+	 * @return Arraylist consisting of SQL Insert Statements.
+	 */
 	public static List getSQLStatements(LogMessage logMessage) {
 		if(logMessage==null) return new ArrayList();
 		
@@ -53,16 +64,14 @@ public class SQLGenerator {
 		}
 	}
 
+	/**
+	 * Returns an ArrayList of SQL Insert statements to persist a LogMessage Object. The LogMessage can be an Event or Object Log Message.
+	 * 
+	 * @param logMessage
+	 * @return
+	 */
 	private static List getObjectStateSQLStatements(LogMessage logMessage) {
-		/*String junkNeverUsed = 
-				" BEGIN;"
-				+"insert into LOG_MESSAGE (LOG_ID,CREATED_ON)values (NULL,1);"
-				+"SELECT @log_id:=LAST_INSERT_ID();"
-				+"insert into OBJECT_ATTRIBUTE (OBJECT_ATTRIBUTE_ID,ATTRIBUTE, PREVIOUS_VALUE, CURRENT_VALUE) values (NULL,'a','b','c');"
-				+"SELECT @objectattribute_id:= last_insert_id();"
-				+"insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (@log_id,@objectattribute_id);"
-				+"COMMIT;";*/
-		
+			
 		List l = new ArrayList();
 		List l2 = new ArrayList();
 		
@@ -71,6 +80,7 @@ public class SQLGenerator {
 		 
 			l.add(getLogMessageSQLStatement(logMessage));
 			//sb1.append(getLogMessageSQLStatement(logMessage));
+			// Get the primary id for the last insert statement.
 			l.add("SELECT @log_id:=LAST_INSERT_ID();");
 			//sb1.append("SELECT @log_id:=LAST_INSERT_ID();");
 			
@@ -95,12 +105,16 @@ public class SQLGenerator {
 			sb1.append(sb2);
 			//sb1.append("COMMIT;");
 			
-			
-	
 		return l;
 	}
 
 	
+	/**
+	*  Returns a SQL Insert statement based on an LogMessage Object instance. 
+	 * 
+	 * @param logMessage
+	 * @return a string consisting an SQL insert statement for LogMessage object
+	 */
 	private static String getLogMessageSQLStatement(LogMessage logMessage) {
 
 		StringBuffer sql = new StringBuffer();
@@ -151,6 +165,12 @@ public class SQLGenerator {
 		return sql.toString();
 	}
 
+	/**
+	 *  Returns a SQL Insert statement based on an ObjectAttribute Object instance. 
+	 * 
+	 * @param objectAttribute
+	 * @return a string consisting an SQL insert statement for ObjectAttribute object.
+	 */
 	private static String getObjectAttributeSQLStatement(ObjectAttribute objectAttribute) {
 		
 		return "insert into OBJECT_ATTRIBUTE (OBJECT_ATTRIBUTE_ID,ATTRIBUTE, PREVIOUS_VALUE, CURRENT_VALUE) values (NULL"
