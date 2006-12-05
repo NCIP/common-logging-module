@@ -3,6 +3,8 @@
 
 package gov.nih.nci.logging.webapp.action;
 
+import java.util.HashMap;
+
 import gov.nih.nci.logging.webapp.form.LoginForm;
 import gov.nih.nci.logging.webapp.util.Constants;
 import gov.nih.nci.logging.webapp.util.StringUtils;
@@ -46,15 +48,15 @@ public class LoginAction extends Action
 		errors.clear();
 		try
 		{
-			if (isAuthenticated(loginForm))
+			if (isAuthenticated(request, loginForm))
 			{
-			
 				// Perform Authentication here.
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.LOGIN_OBJECT, form);
 				session.setAttribute(Constants.APPLICATION_NAME, loginForm.getApplication());
 				return (mapping.findForward(Constants.FORWARD_HOME));
 			}
+			loadProtectedAttributes(request,loginForm);
 			
 		}
 		catch (Exception ex)
@@ -66,7 +68,7 @@ public class LoginAction extends Action
 
 	}
 
-	private boolean isAuthenticated(LoginForm loginForm) throws Exception
+	private boolean isAuthenticated(HttpServletRequest request, LoginForm loginForm) throws Exception
 	{
 		boolean loginResult = SecurityManager.login(loginForm.getLoginID(),loginForm.getPassword());
 		if (false == loginResult)
@@ -75,13 +77,19 @@ public class LoginAction extends Action
 		}
 		else
 		{
-			loginResult = SecurityManager.checkPermission(loginForm.getApplication(),loginForm.getLoginID(),Constants.APPLICATION_NAME_ATTRIBUTE, loginForm.getApplication());
+			loginResult = SecurityManager.checkPermission(request,loginForm.getApplication(),loginForm.getLoginID(),Constants.APPLICATION_NAME_ATTRIBUTE, loginForm.getApplication());
 			if (false == loginResult)
 			{
 				throw new Exception ("User does not have access permission to view the logs for the " + loginForm.getApplication() + " Application.");
 			}
 		}
 		return loginResult;
+	}
+
+	private void loadProtectedAttributes(HttpServletRequest request, LoginForm loginForm)
+	{
+		HashMap protectedAttributes = SecurityManager.loadProtectedAttributes(loginForm.getLoginID());
+		request.setAttribute(Constants.PROTECTED_ATTRIBUTES,protectedAttributes);
 	}
 
 }

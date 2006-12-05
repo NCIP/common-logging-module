@@ -17,6 +17,8 @@ public interface Constants
 	
 	//Display and Session Constants.
 	public static final String USER_NAME = "USER_NAME";
+	public static final String PROTECTED_ATTRIBUTES = "PROTECTED_ATTRIBUTES";
+	
 	
 	public static final String ALL = "ALL";
 	public static final String YES = "YES";
