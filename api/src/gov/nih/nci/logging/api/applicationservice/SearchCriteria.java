@@ -6,17 +6,15 @@ import java.util.Map;
 /**
  * SearchCriteria object that is passed to Query to specify the search criteria.
  * 
- * 
- * 
- * 
+ * <br><br> 
  * Example Use:
- * 		SearchCriteria searchCriteria = new SearchCriteria();
- * 		searchCriteria.setApplication("CSM");
- * 		searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
- * 		searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
+ * <br>&nbsp;	SearchCriteria searchCriteria = new SearchCriteria();
+ * <br>&nbsp;	searchCriteria.setApplication("CSM");
+ * <br>&nbsp;	searchCriteria.addAscendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_APPLICATION);
+ * <br>&nbsp;	searchCriteria.addDescendingSortOrderFor(SearchCriteria.SORT_BY_PARAMETER_USERNAME);
  * 
  * 
- * @author parmarv
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  */
 public class SearchCriteria implements Constants {
 

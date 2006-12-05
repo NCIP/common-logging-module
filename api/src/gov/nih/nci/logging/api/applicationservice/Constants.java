@@ -1,11 +1,9 @@
 package gov.nih.nci.logging.api.applicationservice;
 
 /**
- *  Constants interface.
- *  
- * To define constants that are available to client as well as the API's.
+ * Constants interface defines constants that are available to Query API as well the Client of Querys API.
  * 
- * @author parmarv
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  */
 public interface Constants {
 

@@ -15,7 +15,7 @@ import org.apache.log4j.spi.ThrowableInformation;
 /**
  * Utility Class for Appender project.
  * 
- * @author Ekagra Software Technologies Limited ('Ekagra')
+ * @author Ekagra Software Technologies Limited.
  * 
  */
 public class AppenderUtils
@@ -53,16 +53,14 @@ public class AppenderUtils
 	}
 
 	/**
-	 * Utility method... I'll just put this here temporarily. Add documentation,
-	 * move in utility class/package?
-	 * 
+	 *
 	 * Allows client method to get the stack trace for an error so that it can
 	 * be parsed or passed to another method.
 	 * 
-	 * NOTE: This method is currently static since I thought I might need to
+	 * NOTE: 
+	 * <br>-This method is currently static since it might need to be 
 	 * call it from constructors and etc. ...
-	 * 
-	 * For now, let all exceptions propagate...
+	 * <br>-For now all exceptions propagate...
 	 * 
 	 * NOTE: If speed becomes an issue then we might want to complete the
 	 * implementation (below) that "caches" the writer objects so that we don't

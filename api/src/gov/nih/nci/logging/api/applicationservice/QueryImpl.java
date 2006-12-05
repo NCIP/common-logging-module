@@ -14,7 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-
+/**
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
+ *
+ */
 public class QueryImpl implements Query
 {
 
