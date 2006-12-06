@@ -4,13 +4,18 @@ import java.io.Serializable;
 
 /**
  * ObjectAttribute is used in case of Object State logs to represent the previous
- * and current values for a particular attribute of the object.  Example: Object
- * 'Customer' has attributes firstName, lastName, street, zip.  ObjectAttribute
- * objectAttribute = new ObjectAttribute(); objectAttribute.
- * setAttributeName("street"); objectAttribute.setPreviousValue("SomeStreet St.");
- * objectAttribute.setPreviousValue("SomeOtherStreet St.");
+ * and current values for a particular attribute of the object.
+ *   
+ * <br><br>Example: 
+ * 		Object 'Customer' has attributes firstName, lastName, street, zip.  
+ * 		<br>ObjectAttribute objectAttribute = new ObjectAttribute(); 
+ * 		<br>objectAttribute.setAttributeName("street");
+ * 		<br> objectAttribute.setPreviousValue("SomeStreet St.");
+ * 		<br>objectAttribute.setPreviousValue("SomeOtherStreet St.");
+ * 
+ * 
  * @version 1.0
- * @updated 17-Aug-2006 5:26:16 PM
+ * 
  */
 public class ObjectAttribute implements Serializable {
 	/**

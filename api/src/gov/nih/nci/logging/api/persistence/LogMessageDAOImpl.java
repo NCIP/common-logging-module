@@ -23,7 +23,7 @@ import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
- * @author Vijay Parmar
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 
@@ -136,7 +136,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 
 	
 	/**
-	 * Based on SearchCriteria object populate the Criteria Object with Expression and Order details.
+	 * Based on SearchCriteria object populate the Hibernates Criteria Object with Expression and sort order details.
 	 * @param searchCriteria
 	 * @param criteria
 	 */
@@ -204,7 +204,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 
 
 	/**
-	 * Based on start/End date and time returns a Criterion.
+	 * Based on start/end date and time returns a Criterion.
 	 * @param searchCriteria
 	 * @return Criterion
 	 */
@@ -228,7 +228,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	}
 
 	/**
-	 * 
+	 * Returns the Data and Time in milliseconds (Long).
 	 * 
 	 * @param date
 	 * @param time

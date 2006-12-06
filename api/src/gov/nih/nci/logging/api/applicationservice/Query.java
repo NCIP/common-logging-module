@@ -9,7 +9,8 @@ import java.util.Collection;
  * 
  * Query API 
  * 
- * Query interface to define the attributes and operations available to query the Log Messages.
+ * 
+ * Query interface to define the operations available to query the Log Messages.
  * 
  * @author parmarv
  *
@@ -83,9 +84,18 @@ public interface Query extends Constants {
 
 	/**
 	 * Returns a XML representation of Ojbects extending LogMessage.
+	 * <br><br>Example:
+	 *<br>&lt;LogMessages&gt;
+	 * <br>&nbsp;&nbsp;		&lt;LogMessage&gt;
+	 * <br>&nbsp;&nbsp;		&lt;/LogMessage&gt;
+	 * <br>&nbsp;&nbsp;		&lt;LogMessage&gt;
+	 * <br>&nbsp;&nbsp;		&lt;/LogMessage&gt;
+	 * <br>&nbsp;&nbsp;		.....
+	 * <br>&lt;/LogMessages&gt;
+	 * 
 	 * 
 	 * @param searchCriteria
-	 * @return
+	 * @return XML representation of LogMessageCollection
 	 */
 	String toXML(Collection logMessageCollection);
 }
