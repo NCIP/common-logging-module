@@ -13,6 +13,8 @@ import java.io.*;
 import org.hibernate.type.Type;
 
 /**
+ * This class generates the specifically formatted message for logging. 
+ * 
  * @author Ekagra Software Technologes Limited ('Ekagra')
  * 
  */

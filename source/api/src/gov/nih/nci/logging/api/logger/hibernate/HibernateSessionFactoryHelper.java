@@ -13,10 +13,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Ekagra Software Technologes Limited ('Ekagra')
- * 
  * 
  * This class provides the utility to obtain a Hibernate session for auditing
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 

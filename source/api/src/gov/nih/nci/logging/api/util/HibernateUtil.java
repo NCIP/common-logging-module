@@ -11,13 +11,21 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
+/**
+ * 
+ * HibernateUtil class provides the SessionFactory for the CLM API.
+ * 
+ * Refer the clm.properties file in api/resources folder for reference.
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
+ *
+ */
 public class HibernateUtil {
 
 	private static Logger log = Logger.getLogger(HibernateUtil.class);
@@ -44,6 +52,12 @@ public class HibernateUtil {
 		return sessionFactory;
 	}
 
+	/**
+	 * This method creates and returns the Hibernate SessionFactory used by CLM's Query API's.
+	 * 
+	 * @return SessionFactory
+	 * @throws Exception
+	 */
 	private static SessionFactory createSessionFactory() throws Exception {
 		LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
 		String mappingResources[] = {
@@ -106,6 +120,12 @@ public class HibernateUtil {
 		return sf;
 	}
 
+	
+	/**
+	 * @return true if clm.properties configuration specifies a Data Source.
+	 * @return false if clm.properties configuration does not specify a Data Source.
+	 *  
+	 */
 	private static boolean isDataSourceProperties() {
 		
 		if(props==null) return false;

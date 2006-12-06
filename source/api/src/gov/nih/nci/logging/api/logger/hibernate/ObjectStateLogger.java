@@ -20,8 +20,10 @@ import gov.nih.nci.logging.api.user.UserInfo;
 import gov.nih.nci.logging.api.util.StringUtils;
 
 /**
- * @author Ekagra Software Technologes Limited ('Ekagra')
+ * This class logs the object state information.
  * 
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  */
 
 public class ObjectStateLogger

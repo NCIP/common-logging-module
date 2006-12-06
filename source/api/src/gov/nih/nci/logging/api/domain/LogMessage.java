@@ -1,6 +1,5 @@
 package gov.nih.nci.logging.api.domain;
 
-import gov.nih.nci.logging.api.applicationservice.Constants;
 import gov.nih.nci.logging.api.logger.util.ApplicationConstants;
 
 import java.io.Serializable;
@@ -11,8 +10,10 @@ import java.util.Set;
 /**
  * LogMessage represents a log message created by Common Logging Module. It can
  * represent event logs and/or object state log messages.
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * @version 1.0
- * @updated 17-Aug-2006 5:26:09 PM
+ 
  */
 public class LogMessage implements Serializable {
 	/**
@@ -100,12 +101,13 @@ public class LogMessage implements Serializable {
 	 * ObjectID is used when the log message is of Object state. For event log
 	 * message objectID its value is null. The object property value of the
 	 * Identifier Attribute is saved in ObjectID column. The value of
-	 * ObjectID will be matched with query Object ID for retrieval. Example: For
-	 * object 'Customer' with attributes: 'personname', 'street', 'zip'. If the Identifier
-	 * Attribute is 'personname', objectID will have possible values of
+	 * ObjectID will be matched with query Object ID for retrieval.
+	 * 
+	 * <br><br>Example: For object 'Customer' with attributes: 'personname', 'street', 'zip'.
+	 * If the Identifier Attribute is 'personname', objectID will have possible values of
 	 * personname attribute.
 	 * 
-	 * Example: For object 'Customer' with attributes: first, last, street, zip. If the
+	 * <br><br>Example: For object 'Customer' with attributes: first, last, street, zip. If the
 	 * Identifier Attribute is 'first,last', objectID will have possible values
 	 * of 'first+" "+last'. if first = "John", last = "Smith", then the value of objectID = "John Smith".
 	 */

@@ -14,13 +14,13 @@ import java.util.*;
 import java.io.*;
 
 /**
- * @author Ekagra Software Technologes Limited ('Ekagra')
- * 
  * 
  * This class intercepts all the related events when the client application
  * performs the persistence such as save, udpate and delete. Also it generate
  * the audit information about the states of the entity object in different
  * stages.
+ * 
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 public class ObjectStateInterceptor extends EmptyInterceptor

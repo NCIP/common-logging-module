@@ -9,9 +9,10 @@ import java.util.Collection;
 import org.springframework.dao.DataAccessException;
 
 /**
- * LogMessageDAO retrieves LogMessages from the Log Storage.
+ * LogMessageDAO retrieves LogMessages from the Log Storage. <br>
+ * LogMessages can be retrieved based on the provided Search Criteria. 
  * 
- * @author Vijay Parmar
+ * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  * 
  */
 public interface LogMessageDAO extends Constants {
