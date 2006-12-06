@@ -59,6 +59,8 @@ public class SecurityManager
 		else
 		{
 			HashMap protectedAttributes = (HashMap)request.getAttribute(Constants.PROTECTED_ATTRIBUTES);
+			if(protectedAttributes==null) return true;
+			
 			if (protectedAttributes.containsKey(attributeName))
 			{
 				return getAuthorizationManager().checkPermission(userName, Constants.APPLICATION_NAME_ATTRIBUTE + applicationName + "&" + attributeName + ":" + attributeValue, Constants.PRIVILEGE);
@@ -95,11 +97,17 @@ public class SecurityManager
 				ProtectionElementPrivilegeContext protectionElementPrivilegeContext = (ProtectionElementPrivilegeContext)iterator.next();
 				ProtectionElement protectionElement = protectionElementPrivilegeContext.getProtectionElement();
 				objectId = protectionElement.getObjectId();					
-				String attributePart = objectId.substring(objectId.indexOf('&'));
+				String attributePart = null;
+				try{
+					attributePart = objectId.substring(objectId.indexOf('&'));
+				}catch(Exception e){
+					continue;
+				}
+					
 				if (attributePart != null & attributePart.length() != 0)
 				{
-					String attributeName = attributePart.substring(0,attributePart.indexOf(':'));
-					String attributeValue = attributePart.substring(attributePart.indexOf(':'));
+					String attributeName = attributePart.substring(1,attributePart.indexOf(':'));
+					String attributeValue = attributePart.substring(attributePart.indexOf(':')+1);
 					if (protectedAttributes.containsKey(attributeName))
 					{
 						ArrayList list = (ArrayList)protectedAttributes.get(attributeName);
