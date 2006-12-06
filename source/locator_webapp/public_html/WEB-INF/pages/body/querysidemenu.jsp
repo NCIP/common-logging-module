@@ -1,11 +1,14 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-html"	prefix="html"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-template" prefix="template"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-nested" prefix="nested"%>
+
+<%@ page import="java.util.*"%>
 <%@ page import="gov.nih.nci.logging.webapp.util.Constants"%>
 <%@ page import="gov.nih.nci.logging.webapp.viewobjects.*"%>
+
 
 <table summary="" cellpadding="0" cellspacing="0" border="0" width="150" height="100%">
 
@@ -30,7 +33,7 @@
 					<td class="formTitle" height="20" colspan="3"><bean:message
 						key="label.search_criteria" /></td>
 				</tr>
-
+				<bean:define name="<%=Constants.PROTECTED_ATTRIBUTES%>" id="protectionAttributesHashMap"/>
 				<tr>
 					<td class=formRequiredNotice width=5>*</td>
 					<td class=formLabel><LABEL for=field1><bean:message
@@ -44,20 +47,26 @@
 						<INPUT class=formField id=application size=30 name=application value="<bean:write name="queryForm" property="application"/>" readonly="readonly">
 					</logic:notPresent>						
 					</td>
-				</tr>				
+				</tr>		
+				<!-- 
+					Log Level
+				 -->		
 				<bean:define name="<%=Constants.LOGLEVEL_MAP%>" id="logLevelMap" />
 				<tr>
-					<td class=formRequiredNotice width=5>*</td>
-					<td class=formLabel><LABEL for=field3><bean:message
-						key="label.loglevel_type" /></LABEL></td>
-					<td class=formField>
-						<html:select property="logLevel">
-							<html:options collection="logLevelMap" property="key" labelProperty="value"/>
-						</html:select>
-					</td>					
+						<td class=formRequiredNotice width=5>*</td>
+						<td class=formLabel><LABEL for=field3><bean:message
+							key="label.loglevel_type" /></LABEL></td>
+						<td class=formField>
+							<html:select property="logLevel">
+								<html:options collection="logLevelMap" property="key" labelProperty="value"/>
+							</html:select>
+						</td>					
 				</tr>
 				
 				
+				<!-- 
+					Server 
+				 -->
 				<bean:define name="<%=Constants.SERVER_NAME_COLLECTION%>" id="serverObjectCollection" type="java.util.Collection"/>
 				<tr>
 					<td class=formRequiredNotice width=5>*</td>
@@ -69,32 +78,158 @@
 						</html:select>
 					</td>
 				</tr>
-				<tr>
-					<td class=formRequiredNotice width=5></td>
-					<td class=formLabel><LABEL for=user><bean:message key="label.user" /></LABEL></td>
-					<td class=formField>
-					<logic:present name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class="formField" id="user" size="30" name="user" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="user"/>" >
-					</logic:present>
-					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class=formField id=user size=30 name=user value="<bean:write name="queryForm" property="user"/>">
-					</logic:notPresent>					
-					</td>
-				</tr>
-				<tr>
-					<td class=formRequiredNotice width=5></td>
-					<td class=formLabel><LABEL for=organization><bean:message
-						key="label.organization" /></LABEL></td>
-					<td class=formField>
-					<logic:present name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class="formField" id="organization" size="30" name="organization" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="organization"/>" >
-					</logic:present>
-					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class=formField id=organization size=30 name=organization value="<bean:write name="queryForm" property="organization"/>">
-					</logic:notPresent>
-					</td>
+				<!-- 
+					User 
+				 -->
+				<logic:present name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=user><bean:message
+							key="label.user" /></LABEL></td>
+
+					<% 
+						HashMap protectionAttributes = (HashMap)protectionAttributesHashMap;
+						if(protectionAttributes!=null){
+							if(!protectionAttributes.values().isEmpty() && protectionAttributes.containsKey(Constants.USER_ATTRIBUTE)){
+								ArrayList userList = (ArrayList) protectionAttributes.get(Constants.USER_ATTRIBUTE);
+								if(userList!=null && userList.size()>0){
+									HashMap users = new HashMap();
+									Iterator itt = userList.iterator();
+									while(itt.hasNext()){
+										String temp = (String)itt.next();
+										users.put(temp,temp);
+									}
+									request.getSession().setAttribute("USER_LIST",users);
+								 %>
+									<bean:define name="USER_LIST" id="userMap"/>
+									<td class=formField>
+										<html:select property="user">
+											<html:options collection="userMap" property="key" labelProperty="value"/>
+										</html:select>
+									</td>
+								<%}else{ %>
+										<td class=formField>
+										<logic:present name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class="formField" id="user" size="30" name="user" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="user"/>" >
+										</logic:present>
+										<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class=formField id=user size=30 name=user value="<bean:write name="queryForm" property="user"/>">
+										</logic:notPresent>					
+										</td>									
+									<% 
+								}
+							}else{
+								%>
+								<td class=formField>
+									<logic:present name="<%=Constants.CURRENT_FORM%>">
+										<INPUT class="formField" id="user" size="30" name="user" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="user"/>" >
+									</logic:present>
+									<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+										<INPUT class=formField id=user size=30 name=user value="<bean:write name="queryForm" property="user"/>">
+									</logic:notPresent>					
+								</td>
+								<%
+							 }
+						}
+					 %>
+					</tr>
+				</logic:present>
+				<logic:notPresent name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=user><bean:message key="label.user" /></LABEL></td>
+						<td class=formField>
+						<logic:present name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class="formField" id="user" size="30" name="user" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="user"/>" >
+						</logic:present>
+						<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class=formField id=user size=30 name=user value="<bean:write name="queryForm" property="user"/>">
+						</logic:notPresent>					
+						</td>
+					</tr>
+				</logic:notPresent>
+				<!-- 
+					Organization 
+				 -->
+				<logic:present name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=organization><bean:message
+							key="label.organization" /></LABEL></td>
+
+					<% 
+						HashMap protectionAttributes = (HashMap)protectionAttributesHashMap;
+						if(protectionAttributes!=null){
+
+							if(!protectionAttributes.values().isEmpty() && protectionAttributes.containsKey(Constants.ORGANIZATION_ATTRIBUTE)){
+
+
+								ArrayList orgList = (ArrayList) protectionAttributes.get(Constants.ORGANIZATION_ATTRIBUTE);
+								if(orgList!=null && orgList.size()>0){
+									
+									HashMap organizations = new HashMap();
+									
+									Iterator itt = orgList.iterator();
+									
+									while(itt.hasNext()){
+										String temp = (String)itt.next();
+										organizations.put(temp,temp);
+									}
+									request.getSession().setAttribute("ORG_LIST",organizations);
+
+								 %>
+									<bean:define name="ORG_LIST" id="organizationMap"/>
+									<td class=formField>
+										<html:select property="organization">
+											<html:options collection="organizationMap" property="key" labelProperty="value"/>
+										</html:select>
+									</td>
+								<%}else{ %>
+									<td class=formField>
+										<logic:present name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class="formField" id="organization" size="30" name="organization" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="organization"/>" >
+										</logic:present>
+										<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class=formField id=organization size=30 name=organization value="<bean:write name="queryForm" property="organization"/>">
+										</logic:notPresent>
+									</td>
+									<% 
+								}
+							}else{
+								%>
+								<td class=formField>
+										<logic:present name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class="formField" id="organization" size="30" name="organization" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="organization"/>" >
+										</logic:present>
+										<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class=formField id=organization size=30 name=organization value="<bean:write name="queryForm" property="organization"/>">
+										</logic:notPresent>
+								</td>
+								
+								<%
+							 }
+						}
 					
-				</tr>
+					 %>
+					</tr>
+				</logic:present>
+				<logic:notPresent name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=organization><bean:message
+							key="label.organization" />2</LABEL></td>
+						<td class=formField>
+						<logic:present name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class="formField" id="organization" size="30" name="organization" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="organization"/>" >
+						</logic:present>
+						<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class=formField id=organization size=30 name=organization value="<bean:write name="queryForm" property="organization"/>">
+						</logic:notPresent>
+						</td>
+						
+					</tr>
+				</logic:notPresent>
+				
 
 				<tr>
 					<td class=formRequiredNotice width=5></td>
@@ -173,19 +308,94 @@
 					</logic:notPresent>
 					</td>
 				</tr>
+				<!-- 
+					ObjectName 
+				
 				<tr>
-					<td class=formRequiredNotice width=5></td>
-					<td class=formLabel><LABEL for=objectName><bean:message
-						key="label.object_name" /></LABEL></td>
-					<td class=formField>
-					<logic:present name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class="formField" id="objectName" size="30" name="objectName" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="objectName"/>" >
-					</logic:present>
-					<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
-						<INPUT class=formField id=objectName size=30 name=objectName value="<bean:write name="queryForm" property="objectName"/>">
-					</logic:notPresent>
-					</td>
-				</tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=objectName><bean:message key="label.object_name" /></LABEL></td>
+						<td class=formField>
+						<logic:present name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class="formField" id="objectName" size="30" name="objectName" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="objectName"/>" >
+						</logic:present>
+						<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class=formField id=objectName size=30 name=objectName value="<bean:write name="queryForm" property="objectName"/>">
+						</logic:notPresent>					
+						</td>
+					</tr>
+					-->
+				<!-- 
+					ObjectName 
+				-->
+				<logic:present name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=objectName><bean:message
+							key="label.object_name" /></LABEL></td>
+
+					<% 
+						HashMap protectionAttributes = (HashMap)protectionAttributesHashMap;
+						if(protectionAttributes!=null){
+							if(!protectionAttributes.values().isEmpty() && protectionAttributes.containsKey(Constants.OBJECT_NAME_ATTRIBUTE)){
+								ArrayList objectNameList = (ArrayList) protectionAttributes.get(Constants.OBJECT_NAME_ATTRIBUTE);
+								if(objectNameList!=null && objectNameList.size()>0){
+									HashMap objectNames = new HashMap();
+									Iterator itt = objectNameList.iterator();
+									while(itt.hasNext()){
+										String temp = (String)itt.next();
+										objectNames.put(temp,temp);
+									}
+									request.getSession().setAttribute("OBJECTNAME_LIST",objectNames);
+								 %>
+									<bean:define name="OBJECTNAME_LIST" id="objectNameMap"/>
+									<td class=formField>
+										<html:select property="objectName">
+											<html:options collection="objectNameMap" property="key" labelProperty="value"/>
+										</html:select>
+									</td>
+								<%}else{ %>
+										<td class=formField>
+										<logic:present name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class="formField" id="objectName" size="30" name="objectName" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="objectName"/>" >
+										</logic:present>
+										<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+											<INPUT class=formField id=objectName size=30 name=objectName value="<bean:write name="queryForm" property="objectName"/>">
+										</logic:notPresent>					
+										</td>									
+									<% 
+								}
+							}else{
+								%>
+								<td class=formField>
+									<logic:present name="<%=Constants.CURRENT_FORM%>">
+										<INPUT class="formField" id="objectName" size="30" name="objectName" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="objectName"/>" >
+									</logic:present>
+									<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+										<INPUT class=formField id=objectName size=30 name=objectName value="<bean:write name="queryForm" property="objectName"/>">
+									</logic:notPresent>					
+								</td>
+								<%
+							 }
+						}
+					 %>
+					</tr>
+				</logic:present>
+				<logic:notPresent name="<%=Constants.PROTECTED_ATTRIBUTES%>">
+					<tr>
+						<td class=formRequiredNotice width=5></td>
+						<td class=formLabel><LABEL for=objectName><bean:message key="label.object_name" /></LABEL></td>
+						<td class=formField>
+						<logic:present name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class="formField" id="objectName" size="30" name="objectName" value="<bean:write name="<%=Constants.CURRENT_FORM%>" property="objectName"/>" >
+						</logic:present>
+						<logic:notPresent name="<%=Constants.CURRENT_FORM%>">
+							<INPUT class=formField id=objectName size=30 name=objectName value="<bean:write name="queryForm" property="objectName"/>">
+						</logic:notPresent>					
+						</td>
+					</tr>
+				</logic:notPresent> 
+				
+				
 				<tr>
 					<td class=formRequiredNotice width=5></td>
 					<td class=formLabel><LABEL for=operation><bean:message
