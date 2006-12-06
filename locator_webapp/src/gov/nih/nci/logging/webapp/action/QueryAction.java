@@ -285,18 +285,7 @@ public class QueryAction extends Action
 				
 				return false;
 			}
-//		}
-//		catch (Exception e)
-//		{
-////			 Set Search Result Page information
-//			SearchResultPage searchResultPage = new SearchResultPage();
-//			searchResultPage.setTotalResultSize(0);
-//			searchResultPage.setSearchResultMessage(Constants.NO_RESULTS_MESSAGE);
-//
-//			// Set Search Results
-//			session.setAttribute(Constants.SEARCH_RESULTS_PAGE, searchResultPage);
-//			return false;
-//		}
+
 		
 	}
 

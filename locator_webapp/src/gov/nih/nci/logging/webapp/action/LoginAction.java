@@ -3,12 +3,11 @@
 
 package gov.nih.nci.logging.webapp.action;
 
-import java.util.HashMap;
-
 import gov.nih.nci.logging.webapp.form.LoginForm;
 import gov.nih.nci.logging.webapp.util.Constants;
-import gov.nih.nci.logging.webapp.util.StringUtils;
 import gov.nih.nci.logging.webapp.util.SecurityManager;
+
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,9 +53,10 @@ public class LoginAction extends Action
 				HttpSession session = request.getSession(true);
 				session.setAttribute(Constants.LOGIN_OBJECT, form);
 				session.setAttribute(Constants.APPLICATION_NAME, loginForm.getApplication());
+				loadProtectedAttributes(request,loginForm);
 				return (mapping.findForward(Constants.FORWARD_HOME));
 			}
-			loadProtectedAttributes(request,loginForm);
+			
 			
 		}
 		catch (Exception ex)
@@ -89,7 +89,8 @@ public class LoginAction extends Action
 	private void loadProtectedAttributes(HttpServletRequest request, LoginForm loginForm)
 	{
 		HashMap protectedAttributes = SecurityManager.loadProtectedAttributes(loginForm.getLoginID());
-		request.setAttribute(Constants.PROTECTED_ATTRIBUTES,protectedAttributes);
+		
+		request.getSession().setAttribute(Constants.PROTECTED_ATTRIBUTES,protectedAttributes);
 	}
 
 }
