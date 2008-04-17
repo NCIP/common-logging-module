@@ -8,6 +8,7 @@ package gov.nih.nci.logging.api.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ekagra Software Technologes Limited ('Ekagra')
@@ -24,6 +25,7 @@ public class UserInfo implements Serializable
 	private ArrayList transactionLogs;
 	private String comment;
 	private String objectIDKey;
+	private String[] groupNames;
 	
 
 	public String getUsername()
@@ -99,5 +101,15 @@ public class UserInfo implements Serializable
 	public void setObjectIDKey(String objectIDKey) {
 		this.objectIDKey = objectIDKey;
 	}
+
+	public String[] getGroupNames() {
+		return groupNames;
+	}
+
+	public void setGroupNames(String[] groupNames) {
+		this.groupNames = groupNames;
+	}
+
+	
 
 }

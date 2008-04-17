@@ -52,6 +52,16 @@ public class UserInfoHelper
 		  }
 		  ThreadVariable.set(userInfo);
 	}
+	public static void setGroupNames( String[] groupNames)
+	{
+		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
+		  if (null == userInfo)
+		   userInfo = new UserInfo();
+		  
+		  userInfo.setGroupNames(groupNames);
+		  ThreadVariable.set(userInfo);
+		  
+	}
 	public static void setSessionID( String sessionID)
 	{
 		 UserInfo userInfo = (UserInfo)ThreadVariable.get();
