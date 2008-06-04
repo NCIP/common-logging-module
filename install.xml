@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 $Id: install.xml 4757 2008-05-15 20:43:31Z zengje $
-$HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 -->
-<project name="csm-upt-installer" default="upgrade" basedir="." 
+<project name="clm-llt-installer" default="upgrade" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
@@ -34,13 +34,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	<property name="jboss-conf.dir.target" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- *-ds.xml and WAR -->
-	<property name="upt.dir.src" value="${basedir}/${upt.dist.relative.dir}" />
-	<property name="upt.ds.file" value="upt-ds.xml" />
-	<property name="upt.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
-	<property name="upt.hibernate.file" value="hibernate.cfg.xml" />
-	<property name="upt.war.file" value="upt.war" />
-	<property name="securityws.dir.src" value="${basedir}/${securityws.dist.relative.dir}" />
-	<property name="securityws.war.file" value="securityws.war" />
+	<property name="llt.dir.src" value="${basedir}/${llt.dist.relative.dir}" />
+	<property name="llt.ds.file" value="llt-ds.xml" />
+	<property name="llt.war.file" value="llt.war" />
+	<property name="llt.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
+	<property name="llt.hibernate.file" value="hibernate.cfg.xml" />
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -72,7 +70,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 
 	<!-- Conditionals -->
 	<available file="${jboss.home}/server/${jboss.server.name}/conf/jboss-service.xml" property="jboss.exists"/>
-	<!-- upt can use either Oracle or MySQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
+	<!-- llt can use either Oracle or MySQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
 	<if>
 		<equals arg1="${database.type}" arg2="oracle"/>
 		<then>
@@ -125,16 +123,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	<!--<import file="db-integrate.xml" />-->
 
 	<!-- Read db configs from existing ds.xml if it exists -->
-	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${upt.ds.file}" property="ds.exists"/>
+	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${llt.ds.file}" property="ds.exists"/>
 	<if>
 		<isset property="ds.exists"/>
 		<then>
 			<jboss-read-dbconfig
-				jboss.ds-xml.file="${upt.ds.file}"
+				jboss.ds-xml.file="${llt.ds.file}"
 				/>
 		</then>
 		<else>
-			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${upt.ds.file}"/>
+			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${llt.ds.file}"/>
 		</else>
 	</if>
 
@@ -230,6 +228,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		                sql.delimitertype="row"
 				sql.file="${db.dir.target}/${database.type}/DataPrimingOracle.sql"
 		                onerror="continue"/>
+		<run-sql-script database.url="${database.url}" 
+		                database.user="${database.user}"
+		                database.password="${database.password}" 
+		                sql.delimiter="/" 
+		                sql.delimitertype="row"
+				sql.file="${db.dir.target}/${database.type}/CLMSchemaMySQL.sql"
+		                onerror="continue"/>
 	</target>
 
 	<target name="-install:database:mysql" if="is.mysql" unless="exclude.database">
@@ -246,32 +251,36 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		       database.password="${database.password}"
 		       sql.file="${db.dir.target}/${database.type}/DataPrimingMySQL.sql"
 		       	/>
+		<run-sql-script database.url="${database.url}" 
+			database.user="${database.user}"
+			database.password="${database.password}" 
+			sql.file="${db.dir.target}/${database.type}/CLMSchemaMySQL.sql"
+			/>
 	</target>
 
 	<target name="install:jboss:binaries" description="Unzip JBoss binary" unless="exclude.jboss">
 		<unzip dest="${application.base.path}" src="${tools.dir.src}/${jboss.binaries.file}" />
 	</target>
 
-	<target name="install:jboss:upt" description="Deploy upt upt.ear, upt-api.war and common libraries" unless="exclude.jboss">
+	<target name="install:jboss:llt" description="Deploy llt llt.ear, llt-api.war and common libraries" unless="exclude.jboss">
 		<!-- added to ensure working.dirs are fresh for our install -->
 		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
 		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
 
-		<copy file="${upt.dir.src}/${upt.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<copy file="${llt.dir.src}/${llt.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		<copy file="${database.driver.file}" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
 		<!-- Replace this with file from ivy when project is ivy'fied -->
 		<copy file="${bda-utils.dir.src}/clm-3.2.jar" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
-		<copy file="${securityws.dir.src}/${securityws.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 	</target>
 
-	<target name="install:jboss:upt:configure" description="Configure upt application" unless="exclude.jboss">
-		<copy file="${jboss-conf.dir.target}/${upt.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
-		<copy file="${jboss-conf.dir.target}/${upt.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
-		<copy file="${jboss-conf.dir.target}/${upt.hibernate.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+	<target name="install:jboss:llt:configure" description="Configure llt application" unless="exclude.jboss">
+		<copy file="${jboss-conf.dir.target}/${llt.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<copy file="${jboss-conf.dir.target}/${llt.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<copy file="${jboss-conf.dir.target}/${llt.hibernate.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 	</target>
 
 	<!-- Wrapper target to configure jboss container, not deployed application -->
-	<target name="install:jboss:configure" description="Configure upt" unless="exclude.jboss"
+	<target name="install:jboss:configure" description="Configure llt" unless="exclude.jboss"
 		depends="install:jboss:binaries,
 		-install:jboss:configure:ports,
 		-install:jboss:configure:login-conf,
@@ -280,13 +289,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		"/>
 
 	<!-- Configure ports used by JBOSS (either bindings or editing jboss config.files) -->
-	<target name="-install:jboss:configure:ports" description="Configure upt" unless="exclude.jboss">
+	<target name="-install:jboss:configure:ports" description="Configure llt" unless="exclude.jboss">
 		<jboss-bindings
 			jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"
 			/>
 	</target>
 
-	<!-- Add custom login-config.xml content from snippet from upt/software/resources/deploy/login-config.${auth.type}-block.xml -->
+	<!-- Add custom login-config.xml content from snippet from llt/software/resources/deploy/login-config.${auth.type}-block.xml -->
 	<target name="-install:jboss:configure:login-conf" unless="exclude.jboss">
 		<if>    
 			<equals arg1="${authentication.type}" arg2="ldap"/>
@@ -311,7 +320,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		</xmlconfig>
 	</target>
 
-	<!-- Configure log4j settings based on contents of upt/software/resrouces/deploy/log4j.block.xml -->
+	<!-- Configure log4j settings based on contents of llt/software/resrouces/deploy/log4j.block.xml -->
 	<target name="-install:jboss:configure:log4j" unless="exclude.jboss">
         <!--
 		<property name="log4j.block.file" value="${resource.dir.target}/log4j.block.xml"/>
@@ -369,9 +378,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		install:clean,
 		install:init,
 		install:jboss:binaries,
-		install:jboss:upt:re-configure,
-		install:jboss:upt,
-		install:jboss:upt:configure,
+		install:jboss:llt:re-configure,
+		install:jboss:llt,
+		install:jboss:llt:configure,
 		install:jboss:configure,
 		install:jboss:start
 		" />
@@ -391,80 +400,80 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		"/>
 
 	<!-- Fixes hibernate dialect and other configurations in code generated at build time.  This is requred because the properties/options selected at build time can be different than those used at install time. -->
-	<target name="install:jboss:upt:re-configure" unless="exclude.jboss">
+	<target name="install:jboss:llt:re-configure" unless="exclude.jboss">
 	    
 	    
 		<!--
-		<delete dir="${working.dir}/upt-ear"/>
-		<delete dir="${working.dir}/upt-war"/>
-		<delete dir="${working.dir}/${upt-api.file.src}"/>
-		<delete dir="${working.dir}//upt/imageZippingMDB-jar"/>
+		<delete dir="${working.dir}/llt-ear"/>
+		<delete dir="${working.dir}/llt-war"/>
+		<delete dir="${working.dir}/${llt-api.file.src}"/>
+		<delete dir="${working.dir}//llt/imageZippingMDB-jar"/>
 
 		
-		<mkdir dir="${working.dir}/upt-ear"/>
-		<mkdir dir="${working.dir}/upt-war"/>
-		<mkdir dir="${working.dir}/${upt-api.file.src}"/>
-		<mkdir dir="${working.dir}/upt/imageZippingMDB.jar"/>
+		<mkdir dir="${working.dir}/llt-ear"/>
+		<mkdir dir="${working.dir}/llt-war"/>
+		<mkdir dir="${working.dir}/${llt-api.file.src}"/>
+		<mkdir dir="${working.dir}/llt/imageZippingMDB.jar"/>
 
 		
-		<unzip src="${basedir}/upt-ear/upt.ear" dest="${working.dir}/upt-ear"/>
-		<unzip src="${working.dir}/upt-ear/upt.war" dest="${working.dir}/upt-war"/>
-		<unzip src="${upt-core-grid.dir.src}/${upt-api.file.src}" dest="${working.dir}/${upt-api.file.src}"/>
-		<unzip src="${working.dir}/upt-ear/imageZippingMDB.jar" dest="${working.dir}/imageZippingMDB-jar"/>
+		<unzip src="${basedir}/llt-ear/llt.ear" dest="${working.dir}/llt-ear"/>
+		<unzip src="${working.dir}/llt-ear/llt.war" dest="${working.dir}/llt-war"/>
+		<unzip src="${llt-core-grid.dir.src}/${llt-api.file.src}" dest="${working.dir}/${llt-api.file.src}"/>
+		<unzip src="${working.dir}/llt-ear/imageZippingMDB.jar" dest="${working.dir}/imageZippingMDB-jar"/>
 
 		
-		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/llt-war/WEB-INF/classes/llt.clm.new.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
 
-		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/llt-war/WEB-INF/classes/llt.clm.new.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
-		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/llt-war/WEB-INF/classes/llt.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
 
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 		
-		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${llt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${llt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${llt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${llt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 
 		
-		<replaceregexp file="${working.dir}/upt/uptwar/WEB-INF/classes/mail.properties" byline="true"
+		<replaceregexp file="${working.dir}/llt/lltwar/WEB-INF/classes/mail.properties" byline="true"
 			match="^(host)=(.*)"
 			replace="\1=${mail.smtp.server}"/>
 		<replace dir="${working.dir}" token="localhost:59080" value="${jboss.server.hostname}:${jboss.server.port}">
@@ -472,34 +481,34 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 			<include name="**/remoteService.xml" />
 		</replace>
 
-		<xmlconfig in="${working.dir}/imageZippingMDB-jar/upt.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/imageZippingMDB-jar/llt.hibernate.cfg.xml" verbose="false">
 			<update path="(//property)[@name='dialect']" value="${database.dialect}" />
 		</xmlconfig>
 
 		
-		<move file="${basedir}/upt-ear/upt.ear" tofile="${basedir}/upt-ear/upt.ear.orig"/>
-		<move file="${upt-core-grid.dir.src}/${upt-api.file.src}" tofile="${upt-core-grid.dir.src}/${upt-api.file.src}.orig"/>
+		<move file="${basedir}/llt-ear/llt.ear" tofile="${basedir}/llt-ear/llt.ear.orig"/>
+		<move file="${llt-core-grid.dir.src}/${llt-api.file.src}" tofile="${llt-core-grid.dir.src}/${llt-api.file.src}.orig"/>
 
 		
-		<jar jarfile="${working.dir}/upt-ear/imageZippingMDB.jar" compress="false" manifest="${working.dir}/imageZippingMDB-jar/META-INF/MANIFEST.MF">
+		<jar jarfile="${working.dir}/llt-ear/imageZippingMDB.jar" compress="false" manifest="${working.dir}/imageZippingMDB-jar/META-INF/MANIFEST.MF">
 			<fileset dir="${working.dir}/imageZippingMDB-jar">
 				<include name="*/**" />
 			</fileset>
 		</jar>
-		<war destfile="${working.dir}/upt-ear/upt.war" compress="false" webxml="${working.dir}/upt-war/WEB-INF/web.xml" >
-			<fileset dir="${working.dir}/upt-war">
+		<war destfile="${working.dir}/llt-ear/llt.war" compress="false" webxml="${working.dir}/llt-war/WEB-INF/web.xml" >
+			<fileset dir="${working.dir}/llt-war">
 				<include name="*/**" />
 			</fileset>
 		</war>
 
-		<ear compress="false" destfile="${basedir}/upt-ear/upt.ear" appxml="${working.dir}/upt-ear/META-INF/application.xml">
-			<fileset dir="${working.dir}/upt-ear">
+		<ear compress="false" destfile="${basedir}/llt-ear/llt.ear" appxml="${working.dir}/llt-ear/META-INF/application.xml">
+			<fileset dir="${working.dir}/llt-ear">
 				<include name="*/**" />
 			</fileset>
 		</ear>
 
-		<war destfile="${upt-core-grid.dir.src}/${upt-api.file.src}" compress="false" webxml="${working.dir}/${upt-api.file.src}/WEB-INF/web.xml" >
-			<fileset dir="${working.dir}/${upt-api.file.src}">
+		<war destfile="${llt-core-grid.dir.src}/${llt-api.file.src}" compress="false" webxml="${working.dir}/${llt-api.file.src}/WEB-INF/web.xml" >
+			<fileset dir="${working.dir}/${llt-api.file.src}">
 				<include name="*/**" />
 			</fileset>
 		</war>
@@ -512,9 +521,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		depends="
 		install:validation:pre-install,
 		install:jboss:stop,
+		install:validation:pre-install:ports,
 		install:init,
-		install:jboss:upt:re-configure,
-		install:jboss:upt,
+		install:jboss:llt:re-configure,
+		install:jboss:llt,
 		install:jboss:start
 		" />
 
@@ -524,6 +534,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		upgrade:init,
 		install:validation:pre-install,
 		install:jboss:stop,
+		install:validation:pre-install:ports,
 		install:init,
 		upgrade:database,
 		upgrade:jboss,
@@ -601,7 +612,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	</target>
 
 	<target name="upgrade:init">
-		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${upt.ds.file} may not exist."/>
+		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${llt.ds.file} may not exist."/>
 		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
 		<properties-exist properties.list="${db.prop.list}"/>
 	</target>

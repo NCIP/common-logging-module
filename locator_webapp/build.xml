@@ -1,4 +1,4 @@
-<project name="LLT Project" basedir="./.." default="all">
+<project name="LLT Project" basedir="." default="all">
 	<description>LLT Project Build File</description>
 
 	<target name="init" >
