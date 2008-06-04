@@ -11,7 +11,7 @@ insert into csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE
 values ("csmupt","CSM UPT Super Admin Application",0,0,sysdate());
 
 insert into csm_user (LOGIN_NAME,FIRST_NAME,LAST_NAME,PASSWORD,UPDATE_DATE)
-values ("<<super_admin_login_id>>","<<super_admin_first_name>>","<<super_admin_last_name>>","zJPWCwDeSgG8j2uyHEABIQ==",sysdate());
+values ("@super.admin.user@","@super.admin.first.name@","@super.admin.last.name@","zJPWCwDeSgG8j2uyHEABIQ==",sysdate());
  
 insert into csm_protection_element(PROTECTION_ELEMENT_NAME,PROTECTION_ELEMENT_DESCRIPTION,OBJECT_ID,APPLICATION_ID,UPDATE_DATE)
 values("csmupt","CSM UPT Super Admin Application Protection Element","csmupt",1,sysdate());
@@ -27,8 +27,8 @@ values(1,1,sysdate());
 INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE_FLAG,ACTIVE_FLAG,UPDATE_DATE)
 VALUES ("<<application_context_name>>","Application Description",0,0,sysdate());
 
-insert into csm_protection_element(PROTECTION_ELEMENT_NAME,PROTECTION_ELEMENT_DESCRIPTION,OBJECT_ID,APPLICATION_ID,UPDATE_DATE)
-values("<<application_context_name>>","<<application_context_name>> Admin Application Protection Element","<<application_context_name>>",1,sysdate());
+INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE_FLAG,ACTIVE_FLAG,UPDATE_DATE)
+VALUES ("@application.context.name.remote@","@application.context.name.remote@",0,0,sysdate());
 
 #
 # The following entries are Common Set of Privileges
