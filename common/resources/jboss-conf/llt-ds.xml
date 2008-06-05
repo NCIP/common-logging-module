@@ -14,7 +14,7 @@
 
 <datasources>
   <local-tx-datasource>
-    <jndi-name>@application.context.name@</jndi-name>
+    <jndi-name>@application.ds.name@</jndi-name>
     <connection-url>@database.url@</connection-url>
     <user-name>@database.user@</user-name>
     <password>@database.password@</password>

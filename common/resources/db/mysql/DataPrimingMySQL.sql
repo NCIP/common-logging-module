@@ -28,7 +28,7 @@ INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE
 VALUES ("<<application_context_name>>","Application Description",0,0,sysdate());
 
 INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE_FLAG,ACTIVE_FLAG,UPDATE_DATE)
-VALUES ("@application.context.name.remote@","@application.context.name.remote@",0,0,sysdate());
+VALUES ("@application.context.name@","@application.context.name@",0,0,sysdate());
 
 #
 # The following entries are Common Set of Privileges
