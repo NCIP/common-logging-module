@@ -37,7 +37,7 @@ public class ObjectStateInterceptor extends EmptyInterceptor
 	{
 		operation = "insert";
 		logger.logMessage(entity, id, state, null, propertyNames, types, operation);
-		return true;
+		return false;
 	}
 
 	/**
