@@ -1,56 +1,119 @@
-<project name="CSMAPIProject" default="dist" basedir=".">
-	<description>CSM API Project Build File</description>
+<project name="clm-api" default="run" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	<description>CLM API Project Build File</description>
+
+	<property name="common.dir" value="${basedir}/../" />
+	<property name="local.repo.dir" value="${basedir}/../local-ivy-repo/${ant.project.name}" />
+	
+	<property name="global.ivy.settings.file" location="${common.dir}/common/ivysettings.xml" />
 
 	<!-- set global properties for this build -->
-	<property name="src" location="src" />
-	<property name="lib" location="lib" />
-	<property name="build" location="build" />
+	<property name="src.dir" location="src" />
+
+	<property name="lib.dir" value="${common.dir}/lib" />
+
+	<!-- This will be removed once all jars are retrieved from Ivy -->
+	<property name="local.lib.dir" value="lib" />
+	<property name="base.lib.dir" value="../lib" />
+
+	<property name="classes.dir" location="${basedir}/classes" />
 	<property name="dist" location="dist" />
 	<property name="resources" location="resources" />
+	<property name="common.resources" location="../common/resources/jboss-conf" />
+	<property name="jar.name" value="clm.jar" />
 
-	<target name="init">
+	<!-- Paths -->
+	<path id="common.classpath">
+		<fileset dir="${common.dir}/lib">
+			<include name="ivy-core-2.0.0-beta2.jar" />
+			<include name="ivy-2.0.0-beta2.jar" />
+		</fileset>
+	</path>
+
+	<path id="project.compile.classpath">
+		<fileset dir="${lib.dir}/api/compile">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${local.lib.dir}">
+			<exclude name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Task definitions -->
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="common.classpath" />
+
+	<!-- Targets -->
+
+	<target name="ivy-settings">
+		<ivy:settings file="${global.ivy.settings.file}" />
+	</target>
+
+	<target name="ivy-compile" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="compile" />
+		<ivy:retrieve pattern="${lib.dir}/api/[conf]/[artifact]-[revision].[ext]" conf="compile" />
+	</target>
+
+
+  	<target name="ivy-runtime" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="runtime" />
+		<ivy:retrieve pattern="${lib.dir}/api/[conf]/[artifact]-[revision].[ext]" conf="runtime" />
+	</target>
+  
+
+	<target name="ivy-clean-cache" description="Cleans local Ivy cache">
+		<delete dir="${user.home}/.ivy-${ant.project.name}" />
+	</target>
+
+	<target name="-pre-clean" depends="ivy-clean-cache" description="Performs all necessary clean-up before a build">
+		<delete dir="${classes.dir}" quiet="false" />
+		<delete file="${target.dir}/${jar.name}" quiet="false" />
+		
+	</target>
+
+	<target name="-init" description="Initializes the system before a build">
 		<!-- Create the time stamp -->
 		<tstamp />
-		<!-- Create the build directory structure used by compile -->
-		<delete dir="${build}"/>
-		<delete dir="${dist}" />
-		<mkdir dir="${build}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${local.repo.dir}"/>
 		<mkdir dir="${dist}" />
+		<mkdir dir="${lib.dir}/api/compile" />
+		<mkdir dir="${lib.dir}/api/runtime" />
+
 	</target>
 
-	<target name="compile" depends="init"
-		description="compile the source ">
-		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}" destdir="${build}" debug="true" deprecation="true">
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</javac>
-		<copy todir="${build}">
-		<fileset dir="${src}" includes="**/*" excludes="**/*.java"/>		       		
-	   	</copy>   
+	<target name="compile" depends="-pre-clean, -init, ivy-compile" description="compile the source ">
+
+		<!-- Compile the java code from ${src.dir} into ${classes.dir} -->
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" deprecation="true" classpathref="project.compile.classpath" />
+
+		<copy file="${src.dir}/clm_spring-config.xml" todir="${classes.dir}" />
 	</target>
 
-	<target name="dist" depends="compile" description="generate the distribution">
-		<!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-		<jar jarfile="${dist}/clm.jar" basedir="${build}" manifest="${resources}/MANIFEST.MF"/>
+	<target name="dist" depends="compile,ivy-runtime" description="generate the distribution">
+		<!-- Put everything in ${classes.dir} into the clm.jar file -->
+		<jar jarfile="${dist}/${jar.name}" basedir="${classes.dir}" />
+
 		<copy todir="${dist}">
-			<fileset dir="${lib}">
+			<fileset dir="${lib.dir}/api/runtime">
 				<include name="**/*.jar" />
 			</fileset>
 		</copy>
+
 		<copy todir="${dist}">
-			<fileset dir="${resources}">
-				<exclude name="MANIFEST.MF" />
-			</fileset>
+			<fileset dir="${common.resources}" />
+			<fileset dir="${resources}" />
 		</copy>
-		<jar jarfile="${dist}/clmwebapp.jar" basedir="${build}" includes="gov/nih/nci/logging/api/logger/hibernate/*.*" manifest="${resources}/MANIFEST.MF" />
+
+		<delete quiet="true" file="${dist}/ObjectStateLoggerConfig.xml" />
 	</target>
 
 	<target name="clean" description="perform the clean up">
-		<delete dir="${build}" />
+		<delete dir="${classes.dir}" />
 	</target>
+
+	<target name="-post-clean" description="Performs necessary clean-up after a build">
+		<delete dir="${classes.dir}" quiet="false" />
+	</target>
+
+	<target name="run" depends="dist, -post-clean" description="Default project target" />
 
 </project>
