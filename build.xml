@@ -4,7 +4,9 @@ $Id: build.xml 4753 2008-05-15 18:24:16Z saksass $
 $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 -->
 <project name="clm-llt" default="build:all" basedir="." 
-	xmlns:ivy="antlib:org.apache.ivy.ant">
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	xmlns:cs="antlib:com.puppycrawl.tools.checkstyle"
+	>
 	<description>
 		Builds the CLM/LLT
 	</description>
@@ -13,20 +15,30 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="project.name" value="clm-llt"/>
 	<property environment="env" />
 	<!-- The project.properties stores properties that are shared between both build.xml and install.xml. Typically properties that are related to the distribution directories, or files. -->
+	<property file="local.properties" />
 	<property file="project.properties" />
+	<!-- should not be required for build
 	<property name="properties.file" value="${basedir}/install.properties"/>
+	-->
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
 	<property file="${properties.file}" />
 	<!-- added for remote deployments since file is copied to root of install dir -->
 	<basename property="properties.file.name" file="${properties.file}"/>
 
+	<!-- Default values in case property file is not used -->
+	<property name="application.base.path" value="${user.home}/apps"/>
+
 	<!-- Generic build time properties -->
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="resources.dir" value="${basedir}/resources" />
 	<property name="reports.dir" value="${basedir}/reports" />
 	<property name="temp.dir" value="${basedir}/temp" />
-	<property name="global.ivy.settings.file" location="ivysettings.xml" />
+	<property name="ivy.settings.file" location="ivy-bda-settings.xml" />
+	<property name="ivy.bda-testing.file" location="ivy-bda-testing.xml" />
+	<property name="ivy.file" value="ivy-2.0.0-beta2.jar"/>
+	<property name="ivy-core.file" value="ivy-core-2.0.0-beta2.jar"/>
+
 
 	<!-- Used by dist:*:prep to copy resource files to distribution area -->
 	<property name="common.src.dir" value="${basedir}/${common.dist.relative.dir}" />
@@ -65,8 +77,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="jboss.dest.file" value="${tools.target.dir}/${jboss.binaries.file}"/>
 
 	<!-- Where the sub-projects should deploy thier artifacts.  This relative from thier *.base.dir above.  We need to use this because thier basedir is not the same as this project's basedir. -->
-	<property name="clm.target.dir" value="../${clm.target.dir}" />
-	<property name="llt.target.dir" value="../${llt.target.dir}" />
+	<property name="clm.dist.dir" value="${clm.target.dir}" />
+	<property name="llt.dist.dir" value="${llt.target.dir}" />
 
 	<!-- Properties related to creating the distribution -->
 	<property name="dist.dir" value="dist"/>
@@ -80,13 +92,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="install.target" value="install"/>
 	<property name="upgrade.target" value="upgrade"/>
 
-	<!-- Paths -->
-	<path id="bda-utils.classpath">
-		<fileset dir="${bda-utils.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
-	
+	<!-- Where grand stores it's outputed pdf reports of build files -->
+	<property name="grand.rpt.dir" value="common/grand"/>
+
 	<!-- retrive ivy files then retrieve bda files and librarires -->
 	<mkdir dir="lib"/>
 	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
@@ -94,6 +102,20 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
 		<property name="lib.dir" value="${lib.dir}"/>
 	</ant>
+
+	<!-- Paths -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<path id="ivy.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="${ivy.file}" />
+			<include name="${ivy-core.file}" />
+		</fileset>
+	</path>
+
 
 	<!-- Task definitions -->
 	<taskdef resource="simiantask.properties" classpathref="bda-utils.classpath" />
@@ -103,7 +125,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</classpath>
 	</taskdef>
 	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="bda-utils.classpath" />
-	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="bda-utils.classpath"/>
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
 		<classpath>
 			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
@@ -111,7 +133,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</taskdef>
 
 	<!-- Includes- include BDA marcos -->
-	<import file="${bda-utils.dir}/bda-build-utils-0.1.xml" />
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
 	<!-- Start logging --> 
 	<mkdir dir="${log.dir}" />
@@ -127,7 +149,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<target name="clean">
-		<mkdir dir="${target.dir}"/>
 		<mkdir dir="${dist.dir}"/>
 		<delete>
 			<fileset dir="${target.dir}">
@@ -140,6 +161,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<target name="init" >
 		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${temp.dir}"/>
 		<mkdir dir="${target.dir}"/>
 		<mkdir dir="${clm.target.dir}"/>
 		<mkdir dir="${llt.target.dir}"/>
@@ -149,7 +171,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<target name="ivy:clean" description="Clean">
-		<ivy:settings file="${global.ivy.settings.file}" />
+		<ivy:settings file="${ivy.settings.file}" />
 		<ivy:cleancache />
 		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
 			target="ivy-cleancache">
@@ -171,9 +193,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${clm.build.file}"
 			target="${clm.build.target}"
 			dir="${clm.base.dir}" >
-			<!-- ignore this since it does not need to be in distribution
-			<property name="dist" value="${clm.target.dir}" />
-			-->
+			<property name="dist" value="${clm.dist.dir}" />
 		</ant>
 	</target>
 
@@ -181,7 +201,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${llt.build.file}"
 			target="${llt.build.target}"
 			dir="${llt.base.dir}" >
-			<property name="dist.home" value="${llt.target.dir}" />
+			<property name="dist.home" value="${llt.dist.dir}" />
 		</ant>
 	</target>
 
@@ -441,7 +461,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Copies the distrbution to the remote system -->
 	<target name="deploy:remote:install:copy">
-		<remote-scp remoteScpFileToCopy="${target.dir}/${clm.install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${dist.dir}/${clm.install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 	</target>
 
@@ -464,7 +484,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Copies distribution to remote system -->
 	<target name="deploy:remote:upgrade:copy">
-		<remote-scp remoteScpFileToCopy="${target.dir}/${clm.upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${dist.dir}/${clm.upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 	</target>
 	<!-- Extracts distribution on remote system -->
@@ -506,38 +526,145 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<report-grand
 			build.file.location="build.xml"
 			output.file.dir="."
-			output.file.name="generic-root-build.xml"
+			output.file.name="${grand.rpt.dir}/root-build.xml"
+			/>
+		<report-grand
+			build.file.location="install.xml"
+			output.file.dir="."
+			output.file.name="${grand.rpt.dir}/root-install.xml"
+			/>
+		<report-grand
+			build.file.location="api/build.xml"
+			output.file.dir="."
+			output.file.name="${grand.rpt.dir}/clm-build.xml"
+			/>
+		<report-grand
+			build.file.location="locator_webapp/build.xml"
+			output.file.dir="."
+			output.file.name="${grand.rpt.dir}/llt-build.xml"
 			/>
 	</target>
-	<!-- Static Analysis  & testing targets 
-	<target name="static-analysis:simian" description="Performs code duplication analysis">
-		<simian>
-			<fileset dir="${basedir}/generic-services-commons/src" includes="**/*.java"/>
-			<fileset dir="${basedir}/generic-services-grid/src" includes="**/*.java"/>
-			<fileset dir="${basedir}/generic-web/src" includes="**/*.java"/>
-			<formatter type="xml" toFile="${reports.dir}/simian-log.xml"/>
-		</simian>
-		<xslt in="${reports.dir}/simian-log.xml" out="${reports.dir}/simian-log.html" style="${resources.dir}/simian.xsl" />
+
+	<target name="compile:all" description="Used by static-analysis, required since dist target cleans up generated classes that are required by some static analysis tools"
+		depends="
+			init,
+			compile:clm,
+			compile:llt
+			"/>
+
+	<target name="compile:clm" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${clm.build.file}"
+			target="compile"
+			dir="${clm.base.dir}"/>
 	</target>
-	 
+
+	<target name="compile:llt" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${llt.build.file}"
+			target="compile"
+			dir="${llt.base.dir}"/>
+	</target>
+
+	<target name="ivy-init" 
+		depends="
+		ivy-settings,
+		ivy-test-selenium,
+		ivy-test-junit,
+		ivy-test-cobertura,
+		ivy-test-javancss,
+		ivy-test-checkstyle,
+		ivy-test-pmd
+		"/>
+	<target name="ivy-settings">
+		<property name="ivy.dep.file" value="${ivy.bda-testing.file}"/>
+		<ivy:settings file="${ivy.settings.file}" />
+	</target>
+	<target name="ivy-test-selenium" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-selenium" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
+	</target>
+	<target name="ivy-test-junit" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-junit" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-junit" />
+	</target>
+	<target name="ivy-test-cobertura" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-cobertura" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-cobertura" />
+	</target>
+	<target name="ivy-test-javancss" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-javancss" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-javancss" />
+	</target>
+	<target name="ivy-test-checkstyle" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-checkstyle" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-checkstyle" />
+	</target>
+	<target name="ivy-test-pmd" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-pmd" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
+	</target>
+
+	<target name="static-analysis" description="Performs static analysis"
+		depends="
+		ivy-init,
+		static-analysis:init,
+		findbugs-init,
+		static-analysis:simian,
+		static-analysis:pmd,
+		static-analysis:checkstyle,
+		static-analysis:javancss,
+		static-analysis:cobertura,
+		static-analysis:findbugs
+		"/>
+
 	<target name="static-analysis:init">
-		<property name="src.test.dir" value="${basedir}/test" />
-		<property name="test.classes.dir" value="${basedir}/test-classes" />
+		<property name="llt.java.dir" value="locator_webapp/src"/>
+		<property name="clm.java.dir" value="api/src"/>
+
+		<property name="llt.classes.dir" value="locator_webapp/build/WEB-INF/classes"/>
+		<property name="clm.classes.dir" value="api/classes"/>
+
+		<property name="common.dir" value="common"/>
+
+		<property name="reports.dir" value="reports"/>
+		<property name="reports.simian.dir" value="${reports.dir}/simian"/>
+		<property name="reports.pmd.dir" value="${reports.dir}/pmd"/>
+		<property name="reports.checkstyle.dir" value="${reports.dir}/checkstyle"/>
+		<property name="reports.javancss.dir" value="${reports.dir}/javancss"/>
+		<property name="reports.cobertura.dir" value="${reports.dir}/cobertura"/>
+		<property name="reports.findbugs.dir" value="${reports.dir}/findbugs"/>
+
 		<property name="instrumented.dir" value="${basedir}/instrumented" />
 		<property name="cobertura.ser.file" value="${instrumented.dir}/cobertura.ser" />
-		<property name="reports.dir" value="${common.dir}reports"/>
-		<property name="junit.reports.dir" value="${reports.dir}/junit"/>
 		<property name="cobertura.reports.dir" value="${reports.dir}/cobertura"/>
-		<fail unless="classes.to.test.dir" message="must define classes.to.test.dir for unittesting.xml to work.  it's typically same as classes.dir in host build file"/>
-		<fail unless="common.dir" message="must define common.dir for unittesting.xml to work"/>
+
 		<path id="ivy.classpath">
 			<fileset dir="${common.dir}/lib">
 				<include name="*.jar" />
 			</fileset>
 		</path>
 		<fail unless="lib.dir" message="must define lib.dir for unittesting.xml to work"/>
-		<path id="project.test.classpath">
-			<fileset dir="${lib.dir}/test">
+		<path id="project.test.selenium.classpath">
+			<fileset dir="${lib.dir}/test-selenium">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<path id="project.test.junit.classpath">
+			<fileset dir="${lib.dir}/test-junit">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<path id="project.test.cobertura.classpath">
+			<fileset dir="${lib.dir}/test-cobertura">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<path id="project.test.javancss.classpath">
+			<fileset dir="${lib.dir}/test-javancss">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<path id="project.test.checkstyle.classpath">
+			<fileset dir="${lib.dir}/test-checkstyle">
 				<include name="*.jar" />
 			</fileset>
 		</path>
@@ -546,149 +673,350 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 				<include name="*.jar" />
 			</fileset>
 		</path>
-		<echo>ci: ${ci.server}</echo>
-
-	</target>
-	<target name="ivy-test" depends="ivy-settings" description="Updates the local ivy repository">
-		<ivy:resolve refresh="true" conf="test" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test" />
-	</target>
-	<target name="ivy-test-pmd" if="ci.server" depends="ivy-settings" description="Updates the local ivy repository">
-		<ivy:resolve refresh="true" conf="test-pmd" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
-	</target>
-	<target name="post-clean-test" if="ci.server">
-		<delete dir="${instrumented.dir}" quiet="false" />
-		<delete dir="${test.classes.dir}" quiet="false" />
-	</target>
-	<target name="init-test" if="ci.server">
-		<mkdir dir="${test.classes.dir}" />
-		<mkdir dir="${instrumented.dir}" />
-		<mkdir dir="${junit.reports.dir}" />
-		<mkdir dir="${reports.dir}/javancss" />
-		<mkdir dir="${reports.dir}/checkstyle" />
-		<mkdir dir="${reports.dir}/pmd" />
-	</target>
-	
-	<target name="compile-test" if="ci.server" depends="-pre-clean, -init, ivy-test" description="Compiles the Java source code">
-		<javac srcdir="${src.test.dir}" destdir="${test.classes.dir}" debug="true">
-			<classpath refid="project.test.classpath" />
-			<classpath path="${classes.to.test.dir}" />
-		</javac>
-	</target>
-	<target name="test" if="ci.server" depends="compile-test, -cobertura-instrument" description="Runs all unit tests">
-		<junit printsummary="on" failureproperty="junit.failure" fork="true" forkmode="once" maxmemory="256m">
-			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
-			<classpath location="${instrumented.dir}" />
-			<classpath location="${classes.to.test.dir}" />
-			<classpath location="${test.classes.dir}" />
-			<classpath refid="project.test.classpath" />
-			<formatter type="xml" />
-			perhaps break down by project name if there are collisions?
-			<batchtest todir="${junit.reports.dir}">
-				<fileset dir="${src.test.dir}">
-					
-					<include name="**/*Test.java" />
-					<include name="**/Test*.java" />
-					<exclude name="**/Abstract*Test.java" />
-					<exclude name="**/Test*Impl.java" />
-
-					<exclude name="**/*.java" />
-				</fileset>
-			</batchtest>
-		</junit>
 		
-		<junitreport todir="${junit.reports.dir}">
-			<fileset dir="${junit.reports.dir}">
-				<include name="TEST-*.xml"/>
-			</fileset>
-			<report format="frames" todir="${junit.reports.dir}"/>
-		</junitreport>          
-				<fail if="junit.failure" message="There were JUnit failures" />
-		
-	</target>
--->
-<!--
-	<target name="static-analysis:java-ncss" if="ci.server">
-		<taskdef name="javancss" classpathref="project.test.classpath" classname="javancss.JavancssAntTask" />
-		<javancss srcdir="${src.java.dir}"
-			includes="**/*.java"
-			generatereport="true"
-			outputfile="${reports.dir}/javancss/javancss_metrics_${ant.project.name}.xml"
-			ccnPerFuncMax="10"
-			format="xml"/>
-		<xslt taskname="javancss"
-			in="${reports.dir}/javancss/javancss_metrics_${ant.project.name}.xml"
-			out="${reports.dir}/javancss/javancss_report_${ant.project.name}.html"
-			style="../common/javancss/javancss2methodhtml.xsl"/>
-	</target>
-	<target name="static-analysis:pmd" if="ci.server" depends="ivy-test-pmd">
-		<taskdef name="pmd" 
-			classname="net.sourceforge.pmd.ant.PMDTask"
-			classpathref="project.test.pmd.classpath"/>
-		<pmd shortFilenames="true" 
-			rulesetfiles="${common.dir}/common/pmd/pmd-ruleset-basic.xml">
-			<formatter type="xml"
-				toFile="${reports.dir}/pmd/pmd_out_${ant.project.name}.xml" />
-			<fileset dir="${src.java.dir}">
-				<include name="**/*.java"/>
-			</fileset>
-		</pmd>
-		<xslt taskname="pmd"
-			in="${reports.dir}/pmd/pmd_out_${ant.project.name}.xml"
-			out="${reports.dir}/pmd/pmd_report_${ant.project.name}.html"
-			style="../common/pmd/pmd-report.xslt"/>
-	</target>
-	<target name="static-analysis:checkstyle" if="ci.server">
-		<taskdef resource="checkstyletask.properties"
-			uri="antlib:com.puppycrawl.tools.checkstyle"
-			classpathref="project.test.classpath"/>
-		<cs:checkstyle config="../common/checkstyle/checkstyle_minimal.xml"
-			failOnViolation="false">
-			<formatter type="xml" 
-				tofile="${reports.dir}/checkstyle/checkstyle_${ant.project.name}.xml"/>
-			<fileset dir="${src.java.dir}">
-				<include name="**/*.java"/>
-			</fileset>
-		</cs:checkstyle>
-		<xslt taskname="checkstyle"
-			in="${reports.dir}/checkstyle/checkstyle_${ant.project.name}.xml"
-			out="${reports.dir}/checkstyle/checkstyle_report_${ant.project.name}.html"
-			style="../common/checkstyle/checkstyle-simple.xsl"/>
+		<delete dir="${reports.dir}"/>
+		<mkdir dir="${reports.dir}"/>
+		<mkdir dir="${reports.simian.dir}"/>
+		<mkdir dir="${reports.pmd.dir}"/>
+		<mkdir dir="${reports.checkstyle.dir}"/>
+		<mkdir dir="${reports.javancss.dir}"/>
+		<mkdir dir="${reports.cobertura.dir}"/>
+		<mkdir dir="${reports.findbugs.dir}"/>
+		<delete dir="${instrumented.dir}"/>
+		<mkdir dir="${instrumented.dir}"/>
+
 	</target>
 
-	<target name="static-analysis:cobertura:instrument" if="ci.server" description="Instruments Cobertura test classes">
-		wait to do this until ivy has populated the directory 
-		<taskdef classpathref="project.test.classpath" resource="tasks.properties" />
-		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser.file}">
-			<fileset dir="${classes.to.test.dir}">
-				<include name="gov/nih/nci/security/**" />
+	<target name="findbugs-init" depends="dist:tools:retrieve:jboss">
+		<property name="findbugs.home.dir" value="${lib.dir}/${findbugs.binaries.relative.dir}"/>
+		<if>
+			<not>
+				<available file="${findbugs.home.dir}/lib/findbugs.jar"/>
+			</not>
+			<then>
+				<echo message="Findbugs is missing, downloading and isnstalling in ${findbugs.home.dir}"/>
+				<get src="${findbugs.src.url}"
+					dest="${temp.dir}/${findbugs.binaries.file}"/>
+				<unzip dest="${lib.dir}" src="${temp.dir}/${findbugs.binaries.file}" />
+			</then>
+		</if>
+		<property name="test.jboss.dir" value="${temp.dir}/${jboss.binaries.relative.dir}"/>
+		<if>
+			<not>
+				<available file="${test.jboss.dir}/lib/jboss-system.jar"/>
+			</not>
+			<then>
+				<mkdir dir="${test.jboss.dir}"/>
+				<unzip dest="${temp.dir}" src="${jboss.dest.file}"/>
+			</then>
+		</if>
+
+		<path id="project.test.findbugs.classpath">
+			<fileset dir="${findbugs.home.dir}">
+				<include name="**/*.jar" />
 			</fileset>
-		</cobertura-instrument>
-	</target>
-	<target name="static-analysis:cobertura:report" if="ci.server" depends="-cobertura-instrument" description="Creates Cobertura report">
-		<cobertura-report datafile="${cobertura.ser.file}" format="html" destdir="${cobertura.reports.dir}/${ant.project.name}">
-			<fileset dir="${src.java.dir}">
-				<include name="gov/nih/nci/security/**" />
-			</fileset>
-		</cobertura-report>
-	</target>
-	<target name="static-analysis:cobertura:check" if="ci.server" depends="-cobertura-report">
-		<cobertura-check failureproperty="cobertura.failure" datafile="${cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
+		</path>
 	</target>
 
-	-->
-	<!-- Static Analysis wrapper, calls all statict analysis targets -->
-	<!--<target name="static-analysis" description="Performs static analysis"
+	<target name="static-analysis:simian" depends="static-analysis:init" description="Performs code duplication analysis">
+		<static-analysis-simian
+			simian.src.dir="${llt.java.dir}"
+			simian.rpt.dir="${reports.simian.dir}"
+			simian.report-xsl.file="${common.dir}/simian/simian.xsl"
+			simian.xml.name="simian-llt.xml"
+			simian.html.name="simian-llt.html"
+			/>
+
+		<static-analysis-simian
+			simian.src.dir="${clm.java.dir}"
+			simian.rpt.dir="${reports.simian.dir}"
+			simian.report-xsl.file="${common.dir}/simian/simian.xsl"
+			simian.xml.name="simian-clm.xml"
+			simian.html.name="simian-clm.html"
+			/>
+
+	</target>
+	<macrodef name="static-analysis-simian">
+		<attribute name="simian.src.dir"/>
+		<attribute name="simian.rpt.dir"/>
+		<attribute name="simian.report-xsl.file"/>
+		<attribute name="simian.xml.name" default="simian.xml"/>
+		<attribute name="simian.html.name" default="simian.html"/>
+		<sequential>
+			<simian>
+				<fileset dir="@{simian.src.dir}" includes="**/*.java"/>
+				<formatter type="xml" toFile="@{simian.rpt.dir}/@{simian.xml.name}"/>
+			</simian>
+			<xslt in="@{simian.rpt.dir}/@{simian.xml.name}" out="@{simian.rpt.dir}/@{simian.html.name}" style="@{simian.report-xsl.file}" />
+		</sequential>
+	</macrodef>
+	 
+	<target name="static-analysis:pmd"
 		depends="
-		static-analysis:simian,
-		static-analysys:java-ncss
-		static-analysys:pmd,
-		static-analysys:checkstyle,
-		static-analysys:cobertura:instrument,
-		static-analysys:cobertura:report,
-		static-analysys:cobertura:check
-		"/>
+		ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-pmd
+			pmd.src.dir="${llt.java.dir}"
+			pmd.rpt.dir="${reports.pmd.dir}"
+			pmd.report-xsl.file="${common.dir}/pmd/pmd-report.xslt"
+			pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset-basic.xml"
+			pmd.xml.name="pmd-llt.xml"
+			pmd.html.name="pmd-llt.html"
+			/>
+		<static-analysis-pmd
+			pmd.src.dir="${clm.java.dir}"
+			pmd.rpt.dir="${reports.pmd.dir}"
+			pmd.report-xsl.file="${common.dir}/pmd/pmd-report.xslt"
+			pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset-basic.xml"
+			pmd.xml.name="pmd-clm.xml"
+			pmd.html.name="pmd-clm.html"
+			/>
+	</target>
 
-	-->
+	<macrodef name="static-analysis-pmd">
+		<attribute name="pmd.src.dir"/>
+		<attribute name="pmd.rpt.dir"/>
+		<attribute name="pmd.report-xsl.file"/>
+		<attribute name="pmd.rule-set.file"/>
+		<attribute name="pmd.xml.name" default="pmd.xml"/>
+		<attribute name="pmd.html.name" default="pmd.html"/>
+		<sequential>
+			<taskdef name="pmd" 
+				classname="net.sourceforge.pmd.ant.PMDTask"
+				classpathref="project.test.pmd.classpath"/>
+			<pmd shortFilenames="true" 
+				rulesetfiles="@{pmd.rule-set.file}">
+				<formatter type="xml"
+					toFile="@{pmd.rpt.dir}/@{pmd.xml.name}" />
+				<fileset dir="@{pmd.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+			</pmd>
+			<xslt taskname="pmd"
+				in="@{pmd.rpt.dir}/@{pmd.xml.name}"
+				out="@{pmd.rpt.dir}/@{pmd.html.name}"
+				style="@{pmd.report-xsl.file}"/>
+		</sequential>
+	</macrodef>
+
+	<target name="static-analysis:javancss"
+		depends="
+		ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-javancss
+			javancss.src.dir="${llt.java.dir}"
+			javancss.rpt.dir="${reports.javancss.dir}"
+			javancss.report-xsl.file="${common.dir}/javancss/javancss2methodhtml.xsl"
+			javancss.xml.name="javancss_metrics_llt.xml"
+			javancss.html.name="javancss_report_llt.html"
+			/>
+		<static-analysis-javancss
+			javancss.src.dir="${clm.java.dir}"
+			javancss.rpt.dir="${reports.javancss.dir}"
+			javancss.report-xsl.file="${common.dir}/javancss/javancss2methodhtml.xsl"
+			javancss.xml.name="javancss_metrics_clm.xml"
+			javancss.html.name="javancss_report_clm.html"
+			/>
+	</target>
+
+	<macrodef name="static-analysis-javancss">
+		<attribute name="javancss.src.dir"/>
+		<attribute name="javancss.rpt.dir"/>
+		<attribute name="javancss.report-xsl.file"/>
+		<attribute name="javancss.xml.name" default="javancss.xml"/>
+		<attribute name="javancss.html.name" default="javancss.html"/>
+		<sequential>
+			<taskdef name="javancss" classpathref="project.test.javancss.classpath" classname="javancss.JavancssAntTask" />
+			<javancss srcdir="@{javancss.src.dir}"
+				includes="**/*.java"
+				excludes="**/*test*/*"
+				generatereport="true"
+				outputfile="@{javancss.rpt.dir}/@{javancss.xml.name}"
+				ccnPerFuncMax="10"
+				format="xml">
+			</javancss>
+			<xslt taskname="javancss"
+				in="@{javancss.rpt.dir}/@{javancss.xml.name}"
+				out="@{javancss.rpt.dir}/@{javancss.html.name}"
+				style="@{javancss.report-xsl.file}"/>
+		</sequential>
+	</macrodef>
+
+	<target name="static-analysis:checkstyle" 
+		depends="
+		ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-checkstyle
+			checkstyle.src.dir="${llt.java.dir}"
+			checkstyle.rpt.dir="${reports.checkstyle.dir}"
+			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl"
+			checkstyle.config.file="${common.dir}/checkstyle/checkstyle_minimal.xml"
+			checkstyle.xml.name="checkstyle-llt.xml"
+			checkstyle.html.name="checkstyle-llt.html"
+			/>
+		<static-analysis-checkstyle
+			checkstyle.src.dir="${clm.java.dir}"
+			checkstyle.rpt.dir="${reports.checkstyle.dir}"
+			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl"
+			checkstyle.config.file="${common.dir}/checkstyle/checkstyle_minimal.xml"
+			checkstyle.xml.name="checkstyle-clm.xml"
+			checkstyle.html.name="checkstyle-clm.html"
+			/>
+	</target>
+
+	<macrodef name="static-analysis-checkstyle">
+		<attribute name="checkstyle.src.dir"/>
+		<attribute name="checkstyle.rpt.dir"/>
+		<attribute name="checkstyle.report-xsl.file"/>
+		<attribute name="checkstyle.config.file"/>
+		<attribute name="checkstyle.xml.name" default="checkstyle.xml"/>
+		<attribute name="checkstyle.html.name" default="checkstyle.html"/>
+		<sequential>
+			<taskdef resource="checkstyletask.properties"
+				uri="antlib:com.puppycrawl.tools.checkstyle"
+				classpathref="project.test.checkstyle.classpath"/>
+			<cs:checkstyle config="@{checkstyle.config.file}"
+				failOnViolation="false">
+				<formatter type="xml" 
+					tofile="@{checkstyle.rpt.dir}/@{checkstyle.xml.name}"/>
+				<fileset dir="@{checkstyle.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+			</cs:checkstyle>
+			<xslt taskname="checkstyle"
+				in="@{checkstyle.rpt.dir}/@{checkstyle.xml.name}"
+				out="@{checkstyle.rpt.dir}/@{checkstyle.html.name}"
+				style="@{checkstyle.report-xsl.file}"
+				/>
+		</sequential>
+	</macrodef>
+
+	<target name="static-analysis:findbugs" 
+		depends="
+		compile:all,
+		ivy-init,
+		findbugs-init,
+		static-analysis:init
+		">
+		<mkdir dir="${reports.findbugs.dir}/llt"/>
+		<mkdir dir="${reports.findbugs.dir}/clm"/>
+
+		<static-analysis-findbugs
+			findbugs.home.dir="${findbugs.home.dir}"
+			findbugs.src.dir="${llt.java.dir}"
+			findbugs.classes.dir="${llt.classes.dir}"
+			findbugs.rpt.dir="${reports.findbugs.dir}/llt"
+			findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl"
+			findbugs.app.classpath.dir="${lib.dir}/llt/runtime"
+			findbugs.jboss.classpath.dir="${test.jboss.dir}"
+			findbugs.xml.name="findbugs-llt.xml"
+			findbugs.html.name="findbugs-llt.html"
+			/>
+		<static-analysis-findbugs
+			findbugs.home.dir="${findbugs.home.dir}"
+			findbugs.src.dir="${clm.java.dir}"
+			findbugs.classes.dir="${clm.classes.dir}"
+			findbugs.rpt.dir="${reports.findbugs.dir}/clm"
+			findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl"
+			findbugs.app.classpath.dir="${lib.dir}/api/runtime"
+			findbugs.jboss.classpath.dir="${test.jboss.dir}"
+			findbugs.xml.name="findbugs-clm.xml"
+			findbugs.html.name="findbugs-clm.html"
+			/>
+	</target>
+
+	<macrodef name="static-analysis-findbugs">
+		<attribute name="findbugs.home.dir"/>
+		<attribute name="findbugs.src.dir"/>
+		<attribute name="findbugs.rpt.dir"/>
+		<attribute name="findbugs.classes.dir"/>
+		<attribute name="findbugs.report-xsl.file"/>
+		<attribute name="findbugs.app.classpath.dir"/>
+		<attribute name="findbugs.jboss.classpath.dir"/>
+		<attribute name="findbugs.xml.name" default="findbugs.xml"/>
+		<attribute name="findbugs.html.name" default="findbugs.html"/>
+		<sequential>
+			<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="project.test.findbugs.classpath"/>
+	
+			<findbugs home="@{findbugs.home.dir}"
+				output="xml:withMessages"
+				outputFile="@{findbugs.rpt.dir}/@{findbugs.xml.name}"
+				jvmargs="-Xms128m -Xmx512m"
+				>
+				<auxClasspath>
+					<fileset dir="@{findbugs.app.classpath.dir}">
+						<include name="**/*.jar" />
+					</fileset>
+					<fileset dir="@{findbugs.jboss.classpath.dir}">
+						<include name="**/*.jar" />
+					</fileset>
+				</auxClasspath>
+				
+				<sourcePath path="@{findbugs.src.dir}" />
+				<class location="@{findbugs.classes.dir}" />
+			</findbugs>
+			<xslt taskname="findbugs"
+				in="@{findbugs.rpt.dir}/@{findbugs.xml.name}"
+				out="@{findbugs.rpt.dir}/@{findbugs.html.name}"
+				style="@{findbugs.report-xsl.file}"
+				/>
+		</sequential>
+	</macrodef>
+		
+	<target name="static-analysis:cobertura" 
+		depends="
+		compile:all,
+		ivy-init,
+		static-analysis:init
+		">
+		<mkdir dir="${basedir}/instrumented/clm"/>
+		<mkdir dir="${basedir}/instrumented/llt"/>
+		<static-analysis-cobertura
+			cobertura.src.dir="${llt.java.dir}"
+			cobertura.classes.dir="${llt.classes.dir}"
+			cobertura.rpt.dir="${reports.cobertura.dir}/llt"
+			cobertura.instrumented.dir="${basedir}/instrumented/llt"
+			cobertura.report-xsl.file="${common.dir}/cobertura/cobertura-simple.xsl"
+			cobertura.ser.file="cobertura.ser"
+			cobertura.config.file="${common.dir}/cobertura/cobertura.xml"
+			/>
+		<static-analysis-cobertura
+			cobertura.src.dir="${clm.java.dir}"
+			cobertura.classes.dir="${clm.classes.dir}"
+			cobertura.rpt.dir="${reports.cobertura.dir}/clm"
+			cobertura.instrumented.dir="${basedir}/instrumented/clm"
+			cobertura.report-xsl.file="${common.dir}/cobertura/cobertura-simple.xsl"
+			cobertura.ser.file="cobertura.ser"
+			cobertura.config.file="${common.dir}/cobertura/cobertura.xml"
+			/>
+	</target>
+
+	<macrodef name="static-analysis-cobertura">
+		<attribute name="cobertura.src.dir"/>
+		<attribute name="cobertura.rpt.dir"/>
+		<attribute name="cobertura.classes.dir"/>
+		<attribute name="cobertura.instrumented.dir"/>
+		<attribute name="cobertura.report-xsl.file"/>
+		<attribute name="cobertura.ser.file"/>
+		<attribute name="cobertura.config.file"/>
+		<sequential>
+			<taskdef classpathref="project.test.cobertura.classpath" resource="tasks.properties" />
+			<cobertura-instrument todir="@{cobertura.instrumented.dir}" datafile="@{cobertura.instrumented.dir}/@{cobertura.ser.file}">
+				<fileset dir="@{cobertura.classes.dir}">
+					<include name="**" />
+				</fileset>
+			</cobertura-instrument>
+	
+			<cobertura-report datafile="@{cobertura.instrumented.dir}/@{cobertura.ser.file}" format="html" destdir="@{cobertura.rpt.dir}">
+				<fileset dir="@{cobertura.src.dir}">
+					<include name="**/*.java" />
+				</fileset>
+			</cobertura-report>
+
+			<cobertura-check failureproperty="cobertura.failure" datafile="@{cobertura.instrumented.dir}/@{cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
+		</sequential>
+	</macrodef>
 </project>
