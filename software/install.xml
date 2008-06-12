@@ -39,6 +39,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 	<property name="llt.war.file" value="llt.war" />
 	<property name="llt.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
 	<property name="llt.hibernate.file" value="hibernate.cfg.xml" />
+	<property name="clm.jar.file" value="clm-4.0.jar" />
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -71,33 +72,28 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 	<!-- Conditionals -->
 	<available file="${jboss.home}/server/${jboss.server.name}/conf/jboss-service.xml" property="jboss.exists"/>
 	<!-- llt can use either Oracle or MySQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
-	<if>
-		<equals arg1="${database.type}" arg2="oracle"/>
-		<then>
+	<switch value="${database.type}">
+		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="is.oracle" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 			<property name="db-incr.list.file" value="${db-incr.oracle.list.file}"/>
 			<property name="db-incr.conf.file" value="${db-incr.oracle.conf.file}"/>
-		</then>
-		<else>
-			<if>
-				<equals arg1="${database.type}" arg2="mysql"/>
-				<then>
-					<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-					<property name="is.mysql" value="true"/>
-					<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
-					<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-					<property name="db-incr.list.file" value="${db-incr.mysql.list.file}"/>
-					<property name="db-incr.conf.file" value="${db-incr.mysql.conf.file}"/>
-				</then>
-				<else>
-					<fail message="Invalid database type ${database.type}"/>
-				</else>
-			</if>
-		</else>
-	</if>
+		</case> 
+		<case value="mysql">
+			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="is.mysql" value="true"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="db-incr.list.file" value="${db-incr.mysql.list.file}"/>
+			<property name="db-incr.conf.file" value="${db-incr.mysql.conf.file}"/>
+		</case> 
+		<default>
+			<fail message="Invalid database type ${database.type}"/>
+		</default>
+	</switch>
+
 	<!-- figure out whether to use install-properties.template or upgrade-proprties.template -->
 	<propertyregex property="properties.file.type"
 		input="${properties.file}"
@@ -118,9 +114,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 		</elseif>
 	</if>
 	<!-- Includes-->
-	<import file="${bda-utils.dir}/bda-build-utils-0.1.xml" />
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 	<!-- Generated and used by database incremental build process -->
-	<!--<import file="db-integrate.xml" />-->
+	<import file="db-integrate.xml" />
 
 	<!-- Read db configs from existing ds.xml if it exists -->
 	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${llt.ds.file}" property="ds.exists"/>
@@ -208,51 +204,36 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 		install:clean,
 		install:init
 		">
-
 		<switch value="${database.type}">
+			<!--
 			<case value="oracle">
-				<run-sql-script database.url="${database.url}"
-				                database.user="${database.user}" 
-						database.password="${database.password}" 
-						sql.delimiter="/" 
-						sql.delimitertype="row"
-						sql.file="${db.dir.target}/${database.type}/AuthSchemaOracle.sql"
-						onerror="continue"/>
-				<run-sql-script database.url="${database.url}" 
-				                database.user="${database.user}"
-						database.password="${database.password}" 
-						sql.delimiter="/" 
-						sql.delimitertype="row"
-						sql.file="${db.dir.target}/${database.type}/DataPrimingOracle.sql"
-						onerror="continue"/>
-				<run-sql-script database.url="${database.url}" 
-				                database.user="${database.user}"
-						database.password="${database.password}" 
-						sql.delimiter="/" 
-						sql.delimitertype="row"
-						sql.file="${db.dir.target}/${database.type}/CLMSchemaMySQL.sql"
-						onerror="continue"/>
+				<for list="${db.install.oracle.file.list}" param="db.install.oracle.file">
+					<sequential>
+						<echo message="Running ${db.dir.target}/${database.type}/@{db.install.mysql.file}"/>
+						<run-sql-script database.url="${database.url}"
+							database.user="${database.user}" 
+							database.password="${database.password}" 
+							sql.delimiter="/" 
+							sql.delimitertype="row"
+							sql.file="${db.dir.target}/${database.type}/@{db.install.oracle.file}"
+							onerror="continue"/>
+					</sequential>
+				</for>
 			</case>
+			-->
 			<case value="mysql">
 				<database-create/>
-				<run-sql-script
-					database.url="${database.url}"
-					database.user="${database.user}"
-					database.password="${database.password}"
-					sql.file="${db.dir.target}/${database.type}/AuthSchemaMySQL.sql"
-				       	/>
-				<run-sql-script
-					database.url="${database.url}"
-					database.user="${database.user}"
-					database.password="${database.password}"
-					sql.file="${db.dir.target}/${database.type}/DataPrimingMySQL.sql"
-				       	/>
-				<run-sql-script
-				       	database.url="${database.url}" 
-					database.user="${database.user}"
-					database.password="${database.password}" 
-					sql.file="${db.dir.target}/${database.type}/CLMSchemaMySQL.sql"
-					/>
+				<for list="${db.install.mysql.file.list}" param="db.install.mysql.file">
+					<sequential>
+						<echo message="Running ${db.dir.target}/${database.type}/@{db.install.mysql.file}"/>
+						<run-sql-script
+							database.url="${database.url}"
+							database.user="${database.user}"
+							database.password="${database.password}"
+							sql.file="${db.dir.target}/${database.type}/@{db.install.mysql.file}"
+							/>
+					</sequential>
+				</for>
 			</case>
 		</switch>
 		<antcall target="upgrade:database" inheritAll="false"/>
@@ -270,7 +251,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 		<copy file="${llt.dir.src}/${llt.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		<copy file="${database.driver.file}" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
 		<!-- Replace this with file from ivy when project is ivy'fied -->
-		<copy file="${bda-utils.dir.src}/clm-3.2.jar" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
+		<copy file="${clm.dist.relative.dir}/${clm.jar.file}" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
 	</target>
 
 	<target name="install:jboss:llt:configure" description="Configure llt application" unless="exclude.jboss">
@@ -550,6 +531,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 
 		<!-- **figure out the changes/scripts based upon current version IN the database, if any ** -->
 		<switch value="${database.type}">
+			<!--
 			<case value="oracle">
 				<if>
 					<available file="${db-incr.list.file}"/>
@@ -559,21 +541,20 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 							database.url="${database.url}"
 							database.user="${database.user}"
 							database.password="${database.password}"
-							/>		
-	
+							/>
 						<database-identify-scripts
 							sqlfiles.list.file="${db-incr.list.file}"
 							build.properties.file="${db-incr.conf.file}"
 							sql.delimiter="/" 
 							sql.delimitertype="row"
 							database.sql.dir="${db-incr.dir.target}"/>
-				       	
 					</then>
 					<else>
 						<echo message="Could not find an incremental file list file ${db-incr.list.file}, there must not be any incrmental updates."/>
 					</else>
 				</if>
 			</case>
+			-->
 			<case value="mysql">
 				<if>
 					<available file="${db-incr.list.file}"/>
@@ -583,7 +564,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 							database.url="${database.url}"
 							database.user="${database.user}"
 							database.password="${database.password}"
-							/>		
+							/>
 						<database-identify-scripts
 							sqlfiles.list.file="${db-incr.list.file}"
 							build.properties.file="${db-incr.conf.file}"
