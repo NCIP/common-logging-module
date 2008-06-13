@@ -59,8 +59,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="llt.build.file" value="build.xml"/>
 	
 	<!-- The target name that should be called from the sub-project build file -->
-	<property name="llt.build.target" value="all"/>
-	<property name="clm.build.target" value="dist"/>
+	<property name="llt.build.target" value="run"/>
+	<property name="clm.build.target" value="run"/>
     
 	<!-- Distribution Structure properties, used to copy files into the distribution area.
        		Use project.propertie relative dir names becasue they are used by install also-->
@@ -150,7 +150,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<target name="clean">
 		<mkdir dir="${dist.dir}"/>
-		<delete>
+		<delete quiet="true">
 			<fileset dir="${target.dir}">
 				<exclude name="**/tools/*"/>
 			</fileset>
