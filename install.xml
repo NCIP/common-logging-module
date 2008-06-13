@@ -331,7 +331,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 		</if>
 	</target>
 	<target name="install:validation:pre-install">
-		<validate-pre-install />
+		<validate-pre-install
+			database.version="4.1.19"
+			/>
 	</target>
 	<target name="install:validation:pre-install:ports">
 		<validate-ports-preinstall />
