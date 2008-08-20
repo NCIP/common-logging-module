@@ -2,7 +2,7 @@
 	<description>CLM API Project Build File</description>
 
 	<property name="common.dir" value="${basedir}/../" />
-	<property name="target.dir" value="${common.dir}/target/clm" />
+	<property name="target.dir" value="${common.dir}/target/dist/exploded/clm" />
 	<property name="local.repo.dir" value="${basedir}/../local-ivy-repo/${ant.project.name}" />
 	
 	<property name="global.ivy.settings.file" location="${common.dir}/common/ivysettings.xml" />
@@ -10,7 +10,7 @@
 	<!-- set global properties for this build -->
 	<property name="src.dir" location="src" />
 
-	<property name="lib.dir" value="${common.dir}/lib" />
+	<property name="lib.dir" value="${common.dir}/target/lib" />
 
 	<!-- This will be removed once all jars are retrieved from Ivy -->
 	<property name="base.lib.dir" value="../lib" />
@@ -21,7 +21,7 @@
 
 	<!-- Paths -->
 	<path id="common.classpath">
-		<fileset dir="${common.dir}/lib">
+		<fileset dir="${lib.dir}">
 			<include name="ivy-core-2.0.0-beta2.jar" />
 			<include name="ivy-2.0.0-beta2.jar" />
 		</fileset>
