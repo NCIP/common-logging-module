@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="software/api/src"/>
-	<classpathentry kind="src" path="software/locator_webapp/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/acegi-security-1.0.3.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/asm-1.5.3.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/asm-attrs-1.5.3.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/c3p0-0.9.0.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/cglib-2.1_3.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/clm-4.0.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/commons-collections-2.1.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/commons-dbcp-1.2.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/commons-lang-1.0.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/commons-pool-1.2.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/csmapi-4.0.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/ehcache-1.2.4.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/ejb3-persistence-1.0.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/hibernate-3.2.0.ga.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/hibernate-annotations-1.0.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/jdom-1.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/jta-1.0.1B.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/junit-3.8.1.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/log4j-1.2.9.jar"/>
-	<classpathentry kind="lib" path="software/lib/api/runtime/spring-1.2.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
