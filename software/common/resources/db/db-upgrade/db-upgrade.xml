@@ -15,7 +15,7 @@
 	                                                        
 	<changeSet id="1" author="bda">
 		<comment>Need to have at least one changeset to allow tagging to work.</comment> 
-		<sql>select now()</sql>
+		<sql>select count(*) from LOG_MESSAGE</sql>
 	</changeSet>
                                                                                                           	                                                                                                      
 </databaseChangeLog>
