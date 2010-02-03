@@ -71,12 +71,9 @@
 		<mkdir dir="${local.repo.dir}"/>
 		<mkdir dir="${lib.dir}/api/compile" />
 		<mkdir dir="${lib.dir}/api/runtime" />
-
 	</target>
 
 	<target name="compile" depends="-pre-clean, -init, ivy-compile" description="compile the source ">
-
-		<!-- Compile the java code from ${src.dir} into ${classes.dir} -->
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" deprecation="true" classpathref="project.compile.classpath" />
 		<copy file="${src.dir}/gov/nih/nci/logging/api/domain/LogMessage.hbm.xml" todir="${classes.dir}/gov/nih/nci/logging/api/domain" />
 		<copy file="${src.dir}/gov/nih/nci/logging/api/domain/ObjectAttribute.hbm.xml" todir="${classes.dir}/gov/nih/nci/logging/api/domain" />
@@ -84,22 +81,28 @@
 		<copy file="${src.dir}/gov/nih/nci/logging/api/appender/jdbc/FilterList" todir="${classes.dir}/gov/nih/nci/logging/api/appender/jdbc" />
 	</target>
 
+	<!-- run time configuration required for other projects -->
 	<target name="dist" depends="compile,ivy-runtime" description="generate the distribution">
 		<!-- Put everything in ${classes.dir} into the clm.jar file -->
-		<jar jarfile="${target.dir}/${jar.name}" basedir="${classes.dir}" />
+		<mkdir dir="${target.dir}/clmjar"/>
+		<jar jarfile="${target.dir}/clmjar/${jar.name}" basedir="${classes.dir}" />
 
-		<copy todir="${target.dir}">
+		<copy todir="${target.dir}/runtime/lib">
 			<fileset dir="${lib.dir}/api/runtime">
 				<include name="**/*.jar" />
 			</fileset>
 		</copy>
 
-		<copy todir="${target.dir}">
+		<copy todir="${target.dir}/common/resources">
 			<fileset dir="${common.resources}" />
+		</copy>
+		<copy todir="${target.dir}/resources">
 			<fileset dir="resources" />
 		</copy>
-
 		<delete quiet="true" file="${target.dir}/ObjectStateLoggerConfig.xml" />
+		<delete quiet="true" dir="${target.dir}/runtime/lib">
+			<include name="*clm*.jar"/>
+		</delete>
 	</target>
 
 	<target name="clean" description="perform the clean up">

@@ -64,7 +64,6 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${lib.dir}/llt/compile" />
 		<mkdir dir="${lib.dir}/llt/runtime" />
-		<!--  MAKE SURE TO REMOVE THE LIB JARS from WEB-INF/lib folder once runtime jars are ivyfied.-->
 		<copy todir="${build.dir}">
 			<fileset dir="${web.dir}" />
 		</copy>
@@ -82,21 +81,22 @@
 			<fileset dir="${src.dir}" excludes="**/*.java" />
 		</copy>
 	</target>
-		
+
 	<target name="-post-compile" depends="compile" description="Post-compile operations">
 		<copy file="${src.dir}/CLM.csm.new.hibernate.cfg.xml" todir="${build.dir}/WEB-INF/classes" />
 		<copy file="${src.dir}/clm.properties" todir="${build.dir}/WEB-INF/classes" />
 	</target>
-	
+
 	<target name="war" depends="compile, -post-compile, ivy-runtime" description="Generate upt.war">
 		<jar jarfile="${target.dir}/${war.file}" basedir="${build.dir}" />
 	</target>
 
 	<target name="dist" depends="war" description="generate the distribution">
 		<copy todir="${target.dir}">
-			<fileset dir="../common/resources/jboss-conf"/>
-			<fileset dir="resources"/>
-			<fileset dir="../common/resources/db/mysql"/>
+			<fileset dir="resources" />
+		</copy>
+		<copy todir="${target.dir}/common/resources">
+			<fileset dir="../common/resources" />
 		</copy>
 		<copy todir="${target.dir}" file="${lib.dir}/llt/runtime/csmapi-4.1.jar" />
 	</target>
