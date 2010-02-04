@@ -51,20 +51,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 	<!-- Wrapper target to configure jboss container, not deployed application -->
 	<target name="install:jboss:configure" description="Configure llt" unless="exclude.jboss"
 		depends="install:jboss:binaries,common:jboss:init">
-		<switch value="${database.type}">
-			<case value="oracle">
-				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver" />
-			</case>
-			<case value="mysql">
-				<property name="database.driver" value="com.mysql.jdbc.Driver" />
-			</case>
-			<case value="postgresql">
-				<property name="database.driver" value="org.postgresql.Driver" />
-			</case>
-			<default>
-				<fail message="Invalid database type ${database.type}" />
-			</default>
-		</switch>
+
 		<copy todir="${working.dir}/${clm.dist.relative.dir}" overwrite="true" filtering="true">
 			<fileset dir="${clm.dist.relative.dir}">
 				<include name="**/*.xml" />
@@ -85,14 +72,33 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 				<filtersfile file="project.properties" />
 			</filterset>
 		</copy>
-		<jboss-login-config authentication.type="${authentication.type}" login-config.ldap.file="${working.dir}/${clm.dist.relative.dir}/${common.dist.reosurces.relative.dir}/login-config.ldap-block.xml" login-config.db.file="${working.dir}/${clm.dist.relative.dir}/${common.dist.reosurces.relative.dir}/login-config.db-block.xml" />
+			
+		<jboss-configure jboss.grid.configure="false" 
+						 jboss.ssl.enable="false" 
+						 authentication.type="${authentication.type}" 
+						 login-config.ldap.file="${working.dir}/${clm.dist.relative.dir}/${common.dist.reosurces.relative.dir}/login-config.ldap-block.xml" 
+						 login-config.db.file="${working.dir}/${clm.dist.relative.dir}/${common.dist.reosurces.relative.dir}/login-config.db-block.xml" 
+		/>
+		<switch value="${database.type}">
+			<case value="oracle">
+				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver" />
+			</case>
+			<case value="mysql">
+				<property name="database.driver" value="com.mysql.jdbc.Driver" />
+			</case>
+			<case value="postgresql">
+				<property name="database.driver" value="org.postgresql.Driver" />
+			</case>
+			<default>
+				<fail message="Invalid database type ${database.type}" />
+			</default>
+		</switch>
+
 		<copy file="${working.dir}//${jboss-conf.dist.relative.dir}/${llt.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
-		
 		<var name="property.block" value="gov.nih.nci.security.configFile=${jboss.home}/server/${jboss.server.name}/csmconfig/ApplicationSecurityConfig.xml${line.separator}" />
 		<copy file="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml" tofile="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml.orig" overwrite="true" />
 		<jboss-update-properties-service property.block="${property.block}" />
-	
-		<copy file="${working.dir}/${jboss-conf.dist.relative.dir}/${llt.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/csmconfig" overwrite="true" />		
+		<copy file="${working.dir}/${jboss-conf.dist.relative.dir}/${llt.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/csmconfig" overwrite="true" />
 		<copy file="${working.dir}/${jboss-conf.dist.relative.dir}/${llt.hibernate.file}" todir="${jboss.home}/server/${jboss.server.name}/csmconfig" overwrite="true" />
 	</target>
 
