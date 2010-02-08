@@ -84,7 +84,7 @@ public class JDBCExecutor implements java.lang.Runnable
 	}
 
 	private void insert() throws Exception{
-		
+		String temp=null;
 		Connection conn = null;
 		Statement stmt = null;
 		try
@@ -98,15 +98,30 @@ public class JDBCExecutor implements java.lang.Runnable
 			while (iterator.hasNext())
 			{
 				LogMessage logMessage  = (LogMessage) iterator.next();
-				List l =  SQLGenerator.getSQLStatements(logMessage);
-				list.addAll(l);
 				
-			    
-			    
+				List l =  new ArrayList();
+				if(getDbUrl().contains("mysql")){
+					l=SQLGeneratorMySQL.getSQLStatements(logMessage);
+				}
+				if(getDbUrl().contains("oracle")){
+					l=SQLGeneratorOracle.getSQLStatements(logMessage);
+				}
+				if(getDbUrl().contains("postgres")){
+					l=SQLGeneratorPostgres.getSQLStatements(logMessage);
+				}
+				for(int ii=0; ii<l.size();ii++){
+					//System.out.println(l.get(ii));
+					list.add(l.get(ii));
+				}	
 			}
 			Iterator iter = list.iterator();
+			
 			while(iter.hasNext()){
-				stmt.execute((String)iter.next());
+				temp=(String)iter.next() ;
+				
+				//System.out.println(temp);
+				if(!StringUtils.isBlank(temp))
+					stmt.execute(temp);
 			}
 			conn.commit();
 		}catch(Exception e){

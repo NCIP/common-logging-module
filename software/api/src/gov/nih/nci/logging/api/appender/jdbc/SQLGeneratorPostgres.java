@@ -14,7 +14,7 @@ import gov.nih.nci.logging.api.util.StringUtils;
  *   
  * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  */
-public class SQLGenerator {
+public class SQLGeneratorPostgres {
 
 	public static final String APPLICATION = "APPLICATION";
 
@@ -72,38 +72,37 @@ public class SQLGenerator {
 	 */
 	private static List getObjectStateSQLStatements(LogMessage logMessage) {
 			
-		List l = new ArrayList();
-		List l2 = new ArrayList();
-		
-		StringBuffer sb1 = new StringBuffer();
+		List<String> l = new ArrayList();
+	
 		
 		 
 			l.add(getLogMessageSQLStatement(logMessage));
+			//System.out.println(getLogMessageSQLStatement(logMessage));
 			//sb1.append(getLogMessageSQLStatement(logMessage));
+
 			// Get the primary id for the last insert statement.
-			l.add("SELECT @log_id:=LAST_INSERT_ID();");
-			//sb1.append("SELECT @log_id:=LAST_INSERT_ID();");
+			//l.add("SELECT @log_id:=	last_number	FROM user_sequences where sequence_name = 'LOG_MESSAGE_ID_SEQ'");
+			
+			
+			
 			
 			Set objectAttributeSet = logMessage.getObjectAttributeSet();
 			int iCount = 0;
-			StringBuffer sb2 = new StringBuffer();
 			Iterator iterator = objectAttributeSet.iterator();
 			while(iterator.hasNext()){
 				iCount+= 1;
 				ObjectAttribute oa = (ObjectAttribute) iterator.next();
 				l.add(getObjectAttributeSQLStatement(oa));
-				//sb1.append(getObjectAttributeSQLStatement(oa));
-				l.add("SELECT @objectattribute_id"+iCount+":= last_insert_id();");
-				//sb1.append("SELECT @objectattribute_id"+iCount+":= last_insert_id();");
-				l2.add("insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (@log_id,@objectattribute_id"+iCount+");");
-				//sb2.append("insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (@log_id,@objectattribute_id"+iCount+");");
+				//System.out.println(getObjectAttributeSQLStatement(oa));
+				//l.add("SELECT @objectattribute_id"+iCount+":= last_insert_id()");
+				l.add("insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (currval('LOG_MESSAGE_ID_SEQ'),currval('OBJECT_ATTRIBUTE_ID_SEQ'))");
+				//System.out.println("insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (LOG_MESSAGE_ID_SEQ.CURRVAL,OBJECT_ATTRIBUTE_ID_SEQ.CURRVAL)");
+
 			}
-			
-			for(int i=0; i<l2.size();i++){
-				l.add(l2.get(i));
-			}
-			sb1.append(sb2);
-			//sb1.append("COMMIT;");
+			l.add("COMMIT");
+		
+
+
 			
 		return l;
 	}
@@ -161,7 +160,7 @@ public class SQLGenerator {
 		sql.append(StringUtils.initString(logMessage.getObjectName()));
 		sql.append("','");
 		sql.append(StringUtils.initString(logMessage.getOperation()));
-		sql.append("');");
+		sql.append("')");
 		return sql.toString();
 	}
 
@@ -173,11 +172,11 @@ public class SQLGenerator {
 	 */
 	private static String getObjectAttributeSQLStatement(ObjectAttribute objectAttribute) {
 		
-		return "insert into OBJECT_ATTRIBUTE (OBJECT_ATTRIBUTE_ID,ATTRIBUTE, PREVIOUS_VALUE, CURRENT_VALUE) values (NULL"
-			+",'"+StringUtils.initString(objectAttribute.getAttributeName())
+		return "insert into OBJECT_ATTRIBUTE (ATTRIBUTE, PREVIOUS_VALUE, CURRENT_VALUE) values ("
+			+"'"+StringUtils.initString(objectAttribute.getAttributeName())
 			+"','"+StringUtils.initString(objectAttribute.getPreviousValue())
 			+"','"+StringUtils.initString(objectAttribute.getCurrentValue())
-			+"');";
+			+"')";
 	}
 }
 
