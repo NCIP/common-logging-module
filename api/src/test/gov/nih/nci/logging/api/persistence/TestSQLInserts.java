@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import gov.nih.nci.logging.api.appender.jdbc.SQLGenerator;
+import gov.nih.nci.logging.api.appender.jdbc.SQLGeneratorMySQL;
 import gov.nih.nci.logging.api.domain.LogMessage;
 import gov.nih.nci.logging.api.domain.ObjectAttribute;
 
@@ -29,8 +29,8 @@ public class TestSQLInserts {
 		statementList.add("insert into OBJECTATTRIBUTES (LOG_ID, OBJECT_ATTRIBUTE_ID) values (11,12);");*/
 		//statementList.add("COMMIT;");
 
-		statementList.addAll(SQLGenerator.getSQLStatements(getLogMessage_ObjectState()));
-		statementList.addAll(SQLGenerator.getSQLStatements(getLogMessage_NonObjectState()));
+		statementList.addAll(SQLGeneratorMySQL.getSQLStatements(getLogMessage_ObjectState()));
+		statementList.addAll(SQLGeneratorMySQL.getSQLStatements(getLogMessage_NonObjectState()));
 		
 		Connection con = null;
 		Statement stmt = null;
