@@ -17,7 +17,7 @@
 
 	<property name="classes.dir" location="${basedir}/classes" />
 	<property name="common.resources" location="../common/resources/jboss-conf" />
-	<property name="jar.name" value="clm.jar" />
+	<property name="jar.name" value="clm-4.2.beta.jar" />
 
 	<!-- Paths -->
 	<path id="common.classpath">
@@ -75,10 +75,17 @@
 
 	<target name="compile" depends="-pre-clean, -init, ivy-compile" description="compile the source ">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" deprecation="true" classpathref="project.compile.classpath" />
-		<copy file="${src.dir}/gov/nih/nci/logging/api/domain/LogMessage.hbm.xml" todir="${classes.dir}/gov/nih/nci/logging/api/domain" />
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<!--<copy file="${src.dir}/gov/nih/nci/logging/api/domain/LogMessage.hbm.xml" todir="${classes.dir}/gov/nih/nci/logging/api/domain" />
 		<copy file="${src.dir}/gov/nih/nci/logging/api/domain/ObjectAttribute.hbm.xml" todir="${classes.dir}/gov/nih/nci/logging/api/domain" />
 		<copy file="${src.dir}/clm_spring-config.xml" todir="${classes.dir}" />
 		<copy file="${src.dir}/gov/nih/nci/logging/api/appender/jdbc/FilterList" todir="${classes.dir}/gov/nih/nci/logging/api/appender/jdbc" />
+		-->
 	</target>
 
 	<!-- run time configuration required for other projects -->
