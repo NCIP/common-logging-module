@@ -33,8 +33,8 @@
 		<dependency org="org.hibernate" name="ejb3-persistence" rev="1.0.1" conf="compile;runtime;" />
 
 		<dependency org="ehcache" name="ehcache" rev="1.2.4" conf="compile;runtime;" />
-		<dependency org="ncicb" name="csm" rev="4.1" conf="compile;runtime;" /> 
-		<dependency org="ncicb" name="clm" rev="4.1" conf="compile;runtime;" />
+		<dependency org="ncicb" name="csm" rev="4.2" conf="compile;runtime;" /> 
+		<dependency org="ncicb" name="clm" rev="4.2.beta" conf="compile;runtime;" />
 		
 		<dependency org="javancss" name="javancss" rev="29.50" conf="test->runtime"/>
 		<dependency org="junit" name="junit" rev="3.8.1" conf="test->master"/>
