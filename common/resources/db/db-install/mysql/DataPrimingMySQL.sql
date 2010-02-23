@@ -11,7 +11,7 @@ insert into csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE
 values ("csmupt","CSM UPT Super Admin Application",0,0,sysdate());
 
 insert into csm_user (LOGIN_NAME,FIRST_NAME,LAST_NAME,PASSWORD,UPDATE_DATE)
-values ("@super.admin.user@","@super.admin.first.name@","@super.admin.last.name@","zJPWCwDeSgG8j2uyHEABIQ==",sysdate());
+values ("superadmin","super.admin.first.name","super.admin.last.name","zJPWCwDeSgG8j2uyHEABIQ==",sysdate());
 
  
 insert into csm_protection_element(PROTECTION_ELEMENT_NAME,PROTECTION_ELEMENT_DESCRIPTION,OBJECT_ID,APPLICATION_ID,UPDATE_DATE)
@@ -25,11 +25,31 @@ values(1,1);
 # Replace <<application_context_name>> with your application name.
 #
 
-INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE_FLAG,ACTIVE_FLAG,UPDATE_DATE)
-VALUES ("@application.context.name.remote@","@application.context.name.remote@",0,0,sysdate());
+INSERT INTO csm_application(APPLICATION_NAME,APPLICATION_DESCRIPTION,DECLARATIVE_FLAG,ACTIVE_FLAG,UPDATE_DATE,DATABASE_URL,DATABASE_USER_NAME,DATABASE_PASSWORD,DATABASE_DIALECT,DATABASE_DRIVER,CSM_VERSION)
+VALUES ("CLM","CLM",0,0,sysdate(),"jdbc:mysql://localhost:3306/clm","clm","nGNTxuVEogo=","org.hibernate.dialect.MySQLDialect","com.mysql.jdbc.Driver","4.2");
 
 insert into csm_protection_element(PROTECTION_ELEMENT_NAME,PROTECTION_ELEMENT_DESCRIPTION,OBJECT_ID,APPLICATION_ID,UPDATE_DATE)
-values("@application.context.name.remote@","@application.context.name.remote@","@application.context.name.remote@",1,sysdate());
+values("CLM","CLM","CLM",1,sysdate());
+
+insert into csm_user_pe(PROTECTION_ELEMENT_ID,USER_ID)
+values(2,1);
+
+insert into csm_protection_element(PROTECTION_ELEMENT_NAME,PROTECTION_ELEMENT_DESCRIPTION,OBJECT_ID,APPLICATION_ID,UPDATE_DATE)
+values("APPLICATION_NAME:csmupt","APPLICATION_NAME:csmupt","APPLICATION_NAME:csmupt",2,sysdate());
+
+
+insert into csm_protection_group(PROTECTION_GROUP_NAME,PROTECTION_GROUP_DESCRIPTION,APPLICATION_ID,LARGE_ELEMENT_COUNT_FLAG,UPDATE_DATE)
+values("APPLICATION_NAME","APPLICATION_NAME",2,0,sysdate());
+
+insert into csm_pg_pe(protection_group_id,protection_element_id,update_date) values (1,3,sysdate());
+
+insert into csm_role(role_name,role_description,application_id,active_flag,update_date)
+values("READ_ROLE","READ_ROLE",2,1,sysdate());
+
+
+
+insert into csm_user_group_role_pg(user_id,role_id,protection_group_id,update_date)
+values(1,1,1,sysdate());
 
 
 #
@@ -56,6 +76,8 @@ VALUES("DELETE","This privilege permits a user to delete a logical entity. This 
 
 INSERT INTO csm_privilege (privilege_name, privilege_description, update_date)
 VALUES("EXECUTE","This privilege allows a user to execute a particular resource. The resource can be a method, function, behavior of the application, URL, button etc", sysdate());
+
+insert into csm_role_privilege(role_id,privilege_id) values (1,3);
 
 
 COMMIT;
