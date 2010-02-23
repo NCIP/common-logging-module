@@ -88,6 +88,12 @@
 	</target>
 
 	<target name="war" depends="compile, -post-compile, ivy-runtime" description="Generate upt.war">
+		<copy todir="${build.dir}/WEB-INF/lib">
+			<fileset dir="${lib.dir}/llt/compile" includes="**/*.jar"/>
+			<fileset dir="${lib.dir}/llt/runtime" includes="**/*.jar"/>
+		</copy>
+		<delete quiet="true" file="${build.dir}/WEB-INF/lib/commons-logging-1.0.4.jar"/>
+		<delete quiet="true" file="${build.dir}/WEB-INF/lib/log4j-1.2.9.jar"/>
 		<jar jarfile="${target.dir}/${war.file}" basedir="${build.dir}" />
 	</target>
 
@@ -98,7 +104,7 @@
 		<copy todir="${target.dir}/common/resources">
 			<fileset dir="../common/resources" />
 		</copy>
-		<copy todir="${target.dir}" file="${lib.dir}/llt/runtime/csmapi-4.1.jar" />
+		<copy todir="${target.dir}" file="${lib.dir}/llt/runtime/csmapi-4.2.jar" />
 	</target>
 
 	<target name="-post-clean" description="Performs necessary clean-up after a build">
