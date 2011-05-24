@@ -104,7 +104,7 @@
 		<copy todir="${target.dir}/common/resources">
 			<fileset dir="../common/resources" />
 		</copy>
-		<copy todir="${target.dir}" file="${lib.dir}/llt/runtime/csmapi-4.2.jar" />
+		<copy todir="${target.dir}" file="${lib.dir}/llt/runtime/csmapi-4.3.jar" />
 	</target>
 
 	<target name="-post-clean" description="Performs necessary clean-up after a build">

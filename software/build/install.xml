@@ -11,7 +11,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 	</description>
 	<property name="project.name" value="clm" />
 	<property name="llt-webapp.name" value="llt" />
-
+	<property name="database.schema" value="${database.user}"/>
 	<import file="install-bda-master.xml" />
 
 	<!-- *-ds.xml and WAR -->
@@ -20,7 +20,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/llt/trunk/software/install.xml $
 	<property name="llt.war.file" value="llt.war" />
 	<property name="llt.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
 	<property name="llt.hibernate.file" value="hibernate.cfg.xml" />
-	<property name="clm.jar.file" value="clm-4.2.beta.jar" />
+	<property name="clm.jar.file" value="clm-4.2.jar" />
 
 	<property name="jboss.application.url" value="http://${jboss.server.hostname}:${jboss.server.port}/${llt-webapp.name}" />
 

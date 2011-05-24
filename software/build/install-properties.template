@@ -44,6 +44,20 @@ jboss.snmp.port=
 jboss.remoting.port=
 jboss.messaging.port=
 
+jboss.jms.port=
+jboss.remoting.port=
+
+# new ports with 5.1.0
+jboss.unifiedinvoker.port=
+jboss.hajndi.auto.port=
+jboss.ssl.port=
+jboss.jms2.netty.port=
+jboss.jms2.netty-ssl.port=
+jboss.transaction.recovery.port=
+jboss.transaction.status.port=
+jboss.transaction.processid.port=
+
+
 ###################################
 #  PRE-POST VALIDATION PROPERTIES #
 ###################################
