@@ -18,11 +18,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 /**
- * 
+ *
  * HibernateUtil class provides the SessionFactory for the CLM API.
- * 
+ *
  * Refer the clm.properties file in api/resources folder for reference.
- * 
+ *
  * @author Vijay Parmar (Ekagra Software Technologies Limited.)
  *
  */
@@ -54,7 +54,7 @@ public class HibernateUtil {
 
 	/**
 	 * This method creates and returns the Hibernate SessionFactory used by CLM's Query API's.
-	 * 
+	 *
 	 * @return SessionFactory
 	 * @throws Exception
 	 */
@@ -89,20 +89,19 @@ public class HibernateUtil {
 				props = properties;
 			}
 		}
-			
+
 		if(isDataSourceProperties()){
 			String jndiName = props.getProperty("CLMDJndiDS.jndiName");
 			Properties properties = new Properties();
 			properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
 			localSessionFactoryBean.setHibernateProperties(props);
-			// set javax.sql.DataSource 
+			// set javax.sql.DataSource
 			localSessionFactoryBean.setDataSource(getDataSource(jndiName));
 		}else{
 			//set JDBC Connection Properties for Hibernate
 			localSessionFactoryBean.setHibernateProperties(props);
 
 		}
-		
 
 		try {
 			localSessionFactoryBean.afterPropertiesSet();
@@ -120,16 +119,16 @@ public class HibernateUtil {
 		return sf;
 	}
 
-	
+
 	/**
 	 * @return true if clm.properties configuration specifies a Data Source.
 	 * @return false if clm.properties configuration does not specify a Data Source.
-	 *  
+	 *
 	 */
 	private static boolean isDataSourceProperties() {
-		
+
 		if(props==null) return false;
-		
+
 		if (props.containsKey("CLMDJndiDS.jndiName")) {
 			/*String jndiName = props.getProperty("CLMDS.jndiName");
 
@@ -139,7 +138,7 @@ public class HibernateUtil {
 		}
 		return false;
 	}
-	
+
 	private static DataSource getDataSource(String jndiName) throws Exception {
 		Context ctx = new InitialContext();
 		if (ctx == null) {
@@ -152,9 +151,8 @@ public class HibernateUtil {
 
 	public static Session currentSession() throws HibernateException {
 		Session s = (Session) session.get();
-
 		// Open a new Session, if this Thread has none yet
-		if (s == null) {
+		if (s == null || (!s.isOpen())) {
 			s = getSessionFactory().openSession();
 			session.set(s);
 		}
@@ -165,7 +163,9 @@ public class HibernateUtil {
 		Session s = (Session) session.get();
 		session.set(null);
 		if (s != null)
+		{
 			s.close();
+		}
 	}
 
 	public static Properties getProperties() {
@@ -216,11 +216,11 @@ public class HibernateUtil {
 			properties.setProperty("hibernate.connection.username", username);
 			properties.setProperty("hibernate.connection.password", password);
 			properties.setProperty("hibernate.dialect", hibernateDialect);
-			
+
 		}
 
 	}
 
-	
+
 
 }

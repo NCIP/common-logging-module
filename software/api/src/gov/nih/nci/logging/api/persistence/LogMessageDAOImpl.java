@@ -24,7 +24,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  * @author Vijay Parmar (Ekagra Software Technologies Limited.)
- * 
+ *
  */
 
 public class LogMessageDAOImpl extends HibernateDaoSupport implements
@@ -36,19 +36,35 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	public Collection retrieve(
 			final SearchCriteria searchCriteria,
 			final int maxSize) {
-		
-		Session session = HibernateUtil.currentSession();
-		
-		Criteria criteria = session.createCriteria(LogMessage.class);
-		
-		populateCriteria(searchCriteria, criteria);
-		
-		// set Maximum result size
-		criteria.setMaxResults(maxSize);
-		// get results.
-		Collection logMessageCollection = criteria.list();
-		
-		if(logMessageCollection.size()>0) return logMessageCollection;
+
+		Session session = null;
+		try
+		{
+			session = HibernateUtil.currentSession();
+
+			Criteria criteria = session.createCriteria(LogMessage.class);
+
+			populateCriteria(searchCriteria, criteria);
+
+			// set Maximum result size
+			criteria.setMaxResults(maxSize);
+			// get results.
+			Collection logMessageCollection = criteria.list();
+
+			if(logMessageCollection.size()>0) return logMessageCollection;
+		}
+		finally
+		{
+			try
+			{
+				if(session != null)
+					session.close();
+			}
+			catch(Exception e)
+			{
+			}
+		}
+
 		return null;
 	}
 
@@ -60,90 +76,147 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 			final int currentStartOffSet,
 			final int currentRecordCount) {
 
-		Session session = HibernateUtil.currentSession();
-		
-		Criteria criteria = session.createCriteria(LogMessage.class);
-		
-		populateCriteria(searchCriteria, criteria);
-		
-		// set Start Off set.
-		criteria.setFirstResult(currentStartOffSet-1);
-		// Set Number of Records
-		criteria.setMaxResults(currentRecordCount);
-		
-		// get Results.
-		Collection logMessageCollection= criteria.list();
-		if(logMessageCollection.size()>0) return logMessageCollection;
+		Session session = null;
+		try
+		{
+			session = HibernateUtil.currentSession();
+
+			Criteria criteria = session.createCriteria(LogMessage.class);
+
+			populateCriteria(searchCriteria, criteria);
+
+			// set Start Off set.
+			criteria.setFirstResult(currentStartOffSet-1);
+			// Set Number of Records
+			criteria.setMaxResults(currentRecordCount);
+
+			// get Results.
+			Collection logMessageCollection= criteria.list();
+			if(logMessageCollection.size()>0) return logMessageCollection;
+		}
+		finally
+		{
+			try
+			{
+				if(session != null)
+					session.close();
+			}
+			catch(Exception e)
+			{
+			}
+		}
 		return null;
-		
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see gov.nih.nci.logging.api.persistence.LogMessageDAO#retrieve(gov.nih.nci.logging.api.domain.SearchCriteria)
 	 */
 
 	public Collection retrieve(SearchCriteria searchCriteria) {
-		
-		Session session = HibernateUtil.currentSession();
-		
-		Criteria criteria = session.createCriteria(LogMessage.class);
-		populateCriteria(searchCriteria, criteria);
-		List results = criteria.list();
-		if(results.size()>0) return results;
+
+		Session session = null;
+		try
+		{
+			session = HibernateUtil.currentSession();
+
+			Criteria criteria = session.createCriteria(LogMessage.class);
+			populateCriteria(searchCriteria, criteria);
+			List results = criteria.list();
+			if(results.size()>0) return results;
+		}
+		finally
+		{
+			try
+			{
+				if(session != null)
+					session.close();
+			}
+			catch(Exception e)
+			{
+			}
+		}
 		return null;
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see gov.nih.nci.logging.api.persistence.LogMessageDAO#retrieveServer()
 	 */
 	public Collection retrieveServer(){
 		String queryStr = "select distinct log.server from gov.nih.nci.logging.api.domain.LogMessage log where log.server is not null";
-		
-		Session session = HibernateUtil.currentSession();
-		
-		Query query = session.createQuery(queryStr);		
-		List results = query.list();
-		
-		return (Collection) results;
+
+		Session session = null;
+		try
+		{
+			session = HibernateUtil.currentSession();
+
+			Query query = session.createQuery(queryStr);
+			List results = query.list();
+			return (Collection) results;
+		}
+		finally
+		{
+			try
+			{
+				if(session != null)
+					session.close();
+			}
+			catch(Exception e)
+			{
+			}
+		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see gov.nih.nci.logging.api.persistence.LogMessageDAO#estimateResultSize(gov.nih.nci.logging.api.applicationservice.SearchCriteria)
 	 */
 	public int estimateResultSize(SearchCriteria searchCriteria) {
-		
-		
-		Session session = HibernateUtil.currentSession();
-		
-		Criteria criteria = session.createCriteria(LogMessage.class);
-		
-		populateCriteria(searchCriteria, criteria);
-		
-		
-		criteria.setProjection( Projections.rowCount());
-		
-		List results = criteria.list();
-		Integer integer = (Integer) results.iterator().next();
-		if(integer!=null){
-			return integer.intValue();	
-		}else{
-			return 0;
+
+
+		Session session = null;
+		try
+		{
+			session = HibernateUtil.currentSession();
+
+			Criteria criteria = session.createCriteria(LogMessage.class);
+
+			populateCriteria(searchCriteria, criteria);
+
+			criteria.setProjection( Projections.rowCount());
+			List results = criteria.list();
+			Integer integer = (Integer) results.iterator().next();
+			if(integer!=null){
+				return integer.intValue();
+			}else{
+				return 0;
+			}
+		}
+		finally
+		{
+			try
+			{
+				if(session != null)
+					session.close();
+			}
+			catch(Exception e)
+			{
+			}
 		}
 	}
 
-	
+
 	/**
 	 * Based on SearchCriteria object populate the Hibernates Criteria Object with Expression and sort order details.
 	 * @param searchCriteria
 	 * @param criteria
 	 */
 	private void populateCriteria(SearchCriteria searchCriteria, Criteria criteria) {
-		
+
 		criteria.add(createExpressionForDate(searchCriteria));
-		
+
 		if (!StringUtils.isBlank(searchCriteria.getApplication())) {
 			criteria.add(Expression.eq(_APPLICATION, searchCriteria.getApplication().trim()));
 		}
@@ -198,7 +271,7 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 					 criteria.addOrder(Order.desc(key));
 				 }
 			}
-		}	
+		}
 	}
 
 
@@ -209,38 +282,38 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	 * @return Criterion
 	 */
 	private Criterion createExpressionForDate(SearchCriteria searchCriteria) {
-		
-		
+
+
 		if(!StringUtils.isBlank(searchCriteria.getStartDate()) && !StringUtils.isBlank(searchCriteria.getEndDate()) ){
 			//Expression.between
 			Long start= getDateTime(searchCriteria.getStartDate(),searchCriteria.getStartTime(),true);
 			Long end= getDateTime(searchCriteria.getEndDate(),searchCriteria.getEndTime(),false);
-			return Expression.between(_DATE,start,end);	
+			return Expression.between(_DATE,start,end);
 		}
 		if(!StringUtils.isBlank(searchCriteria.getStartDate()) && StringUtils.isBlank(searchCriteria.getEndDate()) ){
-			//Expression.ge		
+			//Expression.ge
 			Long start= getDateTime(searchCriteria.getStartDate(),searchCriteria.getStartTime(),true);
 			return Expression.ge(_DATE,start);
 		}
-		
+
 		Long end = getDateTime(searchCriteria.getEndDate(),searchCriteria.getEndTime(),false);
 		return Expression.le(_DATE,end);
 	}
 
 	/**
 	 * Returns the Data and Time in milliseconds (Long).
-	 * 
+	 *
 	 * @param date
 	 * @param time
 	 * @param isStart
 	 * @return Date and Time in milliseconds
 	 */
 	private Long getDateTime(String date, String time, boolean isStart) {
-		
+
 		final SimpleDateFormat sdf = new SimpleDateFormat(ApplicationConstants.DISPLAY_DATE_FORMAT);
-		
+
 		Long datetime=null;
-		
+
 		if(isStart){
 			if(!StringUtils.isBlank(date)){
 				if(StringUtils.isBlank(time)){
@@ -292,12 +365,12 @@ public class LogMessageDAOImpl extends HibernateDaoSupport implements
 	 */
 	public void deleteObject(Object logmessage) {
 		getHibernateTemplate().delete(logmessage);
-		
+
 	}
 
-	
-	
 
 
-	
+
+
+
 }
