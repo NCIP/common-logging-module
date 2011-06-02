@@ -1,14 +1,14 @@
 <!--
-     DTD for the Struts Application Configuration File, Version 1.1
+     DTD for the Struts Application Configuration File
 
      To support validation of your configuration file, include the following
      DOCTYPE element at the beginning (after the "xml" declaration):
 
      <!DOCTYPE struts-config PUBLIC
-       "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-       "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+       "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+       "http://struts.apache.org/dtds/struts-config_1_2.dtd">
 
-     $Id: struts-config_1_1.dtd 51429 2004-02-17 05:51:48Z martinc $
+     $Id: struts-config_1_2.dtd 55025 2004-10-18 17:40:29Z craigmcc $
 -->
 
 
@@ -82,7 +82,7 @@
      hierarchy, and contains nested elements for all of the other
      configuration settings.
 -->
-<!ELEMENT struts-config (data-sources?, form-beans?, global-exceptions?, global-forwards?, action-mappings?, controller?, message-resources*, plug-in*)>
+<!ELEMENT struts-config (display-name?, description?, data-sources?, form-beans?, global-exceptions?, global-forwards?, action-mappings?, controller?, message-resources*, plug-in*)>
 <!ATTLIST struts-config  id             ID              #IMPLIED>
 
 
@@ -117,7 +117,7 @@
                      slash, so the default datasource for a module named "foo" is
                      stored under "org.apache.struts.action.DATA_SOURCE/foo".
 
-     type            Fully qualified Java class name for this data source object.
+     type          Fully qualified Java class name for this data source object.
                      The class must implement DataSource [javax.sql.DataSource],
                      and the object must be configurable entirely from JavaBean
                      properties.
@@ -126,7 +126,7 @@
 <!ATTLIST data-source    id             ID              #IMPLIED>
 <!ATTLIST data-source    className      %ClassName;     #IMPLIED>
 <!ATTLIST data-source    key            %AttributeName; #IMPLIED>
-<!ATTLIST data-source    type           %ClassName;     #IMPLIED>
+<!ATTLIST data-source    type           %ClassName;     #REQUIRED>
 
 
 <!-- The "form-beans" element describes the set of form bean descriptors for this
@@ -159,15 +159,6 @@ The "form-bean" element describes a particular form bean, which is a
                      specified, the object must be a subclass of the default
                      configuration bean.
                      ["org.apache.struts.config.FormBeanConfig"]
-
-     dynamic         If the form bean type is a  DynaActionForm subclass (that you
-                     created), then (and only then) set this attribute to "true".
-                     If the type is set to the default DynaActionForm or any
-                     conventional ActionForm subclass, then this attribute can be
-                     omitted.
-                     [true] if type is "org.apache.struts.action.DynaActionForm"
-                     [false] otherwise  DEPRECATED - THIS IS NOW DETERMINED
-                     DYNAMICALLY BASED ON THE SPECIFIED IMPLEMENTATION CLASS.
 
      name            The unique identifier for this form bean. Referenced by the
                      <action> element to specify which form bean to use with its
@@ -308,7 +299,11 @@ The "form-bean" element describes a particular form bean, which is a
                      attribute starts with a slash "/" and should be considered
                      relative to the entire web application rather than the module.
                      Since Struts 1.1.
+                     DEPRECATED.
                      [false]
+
+     module          The module prefix to use with this path. This value should
+                     begin with a slash ("/").
 
      name            The unique identifier for this forward. Referenced by the
                      Action object at runtime to select - by its logical name -
@@ -331,6 +326,7 @@ The "form-bean" element describes a particular form bean, which is a
 <!ATTLIST forward        id             ID              #IMPLIED>
 <!ATTLIST forward        className      %ClassName;     #IMPLIED>
 <!ATTLIST forward        contextRelative %Boolean;      #IMPLIED>
+<!ATTLIST forward        module         %RequestPath;   #IMPLIED>
 <!ATTLIST forward        name           CDATA           #REQUIRED>
 <!ATTLIST forward        path           %RequestPath;   #REQUIRED>
 <!ATTLIST forward        redirect       %Boolean;       #IMPLIED>
@@ -419,7 +415,7 @@ The "form-bean" element describes a particular form bean, which is a
 
      scope           The context ("request" or "session") that is used to
                      access our ActionForm bean, if any.  Optional if "name" is
-                     specified, else not valid.
+                     specified, else not valid. [session]
 
      suffix          Suffix used to match request parameter names to ActionForm
                      bean property names, if any. Optional if "name" is
@@ -482,10 +478,6 @@ The "form-bean" element describes a particular form bean, which is a
                      be set on each response. May be overridden by the Action,
                      JSP, or other resource to which the request is forwarded.
                      ["text/html"]
-
-     debug           Debugging detail level for this module. [0]
-                     DEPRECATED - configure the logging detail level
-                     in your underlying logging implementation.
 
      forwardPattern  Replacement pattern defining how the "path" attribute of a
                      <forward> element is mapped to a context-relative URL when
@@ -564,7 +556,6 @@ The "form-bean" element describes a particular form bean, which is a
 <!ATTLIST controller     bufferSize     %Integer;       #IMPLIED>
 <!ATTLIST controller     className      %ClassName;     #IMPLIED>
 <!ATTLIST controller     contentType    CDATA           #IMPLIED>
-<!ATTLIST controller     debug          %Integer;       #IMPLIED>
 <!ATTLIST controller     forwardPattern CDATA           #IMPLIED>
 <!ATTLIST controller     inputForward   %Boolean;       #IMPLIED>
 <!ATTLIST controller     locale         %Boolean;       #IMPLIED>
