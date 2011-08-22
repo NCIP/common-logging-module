@@ -17,7 +17,7 @@
 
 	<property name="classes.dir" location="${basedir}/classes" />
 	<property name="common.resources" location="../common/resources/jboss-conf" />
-	<property name="jar.name" value="clm-4.2.jar" />
+	<property name="jar.name" value="clm-4.1.1.jar" />
 
 	<!-- Paths -->
 	<path id="common.classpath">

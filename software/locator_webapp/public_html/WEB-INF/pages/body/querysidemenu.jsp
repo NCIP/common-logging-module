@@ -67,17 +67,19 @@
 				<!-- 
 					Server 
 				 -->
-				<bean:define name="<%=Constants.SERVER_NAME_COLLECTION%>" id="serverObjectCollection" type="java.util.Collection"/>
-				<tr>
-					<td class=formRequiredNotice width=5>*</td>
-					<td class=formLabel><LABEL for=server><bean:message
-						key="label.server" /></LABEL></td>
-					<td class=formField>
-						<html:select property="server">
-							<html:options collection="serverObjectCollection" property="name" labelProperty="name" />
-						</html:select>
-					</td>
-				</tr>
+				 <logic:present name="<%=Constants.SERVER_NAME_COLLECTION%>">
+					<bean:define name="<%=Constants.SERVER_NAME_COLLECTION%>" id="serverObjectCollection" type="java.util.Collection"/>
+					<tr>
+						<td class=formRequiredNotice width=5>*</td>
+						<td class=formLabel><LABEL for=server><bean:message
+							key="label.server" /></LABEL></td>
+						<td class=formField>
+							<html:select property="server">
+								<html:options collection="serverObjectCollection" property="name" labelProperty="name" />
+							</html:select>
+						</td>
+					</tr>
+				</logic:present>
 				<!-- 
 					User 
 				 -->
