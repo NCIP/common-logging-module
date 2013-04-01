@@ -142,11 +142,12 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
 	<property name="commonlibrary.dir" value="" />
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
+	<!--<property name="bda-download.file" value="bda-ivy-build.xml" />-->
 	
 	<mkdir dir="${bda-download.dir}" />
-	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<!--<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />-->
+	<property name="bda-download.src.url" value="https://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/${bda-download.file}" />
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
-	
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" location="${bda-utils.dir}" />
@@ -425,6 +426,12 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<include name="**/*" />
 			</fileset>
 		</copy>
+		<copy todir="${dist.exploded.dir}" overwrite="true">
+			<fileset dir="${build.dir}">
+				<include name="install-bda-master.xml" />
+			</fileset>
+		</copy>
+		
 		<dist-prep />
 		<copy todir="${tools.dist.dir}">
 			<fileset dir="${download.dir}">

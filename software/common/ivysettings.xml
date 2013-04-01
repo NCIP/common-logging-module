@@ -1,5 +1,5 @@
 <ivysettings>	
-	<property name="nci.ivy.repo" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo" />
+	<property name="nci.ivy.repo" value="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk" />
 	<property name="clm.basedir" value="${ivy.settings.dir}/.." />
 
 	<settings defaultCache="${user.home}/.ivy2-${ant.project.name}" defaultResolver="nci-chain" />
