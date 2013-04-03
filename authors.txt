@@ -1,8 +1,0 @@
-(no author) = no_author <no_author@no_author.cvs2svn>
-garmillas = Santosh garmilla <garmillas@mail.nih.gov>
-gursesl = gursesl <gursesl>
-konkapv = Prasad Konka <prasad.konka@nih.gov>
-liany = Yongjian Lian <liany@mail.nih.gov>
-modik = Kunal Modi <modik@mail.nih.gov>
-parmarv = Vijay Parmar <parmarv@mail.nih.gov>
-saksass = Steve Saksa <saksass@mail.nih.gov>
