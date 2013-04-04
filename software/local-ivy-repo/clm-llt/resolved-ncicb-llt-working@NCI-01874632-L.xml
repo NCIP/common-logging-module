@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L-->
+
        
 <ivy-module version="1.0">
 	<info organisation="ncicb" module="llt" revision="working@NCI-01874632-L" status="integration" publication="20130404101647"/>
