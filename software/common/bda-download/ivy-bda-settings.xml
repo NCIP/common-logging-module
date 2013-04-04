@@ -8,7 +8,7 @@ This file is the is the settings file used by IVY.  It is a good starting point 
 <ivysettings>
 	<property name="ivy.project.repo" value="${target.dir}/local-repo-dir"/>
 	<property name="ivy.system.repo" value="${bda.local.repo.dir}"/>
-	<property name="ivy.local-enterprise.repo" value="${commonlibrary.dir}/ivy-repo"/>
+	<property name="ivy.local-enterprise.repo" value="${commonlibrary.dir}/../local-ivy-repo"/>
 	<settings defaultResolver="ncicb-chain" />
 	<!-- defaultCacheDir causes the bda-utils module to use it's own cache directory -->
 	<!-- useOrigin causes avoiding the copy of local artifacts to the cache and use directly their original location -->
@@ -31,11 +31,6 @@ This file is the is the settings file used by IVY.  It is a good starting point 
 				<artifact pattern="${ivy.local-enterprise.repo}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 				<ivy pattern="${ivy.local-enterprise.repo}/[organisation]/[module]/[revision]/ivy.xml" />
 			</filesystem>           
-			<url name="ncicb-ivy-repo">
-				<!-- remote enterprise repository -->
-				<artifact pattern="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-				<ivy pattern="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/[organisation]/[module]/[revision]/ivy.xml" />
-			</url>  
 			<!-- this is where you can publish to, either your own code or for testing new thirdparty files -->
 		</chain>
 	</resolvers>

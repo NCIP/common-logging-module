@@ -1,7 +1,6 @@
 <ivysettings>	
-	<property name="nci.ivy.repo" value="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk" />
 	<property name="clm.basedir" value="${ivy.settings.dir}/.." />
-
+	<property name="ivy.local-enterprise.repo" value="${ivy.settings.dir}/../local-ivy-repo"/>
 	<settings defaultCache="${user.home}/.ivy2-${ant.project.name}" defaultResolver="nci-chain" />
 
 	<caches useOrigin="true" />
@@ -17,30 +16,14 @@
 				<ivy pattern="${local.repo.dir}/[organisation]/[module]/[revision]/ivy.xml" />
 			</filesystem> 
 		
-			<url name="ncicb-ivy-repo" m2compatible="false">
-				<ivy pattern="${nci.ivy.repo}/[organisation]/[module]/[revision]/ivy.xml" />
-				<artifact pattern="${nci.ivy.repo}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-			</url>
-
-			<!-- begin clm specific stuff -->
-			<filesystem name="api-resolver" local="true">
-				<artifact pattern="${clm.basedir}/lib/[module]/[conf]/[artifact]-[revision].[ext]" />
-				<ivy pattern="${clm.basedir}/[module]/ivy.xml" />
-			</filesystem>
-
-			<filesystem name="llt-resolver" local="true">
-				<artifact pattern="${clm.basedir}/lib/[module]/[conf]/[artifact]-[revision].[ext]" />
-				<ivy pattern="${clm.basedir}/[module]/ivy.xml" />	
-			</filesystem>
-
 			<!-- end clm specific stuff -->
-
+			
+			<filesystem name="local-ncicb-ivy-repo" local="true">
+				<!-- local enterprise repository checkout, best used when working remote or network disconnected -->
+				<artifact pattern="${ivy.local-enterprise.repo}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+				<ivy pattern="${ivy.local-enterprise.repo}/[organisation]/[module]/[revision]/ivy.xml" />
+			</filesystem>           
 		</chain>
 	</resolvers>
-
-	<modules>
-		<module organisation="ncicb" name="api" resolver="api-resolver" />
-		<module organisation="ncicb" name="llt" resolver="llt-resolver" />
-	</modules>
 
 </ivysettings>
