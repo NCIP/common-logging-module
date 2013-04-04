@@ -1,3 +1,10 @@
+<%--L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L--%>
+
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-html"	prefix="html"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
