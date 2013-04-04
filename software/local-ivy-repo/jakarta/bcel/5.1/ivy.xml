@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"
+                 href="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-xsl/ivy.xsl"?>
+<ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">  
+
+  <info organisation="jakarta" module="bcel" revision="5.1" status="integration" publication="20120203210402"/>
+        
+  <configurations>
+    <conf name="master"/>
+    <conf name="compile"/>
+    <conf name="runtime"/>
+    <conf name="optional"/>
+  </configurations>
+  
+  <publications>
+    <artifact name="bcel" type="jar" conf="master, compile, runtime"/>
+  </publications>
+  
+  <dependencies>               
+	  <dependency org="apache" name="regexp" rev="latest.integration" force="true" conf="optional->master(*)"/>
+
+  </dependencies>
+  
+</ivy-module>

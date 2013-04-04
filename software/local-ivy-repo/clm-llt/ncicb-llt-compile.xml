@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="ncicb"
+		module="llt"
+		revision="working@NCI-01874632-L"
+		conf="compile"
+		confs="compile"
+		date="20130404101652"/>
+	<dependencies>
+		<module organisation="ncicb" name="csm" >
+			<revision name="4.2" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="12">
+				<metadata-artifact status="successful" details="" size="1551" time="81" location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\csm\ivy-4.2.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\csm\ivy-4.2.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ncicb/csm/4.2/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="4.2" rev-constraint-default="4.2" rev-constraint-dynamic="4.2" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="csmapi" type="jar" ext="jar" status="successful" details="" size="836897" time="681" location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\csm\jars\csmapi-4.2.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ncicb/csm/4.2/csmapi-4.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="ncicb" name="clm" >
+			<revision name="4.2.beta" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile, master" position="13">
+				<metadata-artifact status="successful" details="" size="1418" time="83" location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\clm\ivy-4.2.beta.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\clm\ivy-4.2.beta.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ncicb/clm/4.2.beta/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="4.2.beta" rev-constraint-default="4.2.beta" rev-constraint-dynamic="4.2.beta" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="clm" type="jar" ext="jar" status="successful" details="" size="139262" time="521" location="C:\Users\konkapv\.ivy2-clm-llt\ncicb\clm\jars\clm-4.2.beta.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ncicb/clm/4.2.beta/clm-4.2.beta.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.hibernate" name="ejb3-persistence" >
+			<revision name="1.0.1" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="10">
+				<metadata-artifact status="successful" details="" size="985" time="84" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\ejb3-persistence\ivy-1.0.1.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\ejb3-persistence\ivy-1.0.1.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/ejb3-persistence/1.0.1/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.0.1" rev-constraint-default="1.0.1" rev-constraint-dynamic="1.0.1" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="ejb3-persistence" type="jar" ext="jar" status="successful" details="" size="52847" time="320" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\ejb3-persistence\jars\ejb3-persistence-1.0.1.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/ejb3-persistence/1.0.1/ejb3-persistence-1.0.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.hibernate" name="hibernate-annotations" >
+			<revision name="1.0" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="9">
+				<metadata-artifact status="successful" details="" size="993" time="85" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate-annotations\ivy-1.0.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate-annotations\ivy-1.0.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/hibernate-annotations/1.0/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.0" rev-constraint-default="1.0" rev-constraint-dynamic="1.0" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="hibernate-annotations" type="jar" ext="jar" status="successful" details="" size="280196" time="778" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate-annotations\jars\hibernate-annotations-1.0.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/hibernate-annotations/1.0/hibernate-annotations-1.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.hibernate" name="hibernate" >
+			<revision name="3.2.0.ga" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="8">
+				<metadata-artifact status="successful" details="" size="4627" time="99" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate\ivy-3.2.0.ga.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate\ivy-3.2.0.ga.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/hibernate/3.2.0.ga/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="3.2.0.ga" rev-constraint-default="3.2.0.ga" rev-constraint-dynamic="3.2.0.ga" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="hibernate" type="jar" ext="jar" status="successful" details="" size="2178429" time="4281" location="C:\Users\konkapv\.ivy2-clm-llt\org.hibernate\hibernate\jars\hibernate-3.2.0.ga.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.hibernate/hibernate/3.2.0.ga/hibernate-3.2.0.ga.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="ehcache" name="ehcache" >
+			<revision name="1.2.4" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="11">
+				<metadata-artifact status="successful" details="" size="972" time="118" location="C:\Users\konkapv\.ivy2-clm-llt\ehcache\ehcache\ivy-1.2.4.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\ehcache\ehcache\ivy-1.2.4.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ehcache/ehcache/1.2.4/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.2.4" rev-constraint-default="1.2.4" rev-constraint-dynamic="1.2.4" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="ehcache" type="jar" ext="jar" status="successful" details="" size="212476" time="619" location="C:\Users\konkapv\.ivy2-clm-llt\ehcache\ehcache\jars\ehcache-1.2.4.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/ehcache/ehcache/1.2.4/ehcache-1.2.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="apache" name="struts" >
+			<revision name="1.1" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="7">
+				<metadata-artifact status="successful" details="" size="804" time="95" location="C:\Users\konkapv\.ivy2-clm-llt\apache\struts\ivy-1.1.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\apache\struts\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/apache/struts/1.1/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="struts" type="jar" ext="jar" status="successful" details="" size="498051" time="801" location="C:\Users\konkapv\.ivy2-clm-llt\apache\struts\jars\struts-1.1.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/apache/struts/1.1/struts-1.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.jdom" name="jdom" >
+			<revision name="1.1" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="6">
+				<metadata-artifact status="successful" details="" size="784" time="94" location="C:\Users\konkapv\.ivy2-clm-llt\org.jdom\jdom\ivy-1.1.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\org.jdom\jdom\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.jdom/jdom/1.1/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="jdom" type="jar" ext="jar" status="successful" details="" size="153115" time="254" location="C:\Users\konkapv\.ivy2-clm-llt\org.jdom\jdom\jars\jdom-1.1.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/org.jdom/jdom/1.1/jdom-1.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="jakarta" name="commons-logging" >
+			<revision name="1.0.4" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile, master" position="5">
+				<metadata-artifact status="successful" details="" size="826" time="103" location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-logging\ivy-1.0.4.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-logging\ivy-1.0.4.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/jakarta/commons-logging/1.0.4/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="commons-logging" type="jar" ext="jar" status="successful" details="" size="38015" time="133" location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-logging\jars\commons-logging-1.0.4.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/jakarta/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="jakarta" name="commons-lang" >
+			<revision name="1.0.1" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile, master" position="4">
+				<metadata-artifact status="successful" details="" size="826" time="147" location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-lang\ivy-1.0.1.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-lang\ivy-1.0.1.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/jakarta/commons-lang/1.0.1/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.0.1" rev-constraint-default="1.0.1" rev-constraint-dynamic="1.0.1" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="commons-lang" type="jar" ext="jar" status="successful" details="" size="63980" time="190" location="C:\Users\konkapv\.ivy2-clm-llt\jakarta\commons-lang\jars\commons-lang-1.0.1.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/jakarta/commons-lang/1.0.1/commons-lang-1.0.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="apache" name="log4j" >
+			<revision name="1.2.9" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="3">
+				<metadata-artifact status="successful" details="" size="785" time="108" location="C:\Users\konkapv\.ivy2-clm-llt\apache\log4j\ivy-1.2.9.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\apache\log4j\ivy-1.2.9.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/apache/log4j/1.2.9/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.2.9" rev-constraint-default="1.2.9" rev-constraint-dynamic="1.2.9" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="log4j" type="jar" ext="jar" status="successful" details="" size="352291" time="1270" location="C:\Users\konkapv\.ivy2-clm-llt\apache\log4j\jars\log4j-1.2.9.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/apache/log4j/1.2.9/log4j-1.2.9.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="javax.servlet" name="servlet" >
+			<revision name="2.3.1" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="2">
+				<metadata-artifact status="successful" details="" size="792" time="106" location="C:\Users\konkapv\.ivy2-clm-llt\javax.servlet\servlet\ivy-2.3.1.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\javax.servlet\servlet\ivy-2.3.1.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/javax.servlet/servlet/2.3.1/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="2.3.1" rev-constraint-default="2.3.1" rev-constraint-dynamic="2.3.1" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="servlet" type="jar" ext="jar" status="successful" details="" size="77662" time="137" location="C:\Users\konkapv\.ivy2-clm-llt\javax.servlet\servlet\jars\servlet-2.3.1.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/javax.servlet/servlet/2.3.1/servlet-2.3.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="springsource" name="spring" >
+			<revision name="1.2.8" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile" position="1">
+				<metadata-artifact status="successful" details="" size="839" time="106" location="C:\Users\konkapv\.ivy2-clm-llt\springsource\spring\ivy-1.2.8.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\springsource\spring\ivy-1.2.8.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/springsource/spring/1.2.8/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.2.8" rev-constraint-default="1.2.8" rev-constraint-dynamic="1.2.8" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="spring" type="jar" ext="jar" status="successful" details="" size="1932690" time="1652" location="C:\Users\konkapv\.ivy2-clm-llt\springsource\spring\jars\spring-1.2.8.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/springsource/spring/1.2.8/spring-1.2.8.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="springsource" name="acegi-security" >
+			<revision name="1.0.3" status="integration" pubdate="20120203210402" resolver="ncicb-ivy-repo" artresolver="ncicb-ivy-repo" downloaded="true" searched="true" default="false" conf="compile, master" position="0">
+				<metadata-artifact status="successful" details="" size="814" time="356" location="C:\Users\konkapv\.ivy2-clm-llt\springsource\acegi-security\ivy-1.0.3.xml" searched="true" original-local-location="C:\Users\konkapv\.ivy2-clm-llt\springsource\acegi-security\ivy-1.0.3.xml.original" origin-is-local="false" origin-location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/springsource/acegi-security/1.0.3/ivy.xml"/>
+				<caller organisation="ncicb" name="llt" conf="compile" rev="1.0.3" rev-constraint-default="1.0.3" rev-constraint-dynamic="1.0.3" callerrev="working@NCI-01874632-L"/>
+				<artifacts>
+					<artifact name="acegi-security" type="jar" ext="jar" status="successful" details="" size="527655" time="830" location="C:\Users\konkapv\.ivy2-clm-llt\springsource\acegi-security\jars\acegi-security-1.0.3.jar">
+						<origin-location is-local="false" location="https://ncisvn.nci.nih.gov/svn/deprecated-ivy-repo/trunk/springsource/acegi-security/1.0.3/acegi-security-1.0.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>
