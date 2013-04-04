@@ -13,7 +13,7 @@ CLM is flexible enough to allow application developers to integrate audit loggin
 Common Logging Module is distributed under the BSD 3-Clause License.
 Please see the NOTICE and LICENSE files for details.
 
-You will find more details about NCI CBIIT ISO21090 Localization Common Library in the following links:
+You will find more details about Common Logging Module in the following links:
 
  * [Home Page] (https://wiki.nci.nih.gov/x/4gBB)
  * [Release Notes] (http://gforge.nci.nih.gov/docman/view.php/49/15150/CLM_4.1_Release_notes.txt)
@@ -23,11 +23,13 @@ You will find more details about NCI CBIIT ISO21090 Localization Common Library 
  * [Issue Tracker] (https://tracker.nci.nih.gov/browse/CLM)
  * [Code Repository] (https://github.com/NCIP/common-logging-module)
  * [Release Binaries] (http://gforge.nci.nih.gov/frs/?group_id=49)
+
 Please join us in further developing and improving Common Logging Module.
 
 #Prerequisites
 JDK 1.5.x
 Apache Ant 1.7.x
+Apache Ivy 2.0.0 (Add ivy-2.0.0.jar to <ANT_HOME>/lib)
 
 #Install
 Please refer to [LLT user guide] (http://gforge.nci.nih.gov/docman/view.php/49/15169/LLT_User_Guide.pdf)for installation and setup procedure at
