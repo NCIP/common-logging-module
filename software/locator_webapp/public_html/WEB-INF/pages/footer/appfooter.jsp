@@ -1,3 +1,10 @@
+<%--L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L--%>
+
 <table summary="" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td height="20" class="footerMenuItem"

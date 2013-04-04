@@ -1,3 +1,10 @@
+/*L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L*/
+
 CREATE TABLE CSM_APPLICATION ( 
 	APPLICATION_ID BIGINT AUTO_INCREMENT  NOT NULL,
 	APPLICATION_NAME VARCHAR(255) NOT NULL,

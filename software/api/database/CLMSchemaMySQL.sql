@@ -1,3 +1,10 @@
+/*L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L*/
+
 # Replace the <<database_name>> with proper database name that is to be created. 
 
 CREATE DATABASE <<database_name>>;
