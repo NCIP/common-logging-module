@@ -1,3 +1,10 @@
+/*L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L*/
+
 DROP TABLE IF EXISTS `test`.`customer`;
 CREATE TABLE  `test`.`customer` (
   `id` int(10) unsigned NOT NULL auto_increment,

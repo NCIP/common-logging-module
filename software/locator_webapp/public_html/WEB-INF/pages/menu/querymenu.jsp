@@ -1,3 +1,10 @@
+<%--L
+   Copyright Ekagra Software Technologies
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+L--%>
+
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
 <table summary="" cellpadding="0" cellspacing="0" border="0" height="20">
 	<tr>
