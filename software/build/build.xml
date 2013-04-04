@@ -57,6 +57,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<target name="init" >
 		<mkdir dir="${target.dir}" />
+		<mkdir dir="${target.dir}/lib" />
 		<mkdir dir="${dist.exploded.dir}" />
 		<mkdir dir="${common.dist.dir}" />
 		<mkdir dir="${tools.dist.dir}" />

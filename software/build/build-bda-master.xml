@@ -5,7 +5,7 @@ $Id: build.xml 1773 2009-06-26 18:03:24Z saksass $
 $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/build/build.xml $
 -->
 
-<project name="build-bda-template" default="build:all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:cs="antlib:com.puppycrawl.tools.checkstyle">
+<project name="build-bda-template" default="build:all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<description>
 		This build file is part of the bda-build-template project.  This is the master build file for the project.  It should be placed in project/software/.  This script wrappers sub projects to build, test and inspect code.  Additionally this project manges creation of distributions and deployment locally or remotely.  Deployments will call the install.xml from the distribution to install or upgrade the application.  Lastly this script will run include targets that require manipulation of containers (selenium tests because they require starting the application server container (and require a fully deployed application which this process is responsible for). This build script assumes two sub-projects bda-blueprints-webapp and bda-blueprints-api. The API targets are commented out and can be removed if not needed.  Also support for both tomcat and jboss download, install and configure are included.  These scripts require Java, Ant, Database and SVN to work.
 	</description>
@@ -51,10 +51,10 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<property name="target.dir" location="${software.dir}/target" />
 	<property name="bda-download.dir" location="${common.dir}/bda-download" />
 	<property name="ivy.settings.dir" location="${common.dir}/ivy" />
-	<property name="lib.dir" location="${target.dir}/lib" />
+	<property name="lib.dir" location="${build.dir}/build-utils" />
 	<property name="temp.dir" location="${target.dir}/temp" />
 	<property name="reports.dir" location="${target.dir}/reports" />
-	<property name="bda-utils.dir" location="${target.dir}/bda-utils" />
+	<property name="bda-utils.dir" location="${build.dir}/build-utils" />
 	<property name="log.dir" location="${target.dir}/logs" />
 	<property name="dist.dir" location="${target.dir}/dist" />
 	<property name="download.dir" location="${target.dir}/download" />
@@ -144,18 +144,6 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<!--<property name="bda-download.file" value="bda-ivy-build.xml" />-->
 	
-	<mkdir dir="${bda-download.dir}" />
-	<!--<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />-->
-	<property name="bda-download.src.url" value="https://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/${bda-download.file}" />
-	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
-	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
-		<property name="bda.version" value="${bda.version}" />
-		<property name="bda-utils.dir" location="${bda-utils.dir}" />
-		<property name="lib.dir" location="${lib.dir}" />
-		<property name="software.dir" location="${software.dir}" />
-		<property name="commonlibrary.dir" location="${commonlibrary.dir}" />
-		<property name="target.dir" location="${target.dir}"/>
-	</ant>
 	
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -169,8 +157,6 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		</fileset>
 	</path>
 
-	<!-- Task definitions -->
-	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
 
 	<!-- Includes- include BDA marcos -->
@@ -205,6 +191,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<echo message="| |__)  )| |__/ / | |   | |" />
 		<echo message="|______/ |_____/  |_|   |_|" />
 		<mkdir dir="${target.dir}" />
+		<mkdir dir="${target.dir}/lib" />
 		<mkdir dir="${dist.dir}" />
 		<mkdir dir="${dist.exploded.dir}" />
 		<mkdir dir="${bda-blueprints-api.dist.dir}" />
@@ -374,9 +361,12 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		</if>
 	</target>
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
-		<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
-		<get src="${jboss.src.url}.MD5" dest="${jboss.dest.file}.MD5" />
+		<copy file="${bda-utils.dir}/jboss-4.0.5.GA.zip" todir="${download.dir}" />
+		<copy file="${bda-utils.dir}/jboss-4.0.5.GA.zip.MD5" todir="${download.dir}" />
+		<!--<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
+		<get src="${jboss.src.url}.MD5" dest="${jboss.dest.file}.MD5" />-->
 		<checksum file="${jboss.dest.file}" verifyProperty="jboss.cksum.ok" />
+		<!--
 		<if>
 			<equals arg1="${jboss.cksum.ok}" arg2="true" />
 			<then>
@@ -386,6 +376,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<fail message="Failed to download jboss file sucessfully." />
 			</else>
 		</if>
+		-->
 	</target>
 
 	<target name="dist:tools:retrieve:cagrid" unless="cagrid-libs.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
@@ -394,7 +385,8 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	</target>
 
 	<target name="dist:tools:retrieve:jboss-bindings"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum">
-		<get src="${jboss-bindings.src.url}" dest="${dist.exploded.dir}/${jboss-bindings.file}" />
+		<copy file="${bda-utils.dir}/ncicb-jboss4.0.x-bindings.xml" todir="${dist.exploded.dir}" />
+		<!--<get src="${jboss-bindings.src.url}" dest="${dist.exploded.dir}/${jboss-bindings.file}" />-->
 	</target>
 
 	<target name="dist:tools:retrieve:tomcat" unless="tomcat.tools.exists" description="Downloads TOMCAT from binary repository and verifies checksum">
