@@ -1,3 +1,10 @@
+/*L
+ *  Copyright Ekagra Software Technologies
+ *
+ *  Distributed under the OSI-approved BSD 3-Clause License.
+ *  See http://ncip.github.com/common-logging-module/LICENSE.txt for details.
+ */
+
 //Created by MyEclipse Struts
 // XSL source (default): platform:/plugin/com.genuitec.eclipse.cross.easystruts.eclipse_4.0.0/xslt/JavaClass.xsl
 
