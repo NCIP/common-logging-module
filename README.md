@@ -1,7 +1,7 @@
-Welcome to the Common Logging Module Project!
-=====================================
+Welcome to the Common Logging Module (CLM)Project!
+==================================================
 
-CLM is a set of tools that provides a flexible and comprehensive solution for auditing and logging. CLM includes Event Logging, Aubomated Object State Logging, Asynchronous Logging to database, Query API's and a web based Log Locator Tool.
+Common Logging Module (CLM) is a set of tools that provides a flexible and comprehensive solution for auditing and logging. CLM includes Event Logging, Aubomated Object State Logging, Asynchronous Logging to database, Query API's and a web based Log Locator Tool.
  * Event Logging - This feature provides a log4j-based solution allowing users to log events. Since this feature provides the ability to propagate and store user information, it can be used for anything from auditing a user to detecting security breaches.
  * Automated Object State Logging - This tool provides an automated, Hibernate-based, object state logging mechanism to log the changes to an object's state.
  * Asynchronous Logging to database - This feature provides a log4j based JDBC appender that can log the messages to the database asynchronously. Asynchronous logging increases performance for applications that generate a high volume of log messages.
@@ -15,14 +15,13 @@ Please see the NOTICE and LICENSE files for details.
 
 You will find more details about Common Logging Module in the following links:
 
- * [Home Page] (https://wiki.nci.nih.gov/x/4gBB)
- * [Release Notes] (http://gforge.nci.nih.gov/docman/view.php/49/15150/CLM_4.1_Release_notes.txt)
- * [Documentation] (https://wiki.nci.nih.gov/x/4gBB)
- * [NCI OSDI] (https://wiki.nci.nih.gov/display/caBIGCommunityCode/CBIIT+Open+Source+Development+Initiative)
- * [Forum] (https://cabig-kc.nci.nih.gov/CaGrid/forums/viewforum.php?f=31&sid=317abcd4b7ae1f07e547e12f9c2b9059)
+ * [Community Wiki] (https://wiki.nci.nih.gov/x/4gBB)
  * [Issue Tracker] (https://tracker.nci.nih.gov/browse/CLM)
  * [Code Repository] (https://github.com/NCIP/common-logging-module)
- * [Release Binaries] (http://gforge.nci.nih.gov/frs/?group_id=49)
+ * [Documentation] (https://wiki.nci.nih.gov/x/4gBB) 
+ * [Release Notes] (http://gforge.nci.nih.gov/docman/view.php/49/15150/CLM_4.1_Release_notes.txt)
+ * [Installation Packages] (http://gforge.nci.nih.gov/frs/?group_id=49)
+ * [Forum] (https://cabig-kc.nci.nih.gov/CaGrid/forums/viewforum.php?f=31&sid=317abcd4b7ae1f07e547e12f9c2b9059)
 
 Please join us in further developing and improving Common Logging Module.
 
