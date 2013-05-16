@@ -31,7 +31,7 @@ Please join us in further developing and improving Common Logging Module.
 * Apache Ivy 2.0.0 (Add ivy-2.0.0.jar to <ANT_HOME>/lib)
 
 #Install
-Please refer to [LLT user guide] (http://gforge.nci.nih.gov/docman/view.php/49/15169/LLT_User_Guide.pdf)for installation and setup procedure at
+Please refer to [LLT user guide] (http://gforge.nci.nih.gov/docman/view.php/49/15169/LLT_User_Guide.pdf) for installation and setup procedure at
 
-Please refer to chapter 9 of caCORE 3.2 [technical guide] (ftp://ftp1.nci.nih.gov/pub/cacore/caCORE3.2_Tech_Guide.pdf) for instructions on using CLM API
+Please refer to chapter 9 of caCORE 3.2 technical guide (ftp://ftp1.nci.nih.gov/pub/cacore/caCORE3.2_Tech_Guide.pdf) for instructions on using CLM API
 
