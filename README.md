@@ -1,4 +1,4 @@
-Welcome to the Common Logging Module (CLM)Project!
+Welcome to the Common Logging Module (CLM) Project!
 ==================================================
 
 Common Logging Module (CLM) is a set of tools that provides a flexible and comprehensive solution for auditing and logging. CLM includes Event Logging, Aubomated Object State Logging, Asynchronous Logging to database, Query API's and a web based Log Locator Tool.
